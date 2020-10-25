@@ -6,7 +6,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	. "github.com/gnames/gnames/lib/encode"
+	. "github.com/gnames/gnlib/encode"
 )
 
 type version struct {

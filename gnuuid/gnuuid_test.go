@@ -4,7 +4,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	. "github.com/gnames/gnames/lib/gnuuid"
+	. "github.com/gnames/gnlib/gnuuid"
 )
 
 var _ = Describe("uuid", func() {

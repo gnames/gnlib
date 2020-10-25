@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"strings"
 
-	"github.com/gnames/gnames/lib/format"
+	"github.com/gnames/gnlib/format"
 	jsoniter "github.com/json-iterator/go"
 )
 

@@ -60,10 +60,22 @@ type ResultData struct {
 	// Curation is a string representation of CurationLevel
 	CurationLevelString string `json:"curationLevel"`
 
-	// ID from a data source. We try our best to return ID that correspond to
-	// global_id of a DataSource. If such ID is not provided, this ID will be
+	// ID from a data source. We try our best to return ID that corresponds to
+	// dwc:taxonID of a DataSource. If such ID is not provided, this ID will be
 	// auto-generated.  Auto-generated IDs will have 'gn_' prefix.
 	ID string `json:"id"`
+
+	// GlobalID that is exposed globally by a DataSource. Such IDs are usually
+	// self-resolved, like for example LSID, pURL, DOI etc.
+	GlobalID string `json:"globalId,omitempty"`
+
+	// LocalID used by a DataSource internally. If an OutLink field is provided,
+	// LocalID serves as a 'dynamic' component of the URL.
+	LocalID string `json:"localId,omitempty"`
+
+	// Outlink to the record in the DataSource. It consists of a 'stable'
+	// URL and an appended 'dynamic' LocalID
+	Outlink string `json:"outlink,omitempty"`
 
 	// EntryDate is a timestamp created on entry of the data.
 	EntryDate string `json:"entryDate"`
@@ -71,15 +83,6 @@ type ResultData struct {
 	// Score determines how well the match did work. It is used to determine
 	// best match overall, and best match for every data-source.
 	Score uint32 `json:"-"`
-
-	// GlobalID that is exposed globally by a DataSource.
-	GlobalID string `json:"globalId,omitempty"`
-
-	// LocalID used by a DataSource internally.
-	LocalID string `json:"localId,omitempty"`
-
-	// Outlink to the record in the DataSource.
-	Outlink string `json:"outlink,omitempty"`
 
 	// MatchedName is a name-string from the DataSource that was matched
 	// by GNames algorithm.

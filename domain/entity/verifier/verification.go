@@ -1,5 +1,7 @@
 package verifier
 
+import "gopkg.in/guregu/null.v4"
+
 // VerifyParams are options/parameters for the Verify method.
 type VerifyParams struct {
 	// NameStrings is a list of name-strings to verify.
@@ -49,7 +51,7 @@ type Verification struct {
 // name verification.
 type ResultData struct {
 	// DataSourceID is the ID of a matched DataSource.
-	DataSourceID *int `json:"dataSourceId"`
+	DataSourceID null.Int `json:"dataSourceId"`
 
 	// Shortened/abbreviated title of the data source.
 	DataSrouceTitleShort string `json:"dataSourceTitleShort"`
@@ -91,7 +93,7 @@ type ResultData struct {
 	// MatchCardinality is the cardinality of returned name:
 	// 0 - No match, virus or hybrid formula,
 	// 1 - Uninomial, 2 - Binomial, 3 - trinomial etc.
-	MatchedCardinality *int `json:"matchedCardinality"`
+	MatchedCardinality null.Int `json:"matchedCardinality"`
 
 	// MatchedCanonicalSimple is a simplified canonicl form without ranks for
 	// names lower than species, and with ommited hybrid signs for named hybrids.
@@ -120,7 +122,7 @@ type ResultData struct {
 
 	// CurrentCardinality is a cardinality of the accepted name.
 	// It might differ from the matched name cardinality.
-	CurrentCardinality *int `json:"currentCardinality"`
+	CurrentCardinality null.Int `json:"currentCardinality"`
 
 	// CurrentCanonicalSimple is a canonical form for the currently accepted name.
 	CurrentCanonicalSimple string `json:"currentCanonicalSimple"`
@@ -148,11 +150,11 @@ type ResultData struct {
 	// EditDistance is a Levenshtein edit distance between canonical form of the
 	// input name-string and the matched canonical form. If match type is
 	// "EXACT", edit-distance will be 0.
-	EditDistance *int `json:"editDistance"`
+	EditDistance null.Int `json:"editDistance"`
 
 	// StemEditDistance is a Levenshtein edit distance after removing suffixes
 	// from specific epithets from canonical forms.
-	StemEditDistance *int `json:"stemEditDistance"`
+	StemEditDistance null.Int `json:"stemEditDistance"`
 
 	//MatchType describes what kind of a match happened to a name-string.
 	MatchType `json:"matchType"`

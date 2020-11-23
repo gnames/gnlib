@@ -110,7 +110,7 @@ type ResultData struct {
 
 	// MatchedYear is a year mentioned in the name. Multiple years or
 	// approximate years are ignored.
-	MatchedYear int `json:"-"`
+	MatchedYear null.Int `json:"-"`
 
 	// CurrentRecordID is the id of currently accepted name given by
 	// the data-source.

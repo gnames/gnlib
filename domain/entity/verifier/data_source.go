@@ -2,13 +2,6 @@ package verifier
 
 import "time"
 
-// DataSourcesOpts are options to send to DataSources method.
-type DataSourcesOpts struct {
-	// DataSourceID. When it is given we return results only for this
-	// data_source_id. If not given return results for all data_sources.
-	DataSourceID int `json:"dataSourceId"`
-}
-
 // DataSource provides metadata for an externally collected data-set.
 type DataSource struct {
 	// ID is a DataSource Id.

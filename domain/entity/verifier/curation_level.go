@@ -28,7 +28,6 @@ var mapCurationLevel = map[int]string{
 func (c CurationLevel) String() string {
 	if match, ok := mapCurationLevel[int(c)]; ok {
 		return match
-	} else {
-		return "N/A"
 	}
+	return "N/A"
 }

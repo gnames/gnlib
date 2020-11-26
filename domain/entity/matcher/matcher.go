@@ -5,7 +5,6 @@ package matcher
 
 import (
 	vlib "github.com/gnames/gnlib/domain/entity/verifier"
-	"gopkg.in/guregu/null.v4"
 )
 
 // Match is output of MatchAry method.
@@ -33,8 +32,8 @@ type MatchItem struct {
 	MatchStr string `json:"matchString"`
 	// EditDistance is a Levenshtein edit distance between normalized
 	// input and MatchStr.
-	EditDistance null.Int `json:"editDistance,omitempty"`
+	EditDistance int `json:"editDistance"`
 	// EditDistanceStem is a Levenshtein edit distance between stemmed input and
 	// stemmed MatchStr.
-	EditDistanceStem null.Int `json:"editDistanceStem,omitempty"`
+	EditDistanceStem int `json:"editDistanceStem"`
 }

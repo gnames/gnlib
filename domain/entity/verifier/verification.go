@@ -37,10 +37,7 @@ type Verification struct {
 	// matches are returned by at least one manually curated data source, or by
 	// automatically curated data source, or only by sources that are not
 	// significantly manually curated.
-	CurationLevel `json:"-"`
-
-	// CurationLevelString is a string representation of CurationLevel
-	CurationLevelString string `json:"curationLevel"`
+	CurationLevel `json:"curationLevel"`
 
 	// Error provides an error message, if any. If error is not empty, the match
 	// failed because of a bug in the service.

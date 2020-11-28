@@ -1,5 +1,10 @@
 package verifier
 
+import (
+	"encoding/json"
+	"fmt"
+)
+
 // CurationLevel tells if matched result was returned by at least one
 // DataSource in the following categories.
 type CurationLevel int
@@ -20,9 +25,15 @@ const (
 )
 
 var mapCurationLevel = map[int]string{
-	0: "NOT_CURATED",
-	1: "AUTO_CURATED",
-	2: "CURATED",
+	0: "NotCurated",
+	1: "AutoCurated",
+	2: "Curated",
+}
+
+var mapCurationLevelStr = map[string]CurationLevel{
+	"NotCurated":  NotCurated,
+	"AutoCurated": AutoCurated,
+	"Curated":     Curated,
 }
 
 func (c CurationLevel) String() string {
@@ -30,4 +41,24 @@ func (c CurationLevel) String() string {
 		return match
 	}
 	return "N/A"
+}
+
+// MarshalJSON implements json.Marshaller interface and converts MatchType
+// into a string.
+func (c *CurationLevel) MarshalJSON() ([]byte, error) {
+	return json.Marshal(c.String())
+}
+
+// UnmarshalJSON implements json.Unmarshaller interface and converts a
+// string into MatchType.
+func (c *CurationLevel) UnmarshalJSON(b []byte) error {
+	var s string
+	if err := json.Unmarshal(b, &s); err != nil {
+		return err
+	}
+	if v, ok := mapCurationLevelStr[s]; ok {
+		*c = v
+		return nil
+	}
+	return fmt.Errorf("cannot convert '%s' to CurationLevel", s)
 }

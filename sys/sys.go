@@ -12,13 +12,7 @@ import (
 
 // MakeDir a directory out of a given unless it already exists.
 func MakeDir(dir string) error {
-	if strings.HasPrefix(dir, "~/") || strings.HasPrefix(dir, "~\\") {
-		home, err := homedir.Dir()
-		if err != nil {
-			return err
-		}
-		dir = filepath.Join(home, dir[2:])
-	}
+	dir = ConvertTilda(dir)
 	path, err := os.Stat(dir)
 	if os.IsNotExist(err) {
 		return os.MkdirAll(dir, 0755)
@@ -61,4 +55,16 @@ func CleanDir(dir string) error {
 		}
 	}
 	return nil
+}
+
+// ConvertTilda expands paths with `~/` to an actual home directory.
+func ConvertTilda(path string) string {
+	if strings.HasPrefix(path, "~/") || strings.HasPrefix(path, "~\\") {
+		home, err := homedir.Dir()
+		if err != nil {
+			log.Fatal(err)
+		}
+		path = filepath.Join(home, path[2:])
+	}
+	return path
 }

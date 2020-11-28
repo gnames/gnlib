@@ -57,10 +57,7 @@ type ResultData struct {
 	DataSrouceTitleShort string `json:"dataSourceTitleShort"`
 
 	// CurationLevel of the data source.
-	CurationLevel `json:"-"`
-
-	// Curation is a string representation of CurationLevel
-	CurationLevelString string `json:"curationLevel"`
+	CurationLevel `json:"curationLevel"`
 
 	// ID from a data source. We try our best to return ID that corresponds to
 	// dwc:taxonID of a DataSource. If such ID is not provided, this ID will be

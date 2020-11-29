@@ -17,7 +17,7 @@ type VerifyParams struct {
 // Verification is a result returned by Verify method.
 type Verification struct {
 	// InputID is a UUIDv5 generated out of the Input string.
-	InputID string `json:"input_id"`
+	InputID string `json:"inputId"`
 	// Input is a verified name-string
 	Input string `json:"input"`
 	// MatchType is best available match.
@@ -51,7 +51,7 @@ type ResultData struct {
 	DataSourceID null.Int `json:"dataSourceId"`
 
 	// Shortened/abbreviated title of the data source.
-	DataSrouceTitleShort string `json:"dataSourceTitleShort"`
+	DataSourceTitleShort string `json:"dataSourceTitleShort"`
 
 	// CurationLevel of the data source.
 	CurationLevel `json:"curationLevel"`
@@ -139,7 +139,7 @@ type ResultData struct {
 
 	// ClassificationIDs of the names-strings. They always correspond to
 	// the "id" field.
-	ClassificationIDs string `json:"classificationIds,omitempty"`
+	ClassificationIDs string `json:"-"`
 
 	// EditDistance is a Levenshtein edit distance between canonical form of the
 	// input name-string and the matched canonical form. If match type is

@@ -36,7 +36,7 @@ type DataSource struct {
 	Description string `json:"description,omitempty"`
 
 	// WebsiteURL is a hompage of a DataSource
-	WebsiteURL string `json:"home_url,omitempty"`
+	WebsiteURL string `json:"homeURL,omitempty"`
 
 	// CurationLevel determines how much of manual or programmatic work is put
 	// into assuring the quality of the data.

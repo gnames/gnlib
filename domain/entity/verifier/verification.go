@@ -31,11 +31,11 @@ type Verification struct {
 	// input name-string.
 	DataSourcesNum int `json:"dataSourcesNum"`
 
-	// CurationLevel estimates reliability of matched data sources. If
+	// Curation estimates reliability of matched data sources. If
 	// matches are returned by at least one manually curated data source, or by
 	// automatically curated data source, or only by sources that are not
 	// significantly manually curated.
-	CurationLevel `json:"curationLevel"`
+	Curation CurationLevel `json:"curation"`
 
 	// Error provides an error message, if any. If error is not empty, the match
 	// failed because of a bug in the service.
@@ -51,8 +51,8 @@ type ResultData struct {
 	// Shortened/abbreviated title of the data source.
 	DataSourceTitleShort string `json:"dataSourceTitleShort"`
 
-	// CurationLevel of the data source.
-	CurationLevel `json:"curationLevel"`
+	// Curation of the data source.
+	Curation CurationLevel `json:"curation"`
 
 	// ID from a data source. We try our best to return ID that corresponds to
 	// dwc:taxonID of a DataSource. If such ID is not provided, this ID will be

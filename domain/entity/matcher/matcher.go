@@ -16,7 +16,7 @@ type Match struct {
 	// VirusMatch is true if matching
 	VirusMatch bool `json:"isVirus,omitempty"`
 	// MatchType describe what kind of match happened.
-	MatchType vlib.MatchType `json:"matchType"`
+	MatchType vlib.MatchTypeValue `json:"matchType"`
 	// MatchItems provide all matched data. It will be empty if no matches
 	// occured.
 	MatchItems []MatchItem `json:"matchItems,omitempty"`

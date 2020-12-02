@@ -10,7 +10,7 @@ import (
 
 func TestString(t *testing.T) {
 	testData := []struct {
-		mt  ver.MatchType
+		mt  ver.MatchTypeValue
 		res string
 	}{
 		{ver.NoMatch, "NoMatch"},
@@ -26,7 +26,7 @@ func TestString(t *testing.T) {
 
 func TestNew(t *testing.T) {
 	testData := []struct {
-		res ver.MatchType
+		res ver.MatchTypeValue
 		s   string
 	}{
 		{ver.NoMatch, "NoMatch"},
@@ -44,12 +44,12 @@ func TestNew(t *testing.T) {
 
 func TestJSON(t *testing.T) {
 	type testData struct {
-		Field1 string          `json:"fieldOne"`
-		Field2 []ver.MatchType `json:"fieldTwo"`
+		Field1 string               `json:"fieldOne"`
+		Field2 []ver.MatchTypeValue `json:"fieldTwo"`
 	}
 	test := testData{
 		Field1: "hello",
-		Field2: []ver.MatchType{ver.Exact, ver.Fuzzy, ver.NoMatch},
+		Field2: []ver.MatchTypeValue{ver.Exact, ver.Fuzzy, ver.NoMatch},
 	}
 	enc := encode.GNjson{}
 	res, err := enc.Encode(test)
@@ -58,14 +58,14 @@ func TestJSON(t *testing.T) {
 	var res2 testData
 	err = enc.Decode(res, &res2)
 	assert.Nil(t, err)
-	assert.Equal(t, res2, testData{Field1: "hello", Field2: []ver.MatchType{ver.Exact, ver.Fuzzy, ver.NoMatch}})
+	assert.Equal(t, res2, testData{Field1: "hello", Field2: []ver.MatchTypeValue{ver.Exact, ver.Fuzzy, ver.NoMatch}})
 }
 
 func TestErrJSON(t *testing.T) {
 	enc := encode.GNjson{}
 	res, err := enc.Encode("notType")
 	assert.Nil(t, err)
-	var res2 ver.MatchType
+	var res2 ver.MatchTypeValue
 	err = enc.Decode(res, &res2)
 	assert.Contains(t, err.Error(), "cannot convert 'notType'")
 

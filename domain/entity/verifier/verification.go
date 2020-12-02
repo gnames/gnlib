@@ -39,7 +39,7 @@ type Verification struct {
 
 	// Error provides an error message, if any. If error is not empty, the match
 	// failed because of a bug in the service.
-	Error string `json:"error"`
+	Error string `json:"error,omitempty"`
 }
 
 // ResultData are returned data of the "best" or "preferred" result of

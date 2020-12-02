@@ -11,16 +11,19 @@ type DataSource struct {
 	UUID string `json:"uuid,omitempty"`
 
 	// Title is a full title of a DataSource
-	Title string `json:"title,omitempty"`
+	Title string `json:"title"`
 
 	// TitleShort is a shortened/abbreviated title of a DataSource.
-	TitleShort string `json:"titleShort,omitempty"`
+	TitleShort string `json:"titleShort"`
 
 	// Version of the data-set for a DataSource.
 	Version string `json:"version,omitempty"`
 
 	// RevisionDate of a data-set from a data-provider.
 	// It follows format of 'year-month-day' || 'year-month' || 'year'
+	// This data comes from the information given by the data-provider,
+	// while UpdatedAt field is the date of harvesting of the
+	// resource.
 	RevisionDate string `json:"releaseDate,omitempty"`
 
 	// DOI of a DataSource;
@@ -29,7 +32,7 @@ type DataSource struct {
 	// Citation representing a DataSource
 	Citation string `json:"citation,omitempty"`
 
-	// Authors associated with the Datasource
+	// Authors associated with the DataSource
 	Authors string `json:"authors,omitempty"`
 
 	// Description of the DataSource.
@@ -42,9 +45,11 @@ type DataSource struct {
 	// into assuring the quality of the data.
 	Curation CurationLevel `json:"curation"`
 
-	// RecordCount tells how many entries are in a data source.
+	// RecordCount tells how many entries are in a DataSource.
 	RecordCount int `json:"recordCount"`
 
-	// UpdatedAt is the last import time and date.
+	// UpdatedAt is the last import time and date. In contrast,
+	// RevisionDate field indicates when the resource was
+	// updated according to its data-provider.
 	UpdatedAt time.Time `json:"updatedAt"`
 }

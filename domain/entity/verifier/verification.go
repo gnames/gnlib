@@ -19,7 +19,7 @@ type Verification struct {
 	// Input is a verified name-string
 	Input string `json:"input"`
 	// MatchType is best available match.
-	MatchType `json:"matchType"`
+	MatchType MatchTypeValue `json:"matchType"`
 	// BestResult is the best result according to GNames scoring.
 	BestResult *ResultData `json:"bestResult,omitempty"`
 
@@ -149,7 +149,7 @@ type ResultData struct {
 	StemEditDistance int `json:"stemEditDistance"`
 
 	//MatchType describes what kind of a match happened to a name-string.
-	MatchType `json:"matchType"`
+	MatchType MatchTypeValue `json:"matchType"`
 
 	// Vernacular names that correspond to the matched name. (Will be implemented
 	// later)

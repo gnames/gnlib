@@ -5,12 +5,12 @@ import (
 	"fmt"
 )
 
-// MatchType describes how a name-string matched a name in gnames database.
-type MatchType int
+// MatchTypeValue describes how a name-string matched a name in gnames database.
+type MatchTypeValue int
 
 const (
 	// NoMatch means that verification failed.
-	NoMatch MatchType = iota
+	NoMatch MatchTypeValue = iota
 
 	// Exact means either canonical form, or the whole name-string matched
 	// perfectlly.
@@ -41,7 +41,7 @@ var mapMatchType = map[int]string{
 	4: "PartialFuzzy",
 }
 
-var mapMatchTypeStr = map[string]MatchType{
+var mapMatchTypeStr = map[string]MatchTypeValue{
 	"NoMatch":      NoMatch,
 	"Exact":        Exact,
 	"Fuzzy":        Fuzzy,
@@ -51,7 +51,7 @@ var mapMatchTypeStr = map[string]MatchType{
 
 // NewMatchType takes a string and converts it into a MatchType. If
 // the string is unkown, it returns NoMatch type.
-func NewMatchType(t string) MatchType {
+func NewMatchType(t string) MatchTypeValue {
 	if match, ok := mapMatchTypeStr[t]; ok {
 		return match
 	}
@@ -61,7 +61,7 @@ func NewMatchType(t string) MatchType {
 // String implements fmt.String interface and returns a string representation
 // of a MatchType. The returned string can be converted back to MatchType
 // via NewMatchType function.
-func (mt MatchType) String() string {
+func (mt MatchTypeValue) String() string {
 	if match, ok := mapMatchType[int(mt)]; ok {
 		return match
 	}
@@ -70,13 +70,13 @@ func (mt MatchType) String() string {
 
 // MarshalJSON implements json.Marshaller interface and converts MatchType
 // into a string.
-func (mt *MatchType) MarshalJSON() ([]byte, error) {
+func (mt *MatchTypeValue) MarshalJSON() ([]byte, error) {
 	return json.Marshal(mt.String())
 }
 
 // UnmarshalJSON implements json.Unmarshaller interface and converts a
 // string into MatchType.
-func (mt *MatchType) UnmarshalJSON(b []byte) error {
+func (mt *MatchTypeValue) UnmarshalJSON(b []byte) error {
 	var s string
 	if err := json.Unmarshal(b, &s); err != nil {
 		return err

@@ -36,8 +36,8 @@ var mapCurationLevelStr = map[string]CurationLevel{
 	"Curated":     Curated,
 }
 
-func (c CurationLevel) String() string {
-	if match, ok := mapCurationLevel[int(c)]; ok {
+func (cl CurationLevel) String() string {
+	if match, ok := mapCurationLevel[int(cl)]; ok {
 		return match
 	}
 	return "N/A"
@@ -45,19 +45,19 @@ func (c CurationLevel) String() string {
 
 // MarshalJSON implements json.Marshaller interface and converts MatchType
 // into a string.
-func (c *CurationLevel) MarshalJSON() ([]byte, error) {
-	return json.Marshal(c.String())
+func (cl *CurationLevel) MarshalJSON() ([]byte, error) {
+	return json.Marshal(cl.String())
 }
 
 // UnmarshalJSON implements json.Unmarshaller interface and converts a
 // string into MatchType.
-func (c *CurationLevel) UnmarshalJSON(b []byte) error {
+func (cl *CurationLevel) UnmarshalJSON(b []byte) error {
 	var s string
 	if err := json.Unmarshal(b, &s); err != nil {
 		return err
 	}
 	if v, ok := mapCurationLevelStr[s]; ok {
-		*c = v
+		*cl = v
 		return nil
 	}
 	return fmt.Errorf("cannot convert '%s' to CurationLevel", s)

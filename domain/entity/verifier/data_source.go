@@ -11,10 +11,10 @@ type DataSource struct {
 	UUID string `json:"uuid,omitempty"`
 
 	// Title is a full title of a DataSource
-	Title string `json:"title"`
+	Title string `json:"title,omitempty"`
 
 	// TitleShort is a shortened/abbreviated title of a DataSource.
-	TitleShort string `json:"titleShort"`
+	TitleShort string `json:"titleShort,omitempty"`
 
 	// Version of the data-set for a DataSource.
 	Version string `json:"version,omitempty"`
@@ -38,12 +38,12 @@ type DataSource struct {
 	// WebsiteURL is a hompage of a DataSource
 	WebsiteURL string `json:"homeURL,omitempty"`
 
-	// CurationLevel determines how much of manual or programmatic work is put
+	// Curation determines how much of manual or programmatic work is put
 	// into assuring the quality of the data.
-	CurationLevel `json:"curationLevel,omitempty"`
+	Curation CurationLevel `json:"curation"`
 
 	// RecordCount tells how many entries are in a data source.
-	RecordCount int `json:"recordCount,omitempty"`
+	RecordCount int `json:"recordCount"`
 
 	// UpdatedAt is the last import time and date.
 	UpdatedAt time.Time `json:"updatedAt"`

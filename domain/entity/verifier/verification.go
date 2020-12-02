@@ -19,7 +19,7 @@ type Verification struct {
 	// Input is a verified name-string
 	Input string `json:"input"`
 	// MatchType is best available match.
-	MatchType
+	MatchType `json:"matchType"`
 	// BestResult is the best result according to GNames scoring.
 	BestResult *ResultData `json:"bestResult,omitempty"`
 

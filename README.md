@@ -10,3 +10,4 @@ A miscellaneous collection of tools shared between GNA Go projects
 * fuzzy is levenschein edit distance algorithm.
 * gnuuid creates GNA UUID v5 from strings.
 * sys file system helper methods.
+* organizer restores elements' order after parallel execution.

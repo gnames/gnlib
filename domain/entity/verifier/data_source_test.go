@@ -2,7 +2,6 @@ package verifier_test
 
 import (
 	"testing"
-	"time"
 
 	ver "github.com/gnames/gnlib/domain/entity/verifier"
 	"github.com/gnames/gnlib/encode"
@@ -11,7 +10,7 @@ import (
 
 func TestDataSourceJSON(t *testing.T) {
 	enc := encode.GNjson{Pretty: true}
-	updated, _ := time.Parse("2006-01-02", "2020-06-30")
+	updated := "2020-06-30"
 	testData := []struct {
 		ds   ver.DataSource
 		json string
@@ -31,7 +30,7 @@ func TestDataSourceJSON(t *testing.T) {
   "titleShort": "Catalogue of Life",
   "curation": "Curated",
   "recordCount": 4000000,
-  "updatedAt": "2020-06-30T00:00:00Z"
+  "updatedAt": "2020-06-30"
 }`,
 		},
 	}

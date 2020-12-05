@@ -44,7 +44,7 @@ type DataSource struct {
 	// (be included into preferred data-sources). When false, it does not
 	// mean that the original resource is not valuable, it means that
 	// its representation at gnames is not complete/resent enough.
-	IsOutlinkReady bool `json:"isOutlinkReady"`
+	IsOutlinkReady bool `json:"isOutlinkReady,omitempty"`
 
 	// Curation determines how much of manual or programmatic work is put
 	// into assuring the quality of the data.

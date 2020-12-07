@@ -39,6 +39,10 @@ type DataSource struct {
 	// WebsiteURL is a hompage of a DataSource
 	WebsiteURL string `json:"homeURL,omitempty"`
 
+	// OutlinkURL is a template for generating outlink URLs. Verification
+	// output will substitute '{}' with an OutlinkID
+	OutlinkURL string `json:"-"`
+
 	// IsOutlinkReady is true for data-sources that have enough data and
 	// metadata to be recommended for outlinking by third-party applications
 	// (be included into preferred data-sources). When false, it does not

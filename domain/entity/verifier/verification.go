@@ -78,6 +78,11 @@ type ResultData struct {
 	// best match overall, and best match for every data-source.
 	Score uint32 `json:"-"`
 
+	// ParsingQuality determines how well gnparser was able to break the
+	// name-string to its components. 0 - no parse, 1 - clean parse,
+	// 2 - some problems, 3 - significant problems.
+	ParsingQuality int `json:"-"`
+
 	// MatchedName is a name-string from the DataSource that was matched
 	// by GNames algorithm.
 	MatchedName string `json:"matchedName"`

@@ -54,10 +54,10 @@ type ResultData struct {
 	// Curation of the data source.
 	Curation CurationLevel `json:"curation"`
 
-	// ID from a data source. We try our best to return ID that corresponds to
+	// RecordID from a data source. We try our best to return ID that corresponds to
 	// dwc:taxonID of a DataSource. If such ID is not provided, this ID will be
 	// auto-generated.  Auto-generated IDs will have 'gn_' prefix.
-	ID string `json:"id"`
+	RecordID string `json:"recordId"`
 
 	// GlobalID that is exposed globally by a DataSource. Such IDs are usually
 	// self-resolved, like for example LSID, pURL, DOI etc.
@@ -106,7 +106,7 @@ type ResultData struct {
 
 	// CurrentRecordID is the id of currently accepted name given by
 	// the data-source.
-	CurrentRecordID string `json:"currentRecordID"`
+	CurrentRecordID string `json:"currentRecordId"`
 
 	// CurrentName is a currently accepted name (it is only provided by
 	// DataSources with taxonomic data).

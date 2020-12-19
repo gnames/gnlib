@@ -70,7 +70,7 @@ func (mt MatchTypeValue) String() string {
 
 // MarshalJSON implements json.Marshaller interface and converts MatchType
 // into a string.
-func (mt *MatchTypeValue) MarshalJSON() ([]byte, error) {
+func (mt MatchTypeValue) MarshalJSON() ([]byte, error) {
 	return json.Marshal(mt.String())
 }
 

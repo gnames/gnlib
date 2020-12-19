@@ -1,4 +1,5 @@
-// package tribool implements a simple nullable tri-way value
+// package tribool implements a simple nullable three-valued construct.
+// It can be safely serialized/deserialized by JSON libraries.
 package tribool
 
 import (
@@ -13,11 +14,16 @@ var (
 	maybe = []byte{'"', 'm', 'a', 'y', 'b', 'e', '"'}
 )
 
+// Tribool is a nullable three-value construct.
 type Tribool struct {
 	Value int
 	Valid bool
 }
 
+// NewTribool creates a Tribool out of an integer. Positive integer
+// creates 'yes' value, 0 creates 'maybe' values, negative integer generates
+// 'no value. If no number is given, the result represents null, if more than
+// one number is given, other numbers are ignored.
 func NewTribool(ints ...int) Tribool {
 	if len(ints) == 0 {
 		return Tribool{}
@@ -25,6 +31,7 @@ func NewTribool(ints ...int) Tribool {
 	return Tribool{Value: ints[0], Valid: true}
 }
 
+// Implements fmt.String interface
 func (t Tribool) String() string {
 	if !t.Valid {
 		return ""
@@ -38,6 +45,7 @@ func (t Tribool) String() string {
 	return "maybe"
 }
 
+// Degrades data to a boolean
 func (t Tribool) Bool() bool {
 	if t.Value > 0 && t.Valid {
 		return true

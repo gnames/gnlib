@@ -45,7 +45,7 @@ func (cl CurationLevel) String() string {
 
 // MarshalJSON implements json.Marshaller interface and converts MatchType
 // into a string.
-func (cl *CurationLevel) MarshalJSON() ([]byte, error) {
+func (cl CurationLevel) MarshalJSON() ([]byte, error) {
 	return json.Marshal(cl.String())
 }
 

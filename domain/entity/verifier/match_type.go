@@ -1,8 +1,8 @@
 package verifier
 
 import (
-	"encoding/json"
-	"fmt"
+	"errors"
+	"strings"
 )
 
 // MatchTypeValue describes how a name-string matched a name in gnames database.
@@ -71,19 +71,18 @@ func (mt MatchTypeValue) String() string {
 // MarshalJSON implements json.Marshaller interface and converts MatchType
 // into a string.
 func (mt MatchTypeValue) MarshalJSON() ([]byte, error) {
-	return json.Marshal(mt.String())
+	return []byte("\"" + mt.String() + "\""), nil
 }
 
 // UnmarshalJSON implements json.Unmarshaller interface and converts a
 // string into MatchType.
-func (mt *MatchTypeValue) UnmarshalJSON(b []byte) error {
-	var s string
-	if err := json.Unmarshal(b, &s); err != nil {
-		return err
+func (mt *MatchTypeValue) UnmarshalJSON(bs []byte) error {
+	var err error
+	var ok bool
+	s := strings.Trim(string(bs), `"`)
+	*mt, ok = mapMatchTypeStr[s]
+	if !ok {
+		err = errors.New("cannot decode as a MatchType")
 	}
-	if m, ok := mapMatchTypeStr[s]; ok {
-		*mt = m
-		return nil
-	}
-	return fmt.Errorf("cannot convert '%s' to MatchType", s)
+	return err
 }

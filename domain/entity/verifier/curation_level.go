@@ -1,8 +1,8 @@
 package verifier
 
 import (
-	"encoding/json"
-	"fmt"
+	"errors"
+	"strings"
 )
 
 // CurationLevel tells if matched result was returned by at least one
@@ -46,19 +46,18 @@ func (cl CurationLevel) String() string {
 // MarshalJSON implements json.Marshaller interface and converts MatchType
 // into a string.
 func (cl CurationLevel) MarshalJSON() ([]byte, error) {
-	return json.Marshal(cl.String())
+	return []byte("\"" + cl.String() + "\""), nil
 }
 
 // UnmarshalJSON implements json.Unmarshaller interface and converts a
 // string into MatchType.
-func (cl *CurationLevel) UnmarshalJSON(b []byte) error {
-	var s string
-	if err := json.Unmarshal(b, &s); err != nil {
-		return err
+func (cl *CurationLevel) UnmarshalJSON(bs []byte) error {
+	var err error
+	var ok bool
+	s := strings.Trim(string(bs), `"`)
+	*cl, ok = mapCurationLevelStr[s]
+	if !ok {
+		err = errors.New("cannot decode as a CurationLevel")
 	}
-	if v, ok := mapCurationLevelStr[s]; ok {
-		*cl = v
-		return nil
-	}
-	return fmt.Errorf("cannot convert '%s' to CurationLevel", s)
+	return err
 }

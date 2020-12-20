@@ -48,10 +48,10 @@ func TestCurLevelErrJSON(t *testing.T) {
 	assert.Nil(t, err)
 	var res2 ver.CurationLevel
 	err = enc.Decode(res, &res2)
-	assert.Contains(t, err.Error(), "cannot convert 'notType'")
+	assert.Contains(t, err.Error(), "cannot decode as a CurationLevel")
 
 	res, err = enc.Encode(3.1415926)
 	assert.Nil(t, err)
 	err = enc.Decode(res, &res2)
-	assert.Contains(t, err.Error(), "cannot unmarshal number")
+	assert.Contains(t, err.Error(), "cannot decode as a CurationLevel")
 }

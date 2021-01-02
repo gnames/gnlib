@@ -28,7 +28,14 @@ func NewTribool(ints ...int) Tribool {
 	if len(ints) == 0 {
 		return Tribool{}
 	}
-	return Tribool{Value: ints[0], Valid: true}
+
+	val := ints[0]
+	if val < 0 {
+		val = -1
+	} else if val > 0 {
+		val = 1
+	}
+	return Tribool{Value: val, Valid: true}
 }
 
 // Implements fmt.String interface
@@ -51,6 +58,15 @@ func (t Tribool) Bool() bool {
 		return true
 	}
 	return false
+}
+
+// Returns integer representation of Tribool. For "yes" it returns 1,
+// for "no" and "null" it returns -1, and for "maybe it returns 0.
+func (t Tribool) Int() int {
+	if !t.Valid {
+		return -1
+	}
+	return t.Value
 }
 
 // MarshalJSON implements json.Marshaler.

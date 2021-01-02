@@ -14,18 +14,20 @@ func TestNew(t *testing.T) {
 		valid bool
 		str   string
 		b     bool
+		i     int
 	}{
-		{[]int{}, false, "", false},
-		{[]int{1}, true, "yes", true},
-		{[]int{0}, true, "maybe", false},
-		{[]int{-1}, true, "no", false},
-		{[]int{-1, 44}, true, "no", false},
+		{[]int{}, false, "", false, -1},
+		{[]int{1}, true, "yes", true, 1},
+		{[]int{0}, true, "maybe", false, 0},
+		{[]int{-1}, true, "no", false, -1},
+		{[]int{-1, 44}, true, "no", false, -1},
 	}
 	for i := range data {
 		tb := tbl.NewTribool(data[i].opts...)
 		assert.Equal(t, tb.Valid, data[i].valid)
 		assert.Equal(t, tb.String(), data[i].str)
 		assert.Equal(t, tb.Bool(), data[i].b)
+		assert.Equal(t, tb.Int(), data[i].i)
 	}
 }
 

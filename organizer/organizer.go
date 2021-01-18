@@ -6,18 +6,27 @@
 package organizer
 
 import (
+	"context"
 	"fmt"
 )
 
 // Organize takes disordered data from the chIn channel and resends them in
 // the original order to chOut channel.
-func Organize(chIn <-chan Ordered, chOut chan<- Ordered) error {
+func Organize(
+	ctx context.Context,
+	chIn <-chan Ordered,
+	chOut chan<- Ordered,
+) error {
 	var currIndex, count int
 	tempStorage := make(map[int]Ordered)
 	for o := range chIn {
 		count++
 		if o.Index() == currIndex {
-			chOut <- o
+			select {
+			case <-ctx.Done():
+				return nil
+			case chOut <- o:
+			}
 			currIndex++
 			continue
 		}
@@ -25,7 +34,11 @@ func Organize(chIn <-chan Ordered, chOut chan<- Ordered) error {
 		tempStorage[o.Index()] = o
 
 		if oMap, ok := tempStorage[currIndex]; ok {
-			chOut <- oMap
+			select {
+			case <-ctx.Done():
+				return nil
+			case chOut <- oMap:
+			}
 			delete(tempStorage, currIndex)
 			currIndex++
 			continue
@@ -33,7 +46,11 @@ func Organize(chIn <-chan Ordered, chOut chan<- Ordered) error {
 	}
 	for currIndex < count {
 		if oMap, ok := tempStorage[currIndex]; ok {
-			chOut <- oMap
+			select {
+			case <-ctx.Done():
+				return nil
+			case chOut <- oMap:
+			}
 			delete(tempStorage, currIndex)
 		}
 		currIndex++

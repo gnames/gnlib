@@ -1,6 +1,7 @@
 package organizer_test
 
 import (
+	"context"
 	"fmt"
 	"math/rand"
 	"sync"
@@ -52,6 +53,8 @@ func newOrdered(i int, r rune) org.Ordered {
 }
 
 func TestOrganizer(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 	chIn := make(chan org.Ordered)
 	chOut := make(chan org.Ordered)
 	res := make([]rune, 0, len(txt))
@@ -65,7 +68,7 @@ func TestOrganizer(t *testing.T) {
 	rand.Shuffle(len(shuffled), func(i, j int) {
 		shuffled[i], shuffled[j] = shuffled[j], shuffled[i]
 	})
-	go org.Organize(chIn, chOut)
+	go org.Organize(ctx, chIn, chOut)
 	go func() {
 		defer wg.Done()
 		for v := range chOut {

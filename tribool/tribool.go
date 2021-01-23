@@ -20,11 +20,11 @@ type Tribool struct {
 	Valid bool
 }
 
-// NewTribool creates a Tribool out of an integer. Positive integer
+// New creates a Tribool out of an integer. Positive integer
 // creates 'yes' value, 0 creates 'maybe' values, negative integer generates
 // 'no value. If no number is given, the result represents null, if more than
 // one number is given, other numbers are ignored.
-func NewTribool(ints ...int) Tribool {
+func New(ints ...int) Tribool {
 	if len(ints) == 0 {
 		return Tribool{}
 	}

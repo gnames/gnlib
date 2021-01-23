@@ -23,7 +23,7 @@ func TestNew(t *testing.T) {
 		{[]int{-1, 44}, true, "no", false, -1},
 	}
 	for i := range data {
-		tb := tbl.NewTribool(data[i].opts...)
+		tb := tbl.New(data[i].opts...)
 		assert.Equal(t, tb.Valid, data[i].valid)
 		assert.Equal(t, tb.String(), data[i].str)
 		assert.Equal(t, tb.Bool(), data[i].b)
@@ -42,13 +42,13 @@ func TestJSON(t *testing.T) {
 		dataStruct
 		res string
 	}{
-		{dataStruct{"null", tbl.NewTribool(), []int{1, 2}},
+		{dataStruct{"null", tbl.New(), []int{1, 2}},
 			`{"f1":"null","tb":null,"f2":[1,2]}`},
-		{dataStruct{"yes", tbl.NewTribool(10), []int{}},
+		{dataStruct{"yes", tbl.New(10), []int{}},
 			`{"f1":"yes","tb":"yes","f2":[]}`},
-		{dataStruct{"maybe", tbl.NewTribool(0), []int{5}},
+		{dataStruct{"maybe", tbl.New(0), []int{5}},
 			`{"f1":"maybe","tb":"maybe","f2":[5]}`},
-		{dataStruct{"no", tbl.NewTribool(-3), []int{3}},
+		{dataStruct{"no", tbl.New(-3), []int{3}},
 			`{"f1":"no","tb":"no","f2":[3]}`},
 	}
 	for i := range data {

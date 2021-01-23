@@ -13,7 +13,7 @@ var (
 	Nil      = u.Nil
 )
 
-// Creates new UUIDv5 identifier for globalnames
+// New constructor creates new UUIDv5 identifier for globalnames
 func New(name string) u.UUID {
 	return u.NewSHA1(GNDomain, []byte(name))
 }

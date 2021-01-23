@@ -26,7 +26,7 @@ func (f Format) String() string {
 	return formatMap[f]
 }
 
-func NewFormat(s string) (Format, error) {
+func New(s string) (Format, error) {
 	if f, ok := formatStringMap[s]; ok {
 		return f, nil
 	}

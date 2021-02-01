@@ -3,8 +3,8 @@ package verifier_test
 import (
 	"testing"
 
-	ver "github.com/gnames/gnlib/domain/entity/verifier"
-	"github.com/gnames/gnlib/encode"
+	"github.com/gnames/gnfmt"
+	ver "github.com/gnames/gnlib/ent/verifier"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -51,7 +51,7 @@ func TestJSON(t *testing.T) {
 		Field1: "hello",
 		Field2: []ver.MatchTypeValue{ver.Exact, ver.Fuzzy, ver.NoMatch},
 	}
-	enc := encode.GNjson{}
+	enc := gnfmt.GNjson{}
 	res, err := enc.Encode(test)
 	assert.Nil(t, err)
 	assert.Equal(t, string(res), `{"fieldOne":"hello","fieldTwo":["Exact","Fuzzy","NoMatch"]}`)
@@ -62,7 +62,7 @@ func TestJSON(t *testing.T) {
 }
 
 func TestErrJSON(t *testing.T) {
-	enc := encode.GNjson{}
+	enc := gnfmt.GNjson{}
 	res, err := enc.Encode("notType")
 	assert.Nil(t, err)
 	var res2 ver.MatchTypeValue

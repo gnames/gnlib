@@ -3,8 +3,8 @@ package verifier_test
 import (
 	"testing"
 
-	ver "github.com/gnames/gnlib/domain/entity/verifier"
-	"github.com/gnames/gnlib/encode"
+	"github.com/gnames/gnfmt"
+	ver "github.com/gnames/gnlib/ent/verifier"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -32,7 +32,7 @@ func TestCurLevelJSON(t *testing.T) {
 		Field1: "hello",
 		Field2: []ver.CurationLevel{ver.NotCurated, ver.AutoCurated, ver.Curated},
 	}
-	enc := encode.GNjson{}
+	enc := gnfmt.GNjson{}
 	res, err := enc.Encode(test)
 	assert.Nil(t, err)
 	assert.Equal(t, string(res), `{"fieldOne":"hello","fieldTwo":["NotCurated","AutoCurated","Curated"]}`)
@@ -43,7 +43,7 @@ func TestCurLevelJSON(t *testing.T) {
 }
 
 func TestCurLevelErrJSON(t *testing.T) {
-	enc := encode.GNjson{}
+	enc := gnfmt.GNjson{}
 	res, err := enc.Encode("notType")
 	assert.Nil(t, err)
 	var res2 ver.CurationLevel

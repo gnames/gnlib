@@ -4,7 +4,7 @@ output of gnmatcher functionality.
 package matcher
 
 import (
-	vlib "github.com/gnames/gnlib/domain/entity/verifier"
+	vlib "github.com/gnames/gnlib/ent/verifier"
 )
 
 // Match is output of MatchAry method.

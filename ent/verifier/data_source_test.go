@@ -3,13 +3,13 @@ package verifier_test
 import (
 	"testing"
 
-	ver "github.com/gnames/gnlib/domain/entity/verifier"
-	"github.com/gnames/gnlib/encode"
+	"github.com/gnames/gnfmt"
+	ver "github.com/gnames/gnlib/ent/verifier"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestDataSourceJSON(t *testing.T) {
-	enc := encode.GNjson{Pretty: true}
+	enc := gnfmt.GNjson{Pretty: true}
 	updated := "2020-06-30"
 	testData := []struct {
 		ds   ver.DataSource

@@ -4,22 +4,34 @@ package verifier
 type VerifyParams struct {
 	// NameStrings is a list of name-strings to verify.
 	NameStrings []string `json:"nameStrings"`
+
 	// PreferredSources contain DataSources IDs whos matches will be returned
 	// becides the best result. See PreferredResults field in Verirication.
 	PreferredSources []int `json:"preferredSources"`
+
 	// WithVernaculars indicates if corresponding vernacular results will be
 	// returned as well.
 	WithVernaculars bool `json:"withVernaculars"`
+
+	// WithCapitalization flag; when true, the first rune of low-case
+	// input name-strings will be capitalized if appropriate.
+	WithCapitalization bool `json:"withCapitalization"`
 }
 
 // Verification is a result returned by Verify method.
 type Verification struct {
 	// InputID is a UUIDv5 generated out of the Input string.
 	InputID string `json:"inputId"`
+
 	// Input is a verified name-string
 	Input string `json:"input"`
+
+	// InputCapitalized is true, if the was a request to capitalize input
+	InputCapitalized bool `json:"inputCapitalized,omitempty"`
+
 	// MatchType is best available match.
 	MatchType MatchTypeValue `json:"matchType"`
+
 	// BestResult is the best result according to GNames scoring.
 	BestResult *ResultData `json:"bestResult,omitempty"`
 
@@ -142,7 +154,7 @@ type ResultData struct {
 
 	// ClassificationIDs of the names-strings. They always correspond to
 	// the "id" field.
-	ClassificationIDs string `json:"-"`
+	ClassificationIDs string `json:"classificationIds,omitempty"`
 
 	// EditDistance is a Levenshtein edit distance between canonical form of the
 	// input name-string and the matched canonical form. If match type is
@@ -164,8 +176,10 @@ type ResultData struct {
 // Vernacular name
 type Vernacular struct {
 	Name string `json:"name"`
+
 	// Language of the name, hopefully in ISO form.
 	Language string `json:"language,omitempty"`
+
 	// Locality is geographic places where the name is used.
 	Locality string `json:"locality,omitempty"`
 }

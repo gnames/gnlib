@@ -9,6 +9,15 @@ type VerifyParams struct {
 	// becides the best result. See PreferredResults field in Verirication.
 	PreferredSources []int `json:"preferredSources"`
 
+	// WithAllSources indicates that matches return from all sources. If
+	// WithAllSources is true, PreferredSources setting is ignored.
+	WithAllSources bool `json:"withAllSources"`
+
+	// WithAllMathces indicates that all matches per data-source are returned,
+	// sorted by score (instead of the best match per source). If WithAllSources
+	// is also given, then all results from all sources are returned.
+	WithAllMatches bool `json:"withAllMatches"`
+
 	// WithVernaculars indicates if corresponding vernacular results will be
 	// returned as well.
 	WithVernaculars bool `json:"withVernaculars"`

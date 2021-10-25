@@ -13,7 +13,7 @@ type VerifyParams struct {
 	// WithAllSources is true, PreferredSources setting is ignored.
 	WithAllSources bool `json:"withAllSources"`
 
-	// WithAllMathces indicates that all matches per data-source are returned,
+	// WithAllMatches indicates that all matches per data-source are returned,
 	// sorted by score (instead of the best match per source). If WithAllSources
 	// is also given, then all results from all sources are returned.
 	WithAllMatches bool `json:"withAllMatches"`

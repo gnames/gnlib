@@ -6,11 +6,11 @@ type Clade struct {
 }
 
 type Context struct {
-	Kingdom, Context     *Clade
-	KingdomPC, ContextPC float32
+	Kingdom, Context                     *Clade
+	KingdomPercentage, ContextPercentage float32
 }
 
-// CalcContext takes several items that include bio-clasification and returns back
+// New takes several items that include bio-clasification and returns back
 // the kingdom where most of items belong to (if rank 'kingdom' is provided),
 // percentage of how many items belong to that kingdom, and the highest ranking
 // clade that includes a certain percentage of species. The percentage is
@@ -18,10 +18,13 @@ type Context struct {
 //
 // The algorithm assumes that all items belong to the same classification tree
 // and that classification does not skip clades from item to item.
-func CalcContext(
+func New(
 	h []Hierarch,
 	threshold float32,
 ) Context {
+	if threshold == 0 {
+		threshold = 0.5
+	}
 	clades := extractClades(h)
 	ranks := ranksData()
 	for _, cs := range clades {
@@ -32,13 +35,11 @@ func CalcContext(
 		}
 	}
 	ranks = cleanupRanks(ranks)
-
 	return calcContext(ranks, threshold)
 }
 
 func calcContext(ranks []rankData,
 	threshold float32,
-
 ) Context {
 	var kingdom, context *Clade
 	var kPC, cPC float32
@@ -58,10 +59,10 @@ func calcContext(ranks []rankData,
 	}
 
 	return Context{
-		Kingdom:   kingdom,
-		Context:   context,
-		KingdomPC: kPC,
-		ContextPC: cPC,
+		Kingdom:           kingdom,
+		Context:           context,
+		KingdomPercentage: kPC,
+		ContextPercentage: cPC,
 	}
 }
 

@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/gnames/gnlib/ent/context"
+	"github.com/gnames/gnlib/ent/verifier"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -21,17 +22,17 @@ func TestTestData(t *testing.T) {
 
 func TestContext(t *testing.T) {
 	hs := testData(t)
-	res := context.CalcContext(hs, 0.7)
+	res := context.New(hs, 0.7)
 	assert.Equal(t, res.Kingdom.Name, "Animalia")
-	assert.Equal(t, res.KingdomPC, float32(1.0))
+	assert.Equal(t, res.KingdomPercentage, float32(1.0))
 	assert.Equal(t, res.Context.RankStr, "phylum")
 	assert.Equal(t, res.Context.Name, "Mollusca")
-	assert.Equal(t, res.ContextPC, float32(1.0))
+	assert.Equal(t, res.ContextPercentage, float32(1.0))
 
-	res = context.CalcContext(hs, 0.5)
+	res = context.New(hs, 0.5)
 	assert.Equal(t, res.Context.RankStr, "class")
 	assert.Equal(t, res.Context.Name, "Gastropoda")
-	assert.InDelta(t, res.ContextPC, float32(0.55), 0.01)
+	assert.InDelta(t, res.ContextPercentage, float32(0.55), 0.01)
 }
 
 func testData(t *testing.T) []context.Hierarch {
@@ -59,25 +60,16 @@ func testData(t *testing.T) []context.Hierarch {
 	return res
 }
 
-type testHierarchy struct {
-	clades []context.Clade
-}
-
-func (h testHierarchy) Clades() []context.Clade {
-	return h.clades
-}
-
-func NewTestHierarchy(idStr, nameStr, rankStr string) testHierarchy {
-	ids := strings.Split(idStr, "|")
-	names := strings.Split(nameStr, "|")
-	ranks := strings.Split(rankStr, "|")
-	clades := make([]context.Clade, len(ids))
-	for i := range ids {
-		clades[i].ID = ids[i]
-		clades[i].Name = names[i]
-		clades[i].RankStr = ranks[i]
-		clades[i].Rank = context.NewRank(ranks[i])
+func NewTestHierarchy(idStr, nameStr, rankStr string) *verifier.Name {
+	rd := verifier.ResultData{
+		DataSourceID:        1,
+		ClassificationIDs:   idStr,
+		ClassificationPath:  nameStr,
+		ClassificationRanks: rankStr,
+	}
+	name := verifier.Name{
+		BestResult: &rd,
 	}
 
-	return testHierarchy{clades: clades}
+	return &name
 }

@@ -6,8 +6,16 @@ type Clade struct {
 }
 
 type Context struct {
+	NamesNum                             int
 	Kingdom, Context                     *Clade
 	KingdomPercentage, ContextPercentage float32
+	Kingdoms                             []CladesDist
+}
+
+type CladesDist struct {
+	NamesNum   int
+	Name       string
+	Percentage float32
 }
 
 // New takes several items that include bio-clasification and returns back
@@ -23,7 +31,7 @@ func New(
 	threshold float32,
 ) Context {
 	if threshold == 0 {
-		threshold = 0.5
+		threshold = 0.5001
 	}
 	clades := extractClades(h)
 	ranks := ranksData()

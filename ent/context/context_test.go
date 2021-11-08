@@ -41,8 +41,8 @@ func testData(t *testing.T) []context.Hierarch {
 	path := filepath.Join("..", "..", "testdata", "context.txt")
 	bytesRead, err := ioutil.ReadFile(path)
 	assert.Nil(t, err)
-	file_content := string(bytesRead)
-	ls := strings.Split(file_content, "\n")
+	fileContent := string(bytesRead)
+	ls := strings.Split(fileContent, "\n")
 
 	for _, v := range ls {
 		v = strings.TrimSpace(v)
@@ -60,6 +60,8 @@ func testData(t *testing.T) []context.Hierarch {
 	return res
 }
 
+// NewTestHierarchy creates Name that can be used for calculation of
+// hierarhcy for the context. It satisfies the Hierarch interface.
 func NewTestHierarchy(idStr, nameStr, rankStr string) *verifier.Name {
 	rd := verifier.ResultData{
 		DataSourceID:        1,

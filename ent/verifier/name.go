@@ -174,14 +174,14 @@ type Vernacular struct {
 
 func (n *Name) Clades() []context.Clade {
 	var res []context.Clade
-	if n.BestResult.DataSourceID != 1 {
+	if n.BestResult == nil || n.BestResult.DataSourceID != 1 {
 		return res
 	}
 
 	path := strings.Split(n.BestResult.ClassificationPath, "|")
 	ids := strings.Split(n.BestResult.ClassificationIDs, "|")
 	ranks := strings.Split(n.BestResult.ClassificationRanks, "|")
-	if len(path) == 0 {
+	if len(path) < 2 {
 		return res
 	}
 

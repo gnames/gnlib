@@ -56,13 +56,22 @@ type Meta struct {
 	// NamesNum is the number of name-strings in the request.
 	NamesNum int `json:"namesNum"`
 
+	// Number of names qualified for context/kingdoms calculation
+	ContextNamesNum int `json:"contextNamesNum,omitempty"`
+
 	// WithAllSources indicates if preferred results include all matched
 	// sources.
 	WithAllSources bool `json:"allSources"`
 
 	// WithAllMatches indicates if response provides more then one result
 	// per source, if such results were found.
-	WithAllMatches bool `json:"allMatches,omitempty"`
+	WithAllMatches bool `json:"allMatches"`
+
+	WithContext bool `json:"withContext"`
+
+	// ContextThreshold provides a minimal percentage names that a clade should
+	// have to be qualified as a Context clade.
+	ContextThreshold float32 `json:"contextThreshold,omitempty"`
 
 	// PreferredSources provides IDs of data-sources from the request.
 	PreferredSources []int `json:"preferredSources,omitempty"`
@@ -81,6 +90,9 @@ type Meta struct {
 	// not part of the calculation.
 	KingdomPercentage float32 `json:"kingdomPercentage,omitempty"`
 
+	// Kingdoms provides distribution of names over the kingdoms
+	Kingdoms []Kingdom
+
 	// Context provides the lowest clade that contains most of names from
 	// the request.
 	//
@@ -92,8 +104,10 @@ type Meta struct {
 	// in the "context" clade. This number should be higher than
 	// ContexThreshold unless Context is empty.
 	ContextPercentage float32 `json:"contextPercentage,omitempty"`
+}
 
-	// ContextThreshold provides a minimal percentage names that a clade should
-	// have to be qualified as a Context clade.
-	ContextThreshold float32 `json:"contextThreshold,omitempty"`
+type Kingdom struct {
+	Name       string
+	NamesNum   int
+	Percentage float32
 }

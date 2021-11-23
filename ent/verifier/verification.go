@@ -1,7 +1,7 @@
 package verifier
 
-// VerifyParams are options/parameters for the Verify method.
-type VerifyParams struct {
+// Input is options/parameters for the Verify method.
+type Input struct {
 	// NameStrings is a list of name-strings to verify.
 	NameStrings []string `json:"nameStrings"`
 

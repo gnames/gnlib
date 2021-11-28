@@ -72,7 +72,7 @@ type Meta struct {
 	WithContext bool `json:"withContext"`
 
 	// WithCapitalization is true, if the was a request to capitalize input
-	WithCapitalization bool `json:"inputCapitalized,omitempty"`
+	WithCapitalization bool `json:"withCapitalization,omitempty"`
 
 	// ContextThreshold provides a minimal percentage names that a clade should
 	// have to be qualified as a Context clade.

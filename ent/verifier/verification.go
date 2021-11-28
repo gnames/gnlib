@@ -40,8 +40,8 @@ type Input struct {
 	WithContext bool
 }
 
-// Verification is a result returned by Verify method.
-type Verification struct {
+// Output is a result returned by Verify method.
+type Output struct {
 	// Meta is metadata of the request.
 	Meta `json:"metadata"`
 	// Names from the request.

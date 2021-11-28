@@ -67,7 +67,12 @@ type Meta struct {
 	// per source, if such results were found.
 	WithAllMatches bool `json:"allMatches"`
 
+	// WithContext indicates that the kingdom and convergence clade that contain
+	// majority of names will be calculated.
 	WithContext bool `json:"withContext"`
+
+	// InputCapitalized is true, if the was a request to capitalize input
+	InputCapitalized bool `json:"inputCapitalized,omitempty"`
 
 	// ContextThreshold provides a minimal percentage names that a clade should
 	// have to be qualified as a Context clade.

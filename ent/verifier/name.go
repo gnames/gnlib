@@ -14,9 +14,6 @@ type Name struct {
 	// Input is a verified name-string
 	Input string `json:"input"`
 
-	// InputCapitalized is true, if the was a request to capitalize input
-	InputCapitalized bool `json:"inputCapitalized,omitempty"`
-
 	// MatchType is best available match.
 	MatchType MatchTypeValue `json:"matchType"`
 

@@ -31,6 +31,10 @@ const (
 	// exact. We never do fuzzy matches for uninomials, due to high rate of false
 	// positives.
 	PartialFuzzy
+
+	// FacetedSearch is a match made by search procedure. It does not happen
+	// during verification.
+	FacetedSearch
 )
 
 var mapMatchType = map[int]string{
@@ -39,14 +43,16 @@ var mapMatchType = map[int]string{
 	2: "Fuzzy",
 	3: "PartialExact",
 	4: "PartialFuzzy",
+	5: "FacetedSearch",
 }
 
 var mapMatchTypeStr = map[string]MatchTypeValue{
-	"NoMatch":      NoMatch,
-	"Exact":        Exact,
-	"Fuzzy":        Fuzzy,
-	"PartialExact": PartialExact,
-	"PartialFuzzy": PartialFuzzy,
+	"NoMatch":       NoMatch,
+	"Exact":         Exact,
+	"Fuzzy":         Fuzzy,
+	"PartialExact":  PartialExact,
+	"PartialFuzzy":  PartialFuzzy,
+	"FacetedSearch": FacetedSearch,
 }
 
 // NewMatchType takes a string and converts it into a MatchType. If

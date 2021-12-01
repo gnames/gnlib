@@ -5,9 +5,10 @@ type Input struct {
 	// NameStrings is a list of name-strings to verify.
 	NameStrings []string `json:"nameStrings"`
 
-	// PreferredSources contain DataSources IDs whos matches will be returned
-	// becides the best result. See PreferredResults field in Verirication.
-	// If Preferred sources are []int{0}, then all matched Sources are used.
+	// PreferredSources field contains DataSources IDs whos matches will be
+	// returned becides the best result. See PreferredResults field in
+	// Verirication.  If Preferred sources are []int{0}, then all matched Sources
+	// are used.
 	PreferredSources []int `json:"preferredSources"`
 
 	// ContextThreshold sets the minimal percentage of names in a clade

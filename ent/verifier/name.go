@@ -8,11 +8,11 @@ import (
 
 // Name is a result of verification of one name-string from the input.
 type Name struct {
-	// InputID is a UUIDv5 generated out of the Input string.
-	InputID string `json:"inputId"`
+	// ID is a UUIDv5 generated out of the Input string.
+	ID string `json:"id"`
 
-	// Input is a verified name-string
-	Input string `json:"input"`
+	// Name is a verified name-string
+	Name string `json:"name"`
 
 	// MatchType is best available match.
 	MatchType MatchTypeValue `json:"matchType"`
@@ -20,13 +20,13 @@ type Name struct {
 	// BestResult is the best result according to GNames scoring.
 	BestResult *ResultData `json:"bestResult,omitempty"`
 
-	// PreferredResults contain all detected matches from preverred data sources
+	// Results contain all detected matches from preverred data sources
 	// provided by user.
-	PreferredResults []*ResultData `json:"preferredResults,omitempty"`
+	Results []*ResultData `json:"Results,omitempty"`
 
 	// DataSourcesNum is a number of data sources that matched an
 	// input name-string.
-	DataSourcesNum int `json:"dataSourcesNum"`
+	DataSourcesNum int `json:"dataSourcesNum,omitempty"`
 
 	// Curation estimates reliability of matched data sources. If
 	// matches are returned by at least one manually curated data source, or by
@@ -39,7 +39,7 @@ type Name struct {
 	Error string `json:"error,omitempty"`
 }
 
-// ResultData are returned data of the "best" or "preferred" result of
+// ResultData are returned data of the `BestResult` or `Results` of
 // name verification.
 type ResultData struct {
 	// DataSourceID is the ID of a matched DataSource.

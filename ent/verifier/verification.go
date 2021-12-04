@@ -5,11 +5,11 @@ type Input struct {
 	// NameStrings is a list of name-strings to verify.
 	NameStrings []string `json:"nameStrings"`
 
-	// PreferredSources field contains DataSources IDs whos matches will be
-	// returned becides the best result. See PreferredResults field in
-	// Verirication.  If Preferred sources are []int{0}, then all matched Sources
+	// DataSources field contains DataSources IDs whos matches will be
+	// returned becides the best result. See Results field in
+	// Verirication.  If `dataSources` are []int{0}, then all matched Sources
 	// are used.
-	PreferredSources []int `json:"preferredSources"`
+	DataSources []int `json:"dataSources"`
 
 	// WithAllMatches indicates that all matches per data-source are returned,
 	// sorted by score (instead of the best match per source).
@@ -57,7 +57,7 @@ type Meta struct {
 	// NamesNumber is the number of name-strings in the request.
 	NamesNumber int `json:"namesNumber"`
 
-	// WithAllSources indicates if preferred results include all matched
+	// WithAllSources indicates if `Results` will include all matched
 	// sources.
 	WithAllSources bool `json:"withAllSources,omitempty"`
 
@@ -72,8 +72,8 @@ type Meta struct {
 	// WithCapitalization is true, if the was a request to capitalize input
 	WithCapitalization bool `json:"withCapitalization,omitempty"`
 
-	// PreferredSources provides IDs of data-sources from the request.
-	PreferredSources []int `json:"preferredSources,omitempty"`
+	// DataSources provides IDs of data-sources from the request.
+	DataSources []int `json:"dataSources,omitempty"`
 
 	// ContextThreshold provides a minimal percentage names that a clade should
 	// have to be qualified as a Context clade.

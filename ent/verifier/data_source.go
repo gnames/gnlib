@@ -45,7 +45,7 @@ type DataSource struct {
 
 	// IsOutlinkReady is true for data-sources that have enough data and
 	// metadata to be recommended for outlinking by third-party applications
-	// (be included into preferred data-sources). When false, it does not
+	// (be included into data-sources). When false, it does not
 	// mean that the original resource is not valuable, it means that
 	// its representation at gnames is not complete/resent enough.
 	IsOutlinkReady bool `json:"isOutlinkReady,omitempty"`

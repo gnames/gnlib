@@ -11,14 +11,6 @@ type Input struct {
 	// are used.
 	PreferredSources []int `json:"preferredSources"`
 
-	// ContextThreshold sets the minimal percentage of names in a clade
-	// to be counted as a context of a text.
-	//
-	// Context is a clade that contains at least ContextThreshold percentage
-	// of all names in the text. We use the managerial classification of
-	// Catalogue of Life for the context calculation.
-	ContextThreshold float32
-
 	// WithAllMatches indicates that all matches per data-source are returned,
 	// sorted by score (instead of the best match per source).
 	WithAllMatches bool `json:"withAllMatches"`
@@ -38,7 +30,15 @@ type Input struct {
 	// For examplle context with threshold 0.5 would correspond to a clade that
 	// contains at least half of all names. We use the managerial classification
 	// of Catalogue of Life for the context calculation.
-	WithContext bool
+	WithContext bool `json:"withContext"`
+
+	// ContextThreshold sets the minimal percentage of names in a clade
+	// to be counted as a context of a text.
+	//
+	// Context is a clade that contains at least ContextThreshold percentage
+	// of all names in the text. We use the managerial classification of
+	// Catalogue of Life for the context calculation.
+	ContextThreshold float32 `json:"contextThreshold"`
 }
 
 // Output is a result returned by Verify method.
@@ -54,33 +54,45 @@ type Output struct {
 // that contains most of the names from the request, as well as the lowest
 // clade that contains majority of the names.
 type Meta struct {
-	// NamesNum is the number of name-strings in the request.
-	NamesNum int `json:"namesNum"`
-
-	// Number of names qualified for context/kingdoms calculation
-	ContextNamesNum int `json:"contextNamesNum,omitempty"`
+	// NamesNumber is the number of name-strings in the request.
+	NamesNumber int `json:"namesNumber"`
 
 	// WithAllSources indicates if preferred results include all matched
 	// sources.
-	WithAllSources bool `json:"allSources"`
+	WithAllSources bool `json:"withAllSources,omitempty"`
 
 	// WithAllMatches indicates if response provides more then one result
 	// per source, if such results were found.
-	WithAllMatches bool `json:"allMatches"`
+	WithAllMatches bool `json:"withAllMatches,omitempty"`
 
 	// WithContext indicates that the kingdom and convergence clade that contain
 	// majority of names will be calculated.
-	WithContext bool `json:"withContext"`
+	WithContext bool `json:"withContext,omitempty"`
 
 	// WithCapitalization is true, if the was a request to capitalize input
 	WithCapitalization bool `json:"withCapitalization,omitempty"`
+
+	// PreferredSources provides IDs of data-sources from the request.
+	PreferredSources []int `json:"preferredSources,omitempty"`
 
 	// ContextThreshold provides a minimal percentage names that a clade should
 	// have to be qualified as a Context clade.
 	ContextThreshold float32 `json:"contextThreshold,omitempty"`
 
-	// PreferredSources provides IDs of data-sources from the request.
-	PreferredSources []int `json:"preferredSources,omitempty"`
+	// Number of names qualified for context/kingdoms calculation
+	ContextNamesNum int `json:"contextNamesNum,omitempty"`
+
+	// Context provides the lowest clade that contains most of names from
+	// the request.
+	//
+	// Non-matched names, or names that are not in Catalogue of Life are
+	// not part of the calculation.
+	Context string `json:"context,omitempty"`
+
+	// ContextPercentage indicates the percentage of names that are placed
+	// in the "context" clade. This number should be higher than
+	// ContexThreshold unless Context is empty.
+	ContextPercentage float32 `json:"contextPercentage,omitempty"`
 
 	// Kingdom provides what kingdom includes the majority of names from the
 	// request accorging to the managerial classification of Catalogue of Life.
@@ -96,24 +108,19 @@ type Meta struct {
 	// not part of the calculation.
 	KingdomPercentage float32 `json:"kingdomPercentage,omitempty"`
 
-	// Kingdoms provides distribution of names over the kingdoms
-	Kingdoms []Kingdom
-
-	// Context provides the lowest clade that contains most of names from
-	// the request.
-	//
-	// Non-matched names, or names that are not in Catalogue of Life are
-	// not part of the calculation.
-	Context string `json:"context,omitempty"`
-
-	// ContextPercentage indicates the percentage of names that are placed
-	// in the "context" clade. This number should be higher than
-	// ContexThreshold unless Context is empty.
-	ContextPercentage float32 `json:"contextPercentage,omitempty"`
+	// Kingdoms provides all kingdoms with matched names and names distribution
+	// between the kingdoms.
+	Kingdoms []Kingdom `json:"kingdoms,omitempty"`
 }
 
+// Kingdom provides statistics of matched names found in a particular kingdom.
 type Kingdom struct {
-	Name       string
-	NamesNum   int
-	Percentage float32
+	// KingdomName is the name of a kingdom.
+	KingdomName string `json:"kingdomName"`
+
+	// NamesNumber is the number of names found in a kingdom.
+	NamesNumber int `json:"namesNumber"`
+
+	// Percentage is a percentage of names found in a kingdom.
+	Percentage float32 `json:"percentage"`
 }

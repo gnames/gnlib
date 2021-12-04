@@ -22,7 +22,7 @@ type Name struct {
 
 	// Results contain all detected matches from preverred data sources
 	// provided by user.
-	Results []*ResultData `json:"Results,omitempty"`
+	Results []*ResultData `json:"results,omitempty"`
 
 	// DataSourcesNum is a number of data sources that matched an
 	// input name-string.

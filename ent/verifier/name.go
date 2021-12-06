@@ -169,7 +169,7 @@ type Vernacular struct {
 	Locality string `json:"locality,omitempty"`
 }
 
-func (n *Name) Clades() []context.Clade {
+func (n Name) Clades() []context.Clade {
 	var res []context.Clade
 	if n.BestResult == nil || n.BestResult.DataSourceID != 1 {
 		return res

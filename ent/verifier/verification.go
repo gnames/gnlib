@@ -46,7 +46,7 @@ type Output struct {
 	// Meta is metadata of the request.
 	Meta `json:"metadata"`
 	// Names from the request.
-	Names []*Name `json:"names"`
+	Names []Name `json:"names"`
 }
 
 // Meta is metadata of the request. It provides intofmation about parameters

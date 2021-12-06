@@ -7,7 +7,7 @@ type Clade struct {
 
 type Context struct {
 	NamesNum                             int
-	Kingdom, Context                     *Clade
+	Kingdom, Context                     Clade
 	KingdomPercentage, ContextPercentage float32
 	Kingdoms                             []CladesDist
 }
@@ -30,10 +30,15 @@ func New(
 	h []Hierarch,
 	threshold float32,
 ) Context {
-	if threshold == 0 {
+	if threshold <= 0.5 {
 		threshold = 0.5001
 	}
+
 	clades := extractClades(h)
+	if len(clades) == 1 {
+		return Context{}
+	}
+
 	ranks := ranksData()
 	for _, cs := range clades {
 		for i := range cs {
@@ -49,12 +54,17 @@ func New(
 func calcContext(ranks []rankData,
 	threshold float32,
 ) Context {
-	var kingdom, context *Clade
+	var ks []CladesDist
+	var kingdom, context Clade
 	var kPC, cPC float32
+
 	for i := range ranks {
 		c, pc := maxClade(ranks[i])
 		if ranks[i].rank == Kingdom {
-			kingdom, kPC = c, pc
+			ks = getKingdoms(ranks[i])
+			if isMaxKingdom(ks, pc) {
+				kingdom, kPC = c, pc
+			}
 		}
 		if pc < threshold {
 			if ranks[i].rank < Kingdom {
@@ -65,27 +75,51 @@ func calcContext(ranks []rankData,
 		}
 		context, cPC = c, pc
 	}
-
 	return Context{
 		Kingdom:           kingdom,
 		Context:           context,
 		KingdomPercentage: kPC,
 		ContextPercentage: cPC,
+		Kingdoms:          ks,
 	}
 }
 
-func maxClade(rd rankData) (*Clade, float32) {
+func isMaxKingdom(cd []CladesDist, percentage float32) bool {
+	var count int
+	for i := range cd {
+		if cd[i].Percentage == percentage {
+			count++
+		}
+	}
+	return count == 1
+}
+
+func getKingdoms(kingdom rankData) []CladesDist {
+	res := make([]CladesDist, len(kingdom.data))
+	var i int
+	for k, v := range kingdom.data {
+		cd := CladesDist{
+			NamesNum:   v,
+			Name:       k.Name,
+			Percentage: float32(v) / float32(kingdom.total),
+		}
+		res[i] = cd
+		i++
+	}
+	return res
+}
+
+func maxClade(rd rankData) (Clade, float32) {
 	var max int
-	var cld Clade
+	var res, cld Clade
 	for k, v := range rd.data {
 		if v > max {
 			max = v
 			cld = k
 		}
 	}
-	res := &cld
-	if res.Name == "" {
-		res = nil
+	if cld.Name != "" {
+		res = cld
 	}
 	return res, float32(max) / float32(rd.total)
 }

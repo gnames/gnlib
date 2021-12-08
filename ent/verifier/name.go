@@ -153,9 +153,9 @@ type ResultData struct {
 	//MatchType describes what kind of a match happened to a name-string.
 	MatchType MatchTypeValue `json:"matchType"`
 
-	// MatchDetails provides data about matching of authors, year, rank,
+	// ScoreDetails provides data about matching of authors, year, rank,
 	// parsingQuality...
-	ScoreDetails `json:"scoreDetails,omitempty"`
+	ScoreDetails `json:"scoreDetails"`
 
 	// Vernacular names that correspond to the matched name. (Will be implemented
 	// later)
@@ -187,9 +187,9 @@ type ScoreDetails struct {
 	// this field is 1.
 	InfraSpecificRankScore float32 `json:"infraSpecificRankScore"`
 
-	// FuzzynessScore scores edit distance for fuzzy matching. If edit distance
+	// FuzzyLessScore scores edit distance for fuzzy matching. If edit distance
 	// is 0 the score is maxed to 1.
-	FuzzynessScore float32 `json:"fuzzynessScore"`
+	FuzzyLessScore float32 `json:"fuzzyLessScore"`
 
 	// CuratedDataScore scores highest if the matched data-source is known for
 	// having a significant manual curation effort of the data.

@@ -153,6 +153,10 @@ type ResultData struct {
 	//MatchType describes what kind of a match happened to a name-string.
 	MatchType MatchTypeValue `json:"matchType"`
 
+	// MatchDetails provides data about matching of authors, year, rank,
+	// parsingQuality...
+	ScoreDetails `json:"scoreDetails,omitempty"`
+
 	// Vernacular names that correspond to the matched name. (Will be implemented
 	// later)
 	Vernaculars []Vernacular `json:"vernaculars,omitempty"`
@@ -167,6 +171,41 @@ type Vernacular struct {
 
 	// Locality is geographic places where the name is used.
 	Locality string `json:"locality,omitempty"`
+}
+
+// ScoreDetails provides explanations how sorting of result occures and
+// why something became selected as the `BestResult`. Score data for every
+// item is normalized to a range from 0 to 1 where 0 means there were no
+// match by the factor, and 1 means a "perfect" match by the item.
+// Fields located higher on the list have more weight than lower fields.
+// It means that lower fields are getting into account only if higher fields
+// provide equal values.
+// For all scores 1 is the best, 0 is the worst.
+type ScoreDetails struct {
+	// InfraSpecificRankScore matches infraspecific rank. For example if a
+	// query name is `Aus bus var. cus`, and the match has the same rank,
+	// this field is 1.
+	InfraSpecificRankScore float32 `json:"infraSpecificRankScore"`
+
+	// FuzzynessScore scores edit distance for fuzzy matching. If edit distance
+	// is 0 the score is maxed to 1.
+	FuzzynessScore float32 `json:"fuzzynessScore"`
+
+	// CuratedDataScore scores highest if the matched data-source is known for
+	// having a significant manual curation effort of the data.
+	CuratedDataScore float32 `json:"curatedDataScore"`
+
+	// AuthorMatchScore tries to match authors and years in the name. If
+	// a year and all authors match, the score is 1.
+	AuthorMatchScore float32 `json:"authorMatchScore"`
+
+	// AcceptedNameScore is a binary field, if matched name is also currently
+	// accepted name according to the data-source, the value is 1.
+	AcceptedNameScore float32 `json:"acceptedNameScore"`
+
+	// ParsingQualityScore is the highest for matched names that were parsed
+	// without any problems.
+	ParsingQualityScore float32 `json:"parsingQualityScore"`
 }
 
 func (n Name) Clades() []context.Clade {

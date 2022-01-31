@@ -13,8 +13,6 @@ type Match struct {
 	ID string `json:"id"`
 	// Name is verbatim input name-string.
 	Name string `json:"input"`
-	// VirusMatch is true if matching
-	VirusMatch bool `json:"isVirus,omitempty"`
 	// MatchType describe what kind of match happened.
 	MatchType vlib.MatchTypeValue `json:"matchType"`
 	// MatchItems provide all matched data. It will be empty if no matches

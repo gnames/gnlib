@@ -9,8 +9,13 @@ import (
 type MatchTypeValue int
 
 const (
-	// NoMatch means that verification failed.
+	// NoMatch means that matching failed.
 	NoMatch MatchTypeValue = iota
+
+	// Virus names are matched in the database. `Virus` is a wide
+	// term and includes a variety of non-cellular terms (virus, prion, plasmid,
+	// vector etc.)
+	Virus
 
 	// Exact means either canonical form, or the whole name-string matched
 	// perfectlly.
@@ -39,15 +44,17 @@ const (
 
 var mapMatchType = map[int]string{
 	0: "NoMatch",
-	1: "Exact",
-	2: "Fuzzy",
-	3: "PartialExact",
-	4: "PartialFuzzy",
-	5: "FacetedSearch",
+	1: "Virus",
+	2: "Exact",
+	3: "Fuzzy",
+	4: "PartialExact",
+	5: "PartialFuzzy",
+	6: "FacetedSearch",
 }
 
 var mapMatchTypeStr = map[string]MatchTypeValue{
 	"NoMatch":       NoMatch,
+	"Virus":         Virus,
 	"Exact":         Exact,
 	"Fuzzy":         Fuzzy,
 	"PartialExact":  PartialExact,

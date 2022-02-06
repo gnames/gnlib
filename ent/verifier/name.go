@@ -34,6 +34,11 @@ type Name struct {
 	// significantly manually curated.
 	Curation CurationLevel `json:"curation"`
 
+	// OverloadDetected might be triggered if a virus name or a canonical name
+	// contain many variations and/or strains. In this case not all data are
+	// queried.
+	OverloadDetected string `json:"overloadDetected,omitempty"`
+
 	// Error provides an error message, if any. If error is not empty, the match
 	// failed because of a bug in the service.
 	Error string `json:"error,omitempty"`

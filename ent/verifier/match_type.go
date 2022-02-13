@@ -12,14 +12,15 @@ const (
 	// NoMatch means that matching failed.
 	NoMatch MatchTypeValue = iota
 
-	// Virus names are matched in the database. `Virus` is a wide
-	// term and includes a variety of non-cellular terms (virus, prion, plasmid,
-	// vector etc.)
-	Virus
+	// PartialFuzzy is the same as PartialExact, but also the match was not
+	// exact. We never do fuzzy matches for uninomials, due to high rate of false
+	// positives.
+	PartialFuzzy
 
-	// Exact means either canonical form, or the whole name-string matched
-	// perfectlly.
-	Exact
+	// PartialExact used if GNames failed to match full name string. Now the match
+	// happened by removing either middle species epithets, or by choppping the
+	// 'tail' words of the input name-string canonical form.
+	PartialExact
 
 	// Fuzzy means that matches were not exact due to similarity of name-strings,
 	// OCR or typing errors. Take these results with more suspition than
@@ -27,15 +28,14 @@ const (
 	// high rate of false positives.
 	Fuzzy
 
-	// PartialExact used if GNames failed to match full name string. Now the match
-	// happened by removing either middle species epithets, or by choppping the
-	// 'tail' words of the input name-string canonical form.
-	PartialExact
+	// Exact means either canonical form, or the whole name-string matched
+	// perfectlly.
+	Exact
 
-	// PartialFuzzy is the same as PartialExact, but also the match was not
-	// exact. We never do fuzzy matches for uninomials, due to high rate of false
-	// positives.
-	PartialFuzzy
+	// Virus names are matched in the database. `Virus` is a wide
+	// term and includes a variety of non-cellular terms (virus, prion, plasmid,
+	// vector etc.)
+	Virus
 
 	// FacetedSearch is a match made by search procedure. It does not happen
 	// during verification.
@@ -44,11 +44,11 @@ const (
 
 var mapMatchType = map[int]string{
 	0: "NoMatch",
-	1: "Virus",
-	2: "Exact",
+	1: "PartialFuzzy",
+	2: "PartialExact",
 	3: "Fuzzy",
-	4: "PartialExact",
-	5: "PartialFuzzy",
+	4: "Exact",
+	5: "Virus",
 	6: "FacetedSearch",
 }
 

@@ -14,6 +14,11 @@ type Name struct {
 	// Name is a verified name-string
 	Name string `json:"name"`
 
+	// Cardinality is the cardinality of input name:
+	// 0 - No match, virus or hybrid formula,
+	// 1 - Uninomial, 2 - Binomial, 3 - Trinomial etc.
+	Cardinality int `json:"cardinality"`
+
 	// MatchType is best available match.
 	MatchType MatchTypeValue `json:"matchType"`
 

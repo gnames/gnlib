@@ -5,14 +5,14 @@ type Input struct {
 	// NameStrings is a list of name-strings to verify.
 	NameStrings []string `json:"nameStrings"`
 
-	// DataSources field contains DataSources IDs whos matches will be
-	// returned becides the best result. See Results field in
-	// Verirication.  If `dataSources` are []int{0}, then all matched Sources
-	// are used.
+	// DataSources field contains DataSources IDs to limit results to only these
+	// sources. The best result is calculated only out of this limited set of
+	// data. By default only the BestResult is shown. To see all results use
+	// WithAllMatches flag.
 	DataSources []int `json:"dataSources"`
 
-	// WithAllMatches indicates that all matches per data-source are returned,
-	// sorted by score (instead of the best match per source).
+	// WithAllMatches provides all results, instead of only the BestResult.
+	// The results are sorted by score, not by data-source.
 	WithAllMatches bool `json:"withAllMatches"`
 
 	// WithVernaculars indicates if corresponding vernacular results will be

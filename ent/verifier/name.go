@@ -192,6 +192,17 @@ type Vernacular struct {
 // provide equal values.
 // For all scores 1 is the best, 0 is the worst.
 type ScoreDetails struct {
+	// SortScore is a numeric representation of the whole score.
+	// SortScore takes data from all other scores, and using priority
+	// sequence from highest to lowest: InfraSpecificRankScore, FuzzyLessScore,
+	// CuratedDataScore, AuthorMatchScore, AcceptedNameScore,
+	// ParsingQualityScore calculates its value. Then the value is used to
+	// sort verification or search results and find the BestResult.
+	// Comparing this score between results of different verifications will
+	// not necessary accurate. The score is used for comparison of names
+	// from the same result.
+	SortScore float64 `json:"total"`
+
 	// InfraSpecificRankScore matches infraspecific rank. For example if a
 	// query name is `Aus bus var. cus`, and the match has the same rank,
 	// this field is 1.

@@ -28,6 +28,11 @@ type MatchItem struct {
 	// ID is a UUIDv5 generated out of MatchStr.
 	ID string `json:"id"`
 
+	// InputStr is the string used for matching. Usually it is the canonical
+	// form of the input name. However, if matching was partial, it is
+	// the string that was created by partial matching algorithm.
+	InputStr string `json:"inputString"`
+
 	// MatchStr is the string that matched a particular input. More often than
 	// not it is a canonical form of a name. However for viruses it
 	// can be matched string from the database.
@@ -36,11 +41,11 @@ type MatchItem struct {
 	// MatchType describe what kind of match happened.
 	MatchType vlib.MatchTypeValue `json:"matchType"`
 
-	// EditDistance is a Levenshtein edit distance between normalized
-	// input and MatchStr.
+	// EditDistance is a Levenshtein edit distance between
+	// InputStr and MatchStr.
 	EditDistance int `json:"editDistance"`
 
-	// EditDistanceStem is a Levenshtein edit distance between stemmed input and
-	// stemmed MatchStr.
+	// EditDistanceStem is a Levenshtein edit distance between stemmed
+	// InputStr and stemmed MatchStr.
 	EditDistanceStem int `json:"editDistanceStem"`
 }

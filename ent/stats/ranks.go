@@ -1,7 +1,8 @@
-package context
+package stats
 
 import "strings"
 
+// Rank represents a rank of a taxon.
 type Rank int
 
 const (
@@ -38,6 +39,7 @@ const (
 	Empire
 )
 
+// String returns the string representation of a Rank.
 func (r Rank) String() string {
 	return RankStr[r]
 }
@@ -79,52 +81,53 @@ var RankStr = map[Rank]string{
 type rankData struct {
 	rank  Rank
 	total int
-	data  map[Clade]int
+	data  map[Taxon]int
 }
 
 func ranksData() []rankData {
 	return []rankData{
-		{rank: Empire, data: make(map[Clade]int)},
-		{rank: SuperKingdom, data: make(map[Clade]int)},
-		{rank: Kingdom, data: make(map[Clade]int)},
-		{rank: SubKingdom, data: make(map[Clade]int)},
-		{rank: SuperPhylum, data: make(map[Clade]int)},
-		{rank: Phylum, data: make(map[Clade]int)},
-		{rank: SubPhylum, data: make(map[Clade]int)},
-		{rank: SuperClass, data: make(map[Clade]int)},
-		{rank: Class, data: make(map[Clade]int)},
-		{rank: SubClass, data: make(map[Clade]int)},
-		{rank: InfraClass, data: make(map[Clade]int)},
-		{rank: SubTerClass, data: make(map[Clade]int)},
-		{rank: ParvClass, data: make(map[Clade]int)},
-		{rank: SuperOrder, data: make(map[Clade]int)},
-		{rank: Order, data: make(map[Clade]int)},
-		{rank: SubOrder, data: make(map[Clade]int)},
-		{rank: InfraOrder, data: make(map[Clade]int)},
-		{rank: SuperFamily, data: make(map[Clade]int)},
-		{rank: Family, data: make(map[Clade]int)},
-		{rank: SubFamily, data: make(map[Clade]int)},
-		{rank: InfraFamily, data: make(map[Clade]int)},
-		{rank: Tribe, data: make(map[Clade]int)},
-		{rank: SubTribe, data: make(map[Clade]int)},
-		{rank: SuperGenus, data: make(map[Clade]int)},
-		{rank: Genus, data: make(map[Clade]int)},
-		{rank: SubGenus, data: make(map[Clade]int)},
-		{rank: SuperSpecies, data: make(map[Clade]int)},
-		{rank: Species, data: make(map[Clade]int)},
-		{rank: SubSpecies, data: make(map[Clade]int)},
-		{rank: Unknown, data: make(map[Clade]int)},
-		{rank: Empty, data: make(map[Clade]int)},
+		{rank: Empire, data: make(map[Taxon]int)},
+		{rank: SuperKingdom, data: make(map[Taxon]int)},
+		{rank: Kingdom, data: make(map[Taxon]int)},
+		{rank: SubKingdom, data: make(map[Taxon]int)},
+		{rank: SuperPhylum, data: make(map[Taxon]int)},
+		{rank: Phylum, data: make(map[Taxon]int)},
+		{rank: SubPhylum, data: make(map[Taxon]int)},
+		{rank: SuperClass, data: make(map[Taxon]int)},
+		{rank: Class, data: make(map[Taxon]int)},
+		{rank: SubClass, data: make(map[Taxon]int)},
+		{rank: InfraClass, data: make(map[Taxon]int)},
+		{rank: SubTerClass, data: make(map[Taxon]int)},
+		{rank: ParvClass, data: make(map[Taxon]int)},
+		{rank: SuperOrder, data: make(map[Taxon]int)},
+		{rank: Order, data: make(map[Taxon]int)},
+		{rank: SubOrder, data: make(map[Taxon]int)},
+		{rank: InfraOrder, data: make(map[Taxon]int)},
+		{rank: SuperFamily, data: make(map[Taxon]int)},
+		{rank: Family, data: make(map[Taxon]int)},
+		{rank: SubFamily, data: make(map[Taxon]int)},
+		{rank: InfraFamily, data: make(map[Taxon]int)},
+		{rank: Tribe, data: make(map[Taxon]int)},
+		{rank: SubTribe, data: make(map[Taxon]int)},
+		{rank: SuperGenus, data: make(map[Taxon]int)},
+		{rank: Genus, data: make(map[Taxon]int)},
+		{rank: SubGenus, data: make(map[Taxon]int)},
+		{rank: SuperSpecies, data: make(map[Taxon]int)},
+		{rank: Species, data: make(map[Taxon]int)},
+		{rank: SubSpecies, data: make(map[Taxon]int)},
+		{rank: Unknown, data: make(map[Taxon]int)},
+		{rank: Empty, data: make(map[Taxon]int)},
 	}
 }
 
-// Index returns index of the rank position in the ranksData.
+// Index returns the index of a rank position in the ranksData.
 func (r Rank) Index() int {
 	i := int(r)
 	l := len(RankStr)
 	return l - i - 1
 }
 
+// StrRank conversts a rank string to Rank type.
 var StrRank = func() map[string]Rank {
 	res := make(map[string]Rank)
 	for k, v := range RankStr {
@@ -133,6 +136,7 @@ var StrRank = func() map[string]Rank {
 	return res
 }()
 
+// NewRank creates Rank from a string.
 func NewRank(s string) Rank {
 	s = strings.ToLower(s)
 	if s == "division" {
@@ -147,7 +151,8 @@ func NewRank(s string) Rank {
 	return Unknown
 }
 
-func AddRank(cs []Clade) {
+// AddRank converts a RankStr to its Rank value and saves it in taxons.
+func AddRank(cs []Taxon) {
 	for i := range cs {
 		if cs[i].Rank == Empty {
 			cs[i].Rank = NewRank(cs[i].RankStr)

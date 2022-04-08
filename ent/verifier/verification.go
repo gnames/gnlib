@@ -23,22 +23,23 @@ type Input struct {
 	// input name-strings will be capitalized if appropriate.
 	WithCapitalization bool `json:"withCapitalization"`
 
-	// WithContext flag; when true, results will return the most prevalent
-	// kingdom for the text, as well as the clade which contains a given
-	// percentage of all names in the text.
+	// WithStats flag; when true, results will return the most prevalent
+	// kingdom for the text, as well as the taxon which contains a given
+	// percentage of all names in the text (MainTaxon).
 	//
-	// For examplle context with threshold 0.5 would correspond to a clade that
-	// contains at least half of all names. We use the managerial classification
-	// of Catalogue of Life for the context calculation.
-	WithContext bool `json:"withContext"`
+	// For example MainTaxon with the MainTaxonThreshold of 0.5 would correspond
+	// to a taxon that contains at least half of all names. We use the managerial
+	// classification of Catalogue of Life for the MainTaxon calculation.
+	WithStats bool `json:"withStats"`
 
-	// ContextThreshold sets the minimal percentage of names in a clade
-	// to be counted as a context of a text.
+	// MainTaxonThreshold sets the minimal percentage of names in a taxon
+	// to be counted as a MainTaxon of a text. This field is ignored if
+	// WithStats is false.
 	//
-	// Context is a clade that contains at least ContextThreshold percentage
-	// of all names in the text. We use the managerial classification of
-	// Catalogue of Life for the context calculation.
-	ContextThreshold float32 `json:"contextThreshold"`
+	// MainTaxon is a taxon that contains at least MainTaxonThreshold percentage
+	// of all names (genus and below) in the text. We use the managerial
+	// classification of Catalogue of Life for the MainTaxon calculation.
+	MainTaxonThreshold float32 `json:"mainTaxonThreshold"`
 }
 
 // Output is a result returned by Verify method.
@@ -52,7 +53,7 @@ type Output struct {
 // Meta is metadata of the request. It provides intofmation about parameters
 // used for the request, and, optionally give information about the kingdom
 // that contains most of the names from the request, as well as the lowest
-// clade that contains majority of the names.
+// taxon that contains majority of the names.
 type Meta struct {
 	// NamesNumber is the number of name-strings in the request.
 	NamesNumber int `json:"namesNumber"`
@@ -65,9 +66,9 @@ type Meta struct {
 	// per source, if such results were found.
 	WithAllMatches bool `json:"withAllMatches,omitempty"`
 
-	// WithContext indicates that the kingdom and convergence clade that contain
-	// majority of names will be calculated.
-	WithContext bool `json:"withContext,omitempty"`
+	// WithStats indicates that the kingdom and a taxon that contain
+	// majority of names (MainTaxon) will be calculated.
+	WithStats bool `json:"withStats,omitempty"`
 
 	// WithCapitalization is true, if the was a request to capitalize input
 	WithCapitalization bool `json:"withCapitalization,omitempty"`
@@ -75,24 +76,25 @@ type Meta struct {
 	// DataSources provides IDs of data-sources from the request.
 	DataSources []int `json:"dataSources,omitempty"`
 
-	// ContextThreshold provides a minimal percentage names that a clade should
-	// have to be qualified as a Context clade.
-	ContextThreshold float32 `json:"contextThreshold,omitempty"`
+	// MainTaxonThreshold provides a minimal percentage names that a taxon should
+	// have to be qualified as a MainTaxon.
+	MainTaxonThreshold float32 `json:"mainTaxonThreshold,omitempty"`
 
-	// Number of names qualified for context/kingdoms calculation
-	ContextNamesNum int `json:"contextNamesNum,omitempty"`
+	// StatsNamesNum is the number of names qualified for MainTaxon/Kingdoms
+	// calculation.
+	StatsNamesNum int `json:"statsNamesNum,omitempty"`
 
-	// Context provides the lowest clade that contains most of names from
+	// MainTaxon provides the lowest taxon that contains most of the names from
 	// the request.
 	//
-	// Non-matched names, or names that are not in Catalogue of Life are
-	// not part of the calculation.
-	Context string `json:"context,omitempty"`
+	// Non-matched names, names that are not in the Catalogue of Life, names
+	// higher than genus are not part of the calculation.
+	MainTaxon string `json:"mainTaxon,omitempty"`
 
-	// ContextPercentage indicates the percentage of names that are placed
-	// in the "context" clade. This number should be higher than
-	// ContexThreshold unless Context is empty.
-	ContextPercentage float32 `json:"contextPercentage,omitempty"`
+	// MainTaxonPercentage indicates the percentage of names that are placed
+	// in the MainTaxon. This number should be higher than
+	// MainTaxonThreshold unless MainTaxon is empty.
+	MainTaxonPercentage float32 `json:"mainTaxonPercentage,omitempty"`
 
 	// Kingdom provides what kingdom includes the majority of names from the
 	// request accorging to the managerial classification of Catalogue of Life.

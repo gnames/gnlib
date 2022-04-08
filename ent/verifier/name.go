@@ -3,7 +3,7 @@ package verifier
 import (
 	"strings"
 
-	"github.com/gnames/gnlib/ent/context"
+	"github.com/gnames/gnlib/ent/stats"
 )
 
 // Name is a result of verification of one name-string from the input.
@@ -230,8 +230,8 @@ type ScoreDetails struct {
 	ParsingQualityScore float32 `json:"parsingQualityScore"`
 }
 
-func (n Name) Clades() []context.Clade {
-	var res []context.Clade
+func (n Name) Taxons() []stats.Taxon {
+	var res []stats.Taxon
 	if n.BestResult == nil || n.BestResult.DataSourceID != 1 {
 		return res
 	}
@@ -243,10 +243,10 @@ func (n Name) Clades() []context.Clade {
 		return res
 	}
 
-	res = make([]context.Clade, len(path))
+	res = make([]stats.Taxon, len(path))
 
 	for i := range path {
-		res[i] = context.Clade{Name: path[i]}
+		res[i] = stats.Taxon{Name: path[i]}
 		if len(ids) == len(path) {
 			res[i].ID = ids[i]
 			res[i].ID = ids[i]

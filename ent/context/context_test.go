@@ -1,7 +1,10 @@
 package context_test
 
 import (
+	"encoding/csv"
+	"io"
 	"io/ioutil"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -12,27 +15,43 @@ import (
 )
 
 func TestTestData(t *testing.T) {
-	test := testData(t)
-	assert.Equal(t, len(test), 69)
-	for i := range test {
-		clades := test[i].Clades()
+	hs := testData(t)
+	assert.Equal(t, len(hs), 69)
+	for i := range hs {
+		clades := hs[i].Clades()
 		assert.Greater(t, len(clades), 8)
 	}
 }
 
 func TestContext(t *testing.T) {
+	assert := assert.New(t)
 	hs := testData(t)
 	res := context.New(hs, 0.7)
-	assert.Equal(t, res.Kingdom.Name, "Animalia")
-	assert.Equal(t, res.KingdomPercentage, float32(1.0))
-	assert.Equal(t, res.Context.RankStr, "phylum")
-	assert.Equal(t, res.Context.Name, "Mollusca")
-	assert.Equal(t, res.ContextPercentage, float32(1.0))
+	assert.Equal(res.Kingdom.Name, "Animalia")
+	assert.Equal(res.KingdomPercentage, float32(1.0))
+	assert.Equal(res.Context.RankStr, "phylum")
+	assert.Equal(res.Context.Name, "Mollusca")
+	assert.Equal(res.ContextPercentage, float32(1.0))
 
 	res = context.New(hs, 0.5)
-	assert.Equal(t, res.Context.RankStr, "class")
-	assert.Equal(t, res.Context.Name, "Gastropoda")
-	assert.InDelta(t, res.ContextPercentage, float32(0.55), 0.01)
+	assert.Equal(res.Context.RankStr, "class")
+	assert.Equal(res.Context.Name, "Gastropoda")
+	assert.InDelta(res.ContextPercentage, float32(0.55), 0.01)
+}
+
+// TestFishes tests situation where some sequence of ranks varies from
+// name to name, and some of the names are are higher than genus.
+func TestFishes(t *testing.T) {
+	hs := context2(t)
+	// there are 9 names
+	assert.Equal(t, 9, len(hs))
+	res := context.New(hs, 0.5)
+	// of of the names is bigger than genus and is removed
+	assert.Equal(t, 8, res.NamesNum)
+	assert.Equal(t, "Animalia", res.Kingdom.Name)
+	assert.Equal(t, float32(1.0), res.KingdomPercentage)
+	assert.Equal(t, "Actinopterygii", res.Context.Name)
+	assert.Equal(t, float32(0.75), res.ContextPercentage)
 }
 
 func TestFiftyFifty(t *testing.T) {
@@ -96,6 +115,27 @@ func testData(t *testing.T) []context.Hierarch {
 			res = append(res, h)
 			ids, names = "", ""
 		}
+	}
+	return res
+}
+
+func context2(t *testing.T) []context.Hierarch {
+	var res []context.Hierarch
+	path := filepath.Join("..", "..", "testdata", "context2.csv")
+
+	f, err := os.Open(path)
+	assert.Nil(t, err)
+	defer f.Close()
+	r := csv.NewReader(f)
+
+	for {
+		row, err := r.Read()
+		if err == io.EOF {
+			break
+		}
+		assert.Nil(t, err)
+		n := NewTestHierarchy(row[2], row[0], row[1])
+		res = append(res, n)
 	}
 	return res
 }

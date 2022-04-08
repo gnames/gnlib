@@ -34,12 +34,17 @@ func New(
 		threshold = 0.5001
 	}
 
+	// collect names that are genus or less, no clades are removed from
+	// the hierarchy.
 	clades := extractClades(h)
 	if len(clades) == 1 {
 		return Context{}
 	}
+	namesNum := len(clades)
 
+	// get empty structure for ranks stats
 	ranks := ranksData()
+	// populate ranks
 	for _, cs := range clades {
 		for i := range cs {
 			rankIdx := cs[i].Index()
@@ -47,39 +52,47 @@ func New(
 			ranks[rankIdx].total++
 		}
 	}
-	ranks = cleanupRanks(ranks)
-	return calcContext(ranks, threshold)
+
+	ranks = removeEmptyRanks(ranks)
+	res := calcContext(namesNum, ranks, threshold)
+	return res
 }
 
-func calcContext(ranks []rankData,
+func calcContext(
+	namesNum int,
+	ranks []rankData,
 	threshold float32,
 ) Context {
 	var ks []CladesDist
 	var kingdom, context Clade
-	var kPC, cPC float32
+	var kPCent, cPCent float32
 
 	for i := range ranks {
-		c, pc := maxClade(ranks[i])
+		if ranks[i].rank <= Unknown {
+			break
+		}
+		c, pcent := maxClade(namesNum, ranks[i])
 		if ranks[i].rank == Kingdom {
 			ks = getKingdoms(ranks[i])
-			if isMaxKingdom(ks, pc) {
-				kingdom, kPC = c, pc
+			if isMaxKingdom(ks, pcent) {
+				kingdom, kPCent = c, pcent
 			}
 		}
-		if pc < threshold {
+		if pcent < threshold {
 			if ranks[i].rank < Kingdom {
 				break
 			} else {
 				continue
 			}
 		}
-		context, cPC = c, pc
+		context, cPCent = c, pcent
 	}
 	return Context{
+		NamesNum:          namesNum,
 		Kingdom:           kingdom,
 		Context:           context,
-		KingdomPercentage: kPC,
-		ContextPercentage: cPC,
+		KingdomPercentage: kPCent,
+		ContextPercentage: cPCent,
 		Kingdoms:          ks,
 	}
 }
@@ -109,7 +122,7 @@ func getKingdoms(kingdom rankData) []CladesDist {
 	return res
 }
 
-func maxClade(rd rankData) (Clade, float32) {
+func maxClade(namesNum int, rd rankData) (Clade, float32) {
 	var max int
 	var res, cld Clade
 	for k, v := range rd.data {
@@ -121,37 +134,44 @@ func maxClade(rd rankData) (Clade, float32) {
 	if cld.Name != "" {
 		res = cld
 	}
-	return res, float32(max) / float32(rd.total)
+	return res, float32(max) / float32(namesNum)
 }
 
-// extractClades removes clades that do not contain all records.
+// extractClades collects clades for each name. It only collects names that
+// are genus or less. It does not make sense to take in account higher
+// classification ranks because their meaning can be different than in
+// the Catalogue of Life.
 func extractClades(h []Hierarch) [][]Clade {
-	res := make([][]Clade, len(h))
+	var clades []Clade
+	res := make([][]Clade, 0, len(h))
 	for i := range h {
-		res[i] = h[i].Clades()
-		for ii := range res[i] {
-			if res[i][ii].Rank == Empty {
-				res[i][ii].Rank = NewRank(res[i][ii].RankStr)
+		var genusOrLess bool
+		clades = h[i].Clades()
+		for ii := range clades {
+			if clades[ii].Rank == Empty {
+				clades[ii].Rank = NewRank(clades[ii].RankStr)
 			}
+			if !genusOrLess &&
+				clades[ii].Rank != Unknown &&
+				clades[ii].Rank <= Genus {
+				genusOrLess = true
+			}
+		}
+		if genusOrLess {
+			res = append(res, clades)
 		}
 	}
 	return res
 }
 
-// cleanupRanks leaves only ranks that are known to context
-func cleanupRanks(ranks []rankData) []rankData {
+// removeEmptyRanks removes empty ranks
+func removeEmptyRanks(ranks []rankData) []rankData {
 	var res []rankData
-	var total int
 	for i := range ranks {
 		if ranks[i].total == 0 {
 			continue
 		}
-		if total == 0 {
-			total = ranks[i].total
-		}
-		if ranks[i].total == total {
-			res = append(res, ranks[i])
-		}
+		res = append(res, ranks[i])
 	}
 	return res
 }

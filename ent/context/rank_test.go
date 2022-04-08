@@ -8,6 +8,6 @@ import (
 )
 
 func TestRank(t *testing.T) {
-	assert.True(t, context.Family > context.Genus)
-	assert.True(t, context.Kingdom > context.Phylum)
+	assert.True(t, context.Empire > context.Kingdom)
+	assert.True(t, context.Class > context.SubClass)
 }

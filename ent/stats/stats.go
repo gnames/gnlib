@@ -80,8 +80,8 @@ func New(
 	h []Hierarchy,
 	threshold float32,
 ) Stats {
-	if threshold <= 0.5 {
-		threshold = 0.5001
+	if threshold < 0.5 {
+		threshold = 0.5
 	}
 
 	// collect names that are genus or lower, no taxons are removed from
@@ -116,26 +116,25 @@ func calcStats(
 	var ks []TaxonDist
 	var kingdom, mainTaxon Taxon
 	var kPCent, txnPCent float32
+	var foundMainTaxon bool
+	l := len(ranks)
 
 	for i := range ranks {
-		if ranks[i].rank <= Unknown {
-			break
+		revI := l - 1 - i
+		if ranks[revI].rank <= Unknown {
+			continue
 		}
-		txn, pcent := maxTaxon(namesNum, ranks[i])
-		if ranks[i].rank == Kingdom {
-			ks = getKingdoms(ranks[i])
+		txn, pcent := maxTaxon(namesNum, ranks[revI])
+		if ranks[revI].rank == Kingdom {
+			ks = getKingdoms(ranks[revI])
 			if isMaxKingdom(ks, pcent) {
 				kingdom, kPCent = txn, pcent
 			}
 		}
-		if pcent < threshold {
-			if ranks[i].rank < Kingdom {
-				break
-			} else {
-				continue
-			}
+		if pcent > threshold && !foundMainTaxon {
+			mainTaxon, txnPCent = txn, pcent
+			foundMainTaxon = true
 		}
-		mainTaxon, txnPCent = txn, pcent
 	}
 	return Stats{
 		NamesNum:            namesNum,

@@ -36,13 +36,13 @@ func TestTaxons(t *testing.T) {
 	res = stats.New(hs, 0.5)
 	assert.Equal(res.MainTaxon.RankStr, "class")
 	assert.Equal(res.MainTaxon.Name, "Gastropoda")
-	assert.InDelta(res.MainTaxonPercentage, float32(0.55), 0.01)
+	assert.InDelta(float32(0.55), res.MainTaxonPercentage, 0.01)
 }
 
 // TestFishes tests situation where some sequence of ranks varies from
 // name to name, and some of the names are higher than genus.
 func TestFishes(t *testing.T) {
-	hs := taxons2(t)
+	hs := taxons2(t, "taxons2.csv")
 	// there are 9 names
 	assert.Equal(t, 9, len(hs))
 	res := stats.New(hs, 0.5)
@@ -52,6 +52,17 @@ func TestFishes(t *testing.T) {
 	assert.Equal(t, float32(1.0), res.KingdomPercentage)
 	assert.Equal(t, "Actinopterygii", res.MainTaxon.Name)
 	assert.Equal(t, float32(0.75), res.MainTaxonPercentage)
+}
+
+func TestReptiles(t *testing.T) {
+	hs := taxons2(t, "reptiles.csv")
+	assert.Equal(t, 628, len(hs))
+	res := stats.New(hs, 0.5)
+	assert.Equal(t, 619, res.NamesNum)
+	assert.Equal(t, "Animalia", res.Kingdom.Name)
+	assert.InDelta(t, float32(0.97), res.KingdomPercentage, 0.01)
+	assert.Equal(t, "Squamata", res.MainTaxon.Name)
+	assert.InDelta(t, float32(0.92), res.MainTaxonPercentage, 0.01)
 }
 
 func TestFiftyFifty(t *testing.T) {
@@ -119,9 +130,9 @@ func testData(t *testing.T) []stats.Hierarchy {
 	return res
 }
 
-func taxons2(t *testing.T) []stats.Hierarchy {
+func taxons2(t *testing.T, fileName string) []stats.Hierarchy {
 	var res []stats.Hierarchy
-	path := filepath.Join("..", "..", "testdata", "taxons2.csv")
+	path := filepath.Join("..", "..", "testdata", fileName)
 
 	f, err := os.Open(path)
 	assert.Nil(t, err)

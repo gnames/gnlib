@@ -3,7 +3,7 @@ package verifier
 import (
 	"strings"
 
-	"github.com/gnames/gnlib/ent/stats"
+	"github.com/gnames/gnstats/ent/stats"
 )
 
 // Name is a result of verification of one name-string from the input.

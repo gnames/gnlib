@@ -33,6 +33,9 @@ type Name struct {
 	// input name-string.
 	DataSourcesNum int `json:"dataSourcesNum,omitempty"`
 
+	// DataSourcesIDs is a list of ids of all data-sources with a match.
+	DataSourceIDs []int `json:"dataSourcesIds,omitempty"`
+
 	// Curation estimates reliability of matched data sources. If
 	// matches are returned by at least one manually curated data source, or by
 	// automatically curated data source, or only by sources that are not

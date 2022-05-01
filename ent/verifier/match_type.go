@@ -32,6 +32,11 @@ const (
 	// perfectlly.
 	Exact
 
+	// ExactSpeciesGroup means that match happened not with the name, but
+	// with either an autonym (botany)/coordinated name (zoology) of species,
+	// or binomial part of a trinomial.
+	ExactSpeciesGroup
+
 	// Virus names are matched in the database. `Virus` is a wide
 	// term and includes a variety of non-cellular terms (virus, prion, plasmid,
 	// vector etc.)

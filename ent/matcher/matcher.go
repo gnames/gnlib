@@ -7,8 +7,19 @@ import (
 	vlib "github.com/gnames/gnlib/ent/verifier"
 )
 
-// Match is output of MatchAry method.
-type Match struct {
+// Input for the matcher includes a slice of name-strings several options
+// sent to the matcher.
+type Input struct {
+	// Names is a slice of name-strings.
+	Names []string
+
+	// WithSpeciesGroup -- when true, species are searched within species group.
+	// It means that autonyms in botany and coordination names in zoology.
+	WithSpeciesGroup bool
+}
+
+// Output is output of MatchAry method.
+type Output struct {
 	// ID is UUIDv5 generated from verbatim input name-string.
 	ID string `json:"id"`
 

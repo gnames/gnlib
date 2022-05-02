@@ -23,6 +23,11 @@ type Input struct {
 	// input name-strings will be capitalized if appropriate.
 	WithCapitalization bool `json:"withCapitalization"`
 
+	// WithSpeciesGroup flag; when true, species names also get matched by
+	// their species group. It means that the request will take in account
+	// botanical autonyms and zoological coordinated names.
+	WithSpeciesGroup bool `json:"withSpeciesGroup"`
+
 	// WithStats flag; when true, results will return the most prevalent
 	// kingdom for the text, as well as the taxon which contains a given
 	// percentage of all names in the text (MainTaxon).

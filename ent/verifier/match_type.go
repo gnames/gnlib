@@ -53,18 +53,20 @@ var mapMatchType = map[int]string{
 	2: "PartialExact",
 	3: "Fuzzy",
 	4: "Exact",
-	5: "Virus",
-	6: "FacetedSearch",
+	5: "ExactSpeciesGroup",
+	6: "Virus",
+	7: "FacetedSearch",
 }
 
 var mapMatchTypeStr = map[string]MatchTypeValue{
-	"NoMatch":       NoMatch,
-	"Virus":         Virus,
-	"Exact":         Exact,
-	"Fuzzy":         Fuzzy,
-	"PartialExact":  PartialExact,
-	"PartialFuzzy":  PartialFuzzy,
-	"FacetedSearch": FacetedSearch,
+	"NoMatch":           NoMatch,
+	"Virus":             Virus,
+	"ExactSpeciesGroup": ExactSpeciesGroup,
+	"Exact":             Exact,
+	"Fuzzy":             Fuzzy,
+	"PartialExact":      PartialExact,
+	"PartialFuzzy":      PartialFuzzy,
+	"FacetedSearch":     FacetedSearch,
 }
 
 // NewMatchType takes a string and converts it into a MatchType. If

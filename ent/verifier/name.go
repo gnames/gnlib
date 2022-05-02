@@ -207,6 +207,11 @@ type Vernacular struct {
 // provide equal values.
 // For all scores 1 is the best, 0 is the worst.
 type ScoreDetails struct {
+	// CardinalityScore is 1 when cardinality of input name and match name
+	// match and neither cardinality is 0. In all other cases it this score
+	// equal 0.
+	CardinalityScore float32 `json:"cardinalityScore"`
+
 	// InfraSpecificRankScore matches infraspecific rank. For example if a
 	// query name is `Aus bus var. cus`, and the match has the same rank,
 	// this field is 1.

@@ -11,11 +11,15 @@ import (
 // sent to the matcher.
 type Input struct {
 	// Names is a slice of name-strings.
-	Names []string
+	Names []string `json:"names"`
 
 	// WithSpeciesGroup -- when true, species are searched within species group.
 	// It means that autonyms in botany and coordination names in zoology.
-	WithSpeciesGroup bool
+	WithSpeciesGroup bool `json:"withSpeciesGroup,omitempty"`
+
+	// DataSources -- is a list of data-sources that are used to search
+	// a for a name-string
+	DataSources []int `json:"dataSources,omitempty"`
 }
 
 // Output is output of MatchAry method.
@@ -59,4 +63,8 @@ type MatchItem struct {
 	// EditDistanceStem is a Levenshtein edit distance between stemmed
 	// InputStr and stemmed MatchStr.
 	EditDistanceStem int `json:"editDistanceStem"`
+
+	// DataSources is a set of data-sources that has this particular
+	// MatchItem
+	DataSources map[int]struct{}
 }

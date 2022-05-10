@@ -12,7 +12,8 @@ type Input struct {
 	DataSources []int `json:"dataSources"`
 
 	// WithAllMatches provides all results, instead of only the BestResult.
-	// The results are sorted by score, not by data-source.
+	// The results are sorted by score, not by data-source. The top result is
+	// the the best result.
 	WithAllMatches bool `json:"withAllMatches"`
 
 	// WithVernaculars indicates if corresponding vernacular results will be
@@ -49,13 +50,13 @@ type Input struct {
 
 // Output is a result returned by Verify method.
 type Output struct {
-	// Meta is metadata of the request.
+	// Meta is the metadata of the request results.
 	Meta `json:"metadata"`
-	// Names from the request.
+	// Names are results of name-verification.
 	Names []Name `json:"names"`
 }
 
-// Meta is metadata of the request. It provides intofmation about parameters
+// Meta is metadata of the request. It provides information about parameters
 // used for the request, and, optionally give information about the kingdom
 // that contains most of the names from the request, as well as the lowest
 // taxon that contains majority of the names.
@@ -75,8 +76,11 @@ type Meta struct {
 	// majority of names (MainTaxon) will be calculated.
 	WithStats bool `json:"withStats,omitempty"`
 
-	// WithCapitalization is true, if the was a request to capitalize input
+	// WithCapitalization is true, if there was a request to capitalize input
 	WithCapitalization bool `json:"withCapitalization,omitempty"`
+
+	// WithSpeciesGroup is true, if Input included `WithSpeciesGroup` option.
+	WithSpeciesGroup bool `json:"withSpeciesGroup,omitempty"`
 
 	// DataSources provides IDs of data-sources from the request.
 	DataSources []int `json:"dataSources,omitempty"`

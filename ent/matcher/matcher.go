@@ -22,12 +22,33 @@ type Input struct {
 	DataSources []int `json:"dataSources,omitempty"`
 }
 
-// Output is output of MatchAry method.
 type Output struct {
-	// ID is UUIDv5 generated from verbatim input name-string.
+	// Meta is the metadata of the request results.
+	Meta `json:"metadata"`
+	// Matches contains results of name-matching.
+	Matches []Match `json:"matches"`
+}
+
+// Meta contains metadata about the matching request.
+type Meta struct {
+	// NamesNum is the number of name-strings sent for matching.
+	NamesNum int `json:"namesNum"`
+
+	// WithSpeciesGroup is set to the value of the `Input`'s option
+	// `WithSpeciesGroup`.
+	WithSpeciesGroup bool `json:"withSpeciesGroup,omitempty"`
+
+	// DataSources is set to the value of the `Input`'s option
+	// 'WithSpeciesGroup'.
+	DataSources []int `json:"dataSources,omitempty"`
+}
+
+// Match represents match results for one name-string.
+type Match struct {
+	// ID is a UUIDv5 string generated from `Name` field.
 	ID string `json:"id"`
 
-	// Name is verbatim input name-string.
+	// Name is a verbatim name-string from `Input.Names`.
 	Name string `json:"input"`
 
 	// MatchType describe what kind of match happened.
@@ -64,7 +85,11 @@ type MatchItem struct {
 	// InputStr and stemmed MatchStr.
 	EditDistanceStem int `json:"editDistanceStem"`
 
-	// DataSources is a set of data-sources that has this particular
+	// DataSourcesMap is a set of data-sources that have this particular
+	// MatchItem.
+	DataSourcesMap map[int]struct{} `json:"-"`
+
+	// DataSources is an array of data-sources that have this particular
 	// MatchItem
-	DataSources map[int]struct{}
+	DataSources []int `json:"dataSources,omitempty"`
 }

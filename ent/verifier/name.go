@@ -114,8 +114,8 @@ type ResultData struct {
 	// 1 - Uninomial, 2 - Binomial, 3 - trinomial etc.
 	MatchedCardinality int `json:"matchedCardinality"`
 
-	// MatchedCanonicalSimple is a simplified canonicl form without ranks for
-	// names lower than species, and with ommited hybrid signs for named hybrids.
+	// MatchedCanonicalSimple is a simplified canonical form without ranks for
+	// names lower than species, and with omitted hybrid signs for named hybrids.
 	// Quite often simple canonical is the same as full canonical. Hybrid signs
 	// are preserved for hybrid formulas.
 	MatchedCanonicalSimple string `json:"matchedCanonicalSimple,omitempty"`

@@ -135,3 +135,40 @@ type Kingdom struct {
 	// Percentage is a percentage of names found in a kingdom.
 	Percentage float32 `json:"percentage"`
 }
+
+// NameStringInput is used to get information about a particular name-string.
+type NameStringInput struct {
+	// ID is the UUID v5 generated from a name-string
+	ID string
+
+	// DataSources is a slice of DataSourceIDs which should be used in the
+	// output. If the slice is empty, all DataSources are used.
+	DataSources []int
+
+	// WithAllMatches controls if only the BestMatch, or all possible matches
+	// are returned.
+	WithAllMatches bool
+}
+
+// NameStringOutput contains data corresponding to the provided name-string ID.
+type NameStringOutput struct {
+	// NameStringMeta contains metadata from the input.
+	NameStringMeta `json:"meta"`
+
+	// Name is the found name data.
+	*Name `json:"name"`
+}
+
+// NameStringMeta contains metadata from the provided input.
+type NameStringMeta struct {
+	// ID is the UUID v5 generated for a particular name-string.
+	ID string `json:"id"`
+
+	// DataSources is a slice of DataSource IDs. If it is not empty,
+	// the output results will be constrained to these IDs.
+	DataSources []int `json:"dataSources,omitempty"`
+
+	// WithAllMatches indicates if all matches should be returned, or
+	// only the best matches.
+	WithAllMatches bool `json:"withAllMatches"`
+}

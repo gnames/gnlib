@@ -64,9 +64,10 @@ type ResultData struct {
 	// Curation of the data source.
 	Curation CurationLevel `json:"curation"`
 
-	// RecordID from a data source. We try our best to return ID that corresponds to
-	// dwc:taxonID of a DataSource. If such ID is not provided, this ID will be
-	// auto-generated.  Auto-generated IDs will have 'gn_' prefix.
+	// RecordID from a data source. We try our best to return ID that
+	// corresponds to dwc:taxonID of a DataSource. If such ID is not provided,
+	// this ID will be auto-generated.  Auto-generated IDs will
+	// have 'gn_' prefix.
 	RecordID string `json:"recordId"`
 
 	// GlobalID that is exposed globally by a DataSource. Such IDs are usually
@@ -105,6 +106,9 @@ type ResultData struct {
 	// 2 - some problems, 3 - significant problems.
 	ParsingQuality int `json:"-"`
 
+	// MatchedID is the UUID v5 derived from the MatchedName.
+	MatchedNameID string `json:"matchedNameID"`
+
 	// MatchedName is a name-string from the DataSource that was matched
 	// by GNames algorithm.
 	MatchedName string `json:"matchedName"`
@@ -115,9 +119,9 @@ type ResultData struct {
 	MatchedCardinality int `json:"matchedCardinality"`
 
 	// MatchedCanonicalSimple is a simplified canonical form without ranks for
-	// names lower than species, and with omitted hybrid signs for named hybrids.
-	// Quite often simple canonical is the same as full canonical. Hybrid signs
-	// are preserved for hybrid formulas.
+	// names lower than species, and with omitted hybrid signs for named
+	// hybrids. Quite often simple canonical is the same as full canonical.
+	// Hybrid signs are preserved for hybrid formulas.
 	MatchedCanonicalSimple string `json:"matchedCanonicalSimple,omitempty"`
 
 	// MatchedCanonicalFull is a canonical form that preserves hybrid signs
@@ -134,6 +138,9 @@ type ResultData struct {
 	// CurrentRecordID is the id of currently accepted name given by
 	// the data-source.
 	CurrentRecordID string `json:"currentRecordId"`
+
+	// CurrentID is the UUID v5 derived from the CurrentName.
+	CurrentNameID string `json:"currentNameId"`
 
 	// CurrentName is a currently accepted name (it is only provided by
 	// DataSources with taxonomic data).

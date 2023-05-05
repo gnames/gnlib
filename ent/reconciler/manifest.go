@@ -11,6 +11,9 @@ type Manifest struct {
 	// Name of the reconciliation service. Should be set to "GlobalNames".
 	Name string `json:"name"`
 
+	Preview `json:"preview"`
+	View    `json:"view"`
+
 	// IdentifierSpace contans the URI prefix of the reconciliation service.
 	// For example "https://verifier.globalnames.org/api/v1/name_strings/"
 	IdentifierSpace string `json:"identifierSpace"`
@@ -29,4 +32,14 @@ type Type struct {
 
 	// Name is a human friendly short description of the type.
 	Name string `json:"name"`
+}
+
+type Preview struct {
+	Height int    `json:"height"`
+	Width  int    `json:"width"`
+	URL    string `json:"url"`
+}
+
+type View struct {
+	URL string `json:"url"`
 }

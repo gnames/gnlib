@@ -61,12 +61,12 @@ type ReconciliationCandidate struct {
 	// Description provides some metadata about the item.
 	Description string `json:"description"`
 
-	// Score is used to estimate how well the result matches the
-	// original query.
+	// Score is used to estimate chances for a result to be a match.
+	// It is calculated from features.
 	Score float64 `json:"score"`
 
 	// Features might contain details of reconciliation and be used for
-	// the score determination.
+	// the score calculation.
 	Features []Feature `json:"features,omitempty"`
 
 	// Types contains types that were assigned to the candidate.
@@ -83,6 +83,6 @@ type Feature struct {
 	// ID is the name of the feature.
 	ID string `json:"id"`
 
-	// Value is the a quantitative representation of the feature.
+	// Value is a quantitative representation of the feature.
 	Value float64 `json:"value"`
 }

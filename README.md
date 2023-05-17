@@ -1,13 +1,11 @@
 # gnlib
 
-A miscellaneous collection of tools shared between GNA Go projects
+A miscellaneous collection of entities shared between GNA Go projects
 
-## Packages
+gnver: a project version
 
-* csv contains functions to deal with csv data.
-* encode contains interface and implementation for encoding/decoding.
-* format contains output formats enums.
-* fuzzy is levenschein edit distance algorithm.
-* gnuuid creates GNA UUID v5 from strings.
-* sys file system helper methods.
-* organizer restores elements' order after parallel execution.
+matcher: input and output of for `gnmatcher` service.
+
+reconciler: manifest, input and output for `gnames` reconciler service.
+
+verifier: entities for `gnames` verification service.

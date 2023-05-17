@@ -48,10 +48,24 @@ type View struct {
 
 type Extend struct {
 	ProposeProperties `json:"propose_properties,omitempty"`
-	PropertySettings
+	PropertySettings  []PropertySetting `json:"property_settings"`
 }
 
 type ProposeProperties struct {
 	ServiceURL  string `json:"service_url,omitempty"`
 	ServicePath string `json:"service_path"`
+}
+
+type PropertySetting struct {
+	Name     string   `json:"name"`
+	Label    string   `json:"label"`
+	Type     string   `json:"type"`
+	Default  string   `json:"default"`
+	HelpText string   `json:"help_text,omitempty"`
+	Choices  []Choice `json:"choices,omitempty"`
+}
+
+type Choice struct {
+	Value string `json:"value"`
+	ID    string `json:"id"`
 }

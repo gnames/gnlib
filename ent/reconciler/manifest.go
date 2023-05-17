@@ -14,6 +14,8 @@ type Manifest struct {
 	Preview `json:"preview"`
 	View    `json:"view"`
 
+	Extend `json:"extend"`
+
 	// IdentifierSpace contans the URI prefix of the reconciliation service.
 	// For example "https://verifier.globalnames.org/api/v1/name_strings/"
 	IdentifierSpace string `json:"identifierSpace"`
@@ -42,4 +44,14 @@ type Preview struct {
 
 type View struct {
 	URL string `json:"url"`
+}
+
+type Extend struct {
+	ProposeProperties `json:"propose_properties,omitempty"`
+	PropertySettings
+}
+
+type ProposeProperties struct {
+	ServiceURL  string `json:"service_url,omitempty"`
+	ServicePath string `json:"service_path"`
 }

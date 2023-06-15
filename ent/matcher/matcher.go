@@ -1,4 +1,6 @@
-/* Package matcher provides main data-structures that describe input and
+/*
+	Package matcher provides main data-structures that describe input and
+
 output of gnmatcher functionality.
 */
 package matcher
@@ -16,6 +18,10 @@ type Input struct {
 	// WithSpeciesGroup -- when true, species are searched within species group.
 	// It means that autonyms in botany and coordination names in zoology.
 	WithSpeciesGroup bool `json:"withSpeciesGroup,omitempty"`
+
+	// WithUninomialFuzzyMatch -- when true, the uninomials go through
+	// fuzzy matching together with bi- and tri-nomials.
+	WithUninomialFuzzyMatch bool `json:"withUninomialFuzzyMatch,omitempty"`
 
 	// DataSources -- is a list of data-sources that are used to search
 	// a for a name-string

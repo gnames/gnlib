@@ -29,13 +29,19 @@ type Input struct {
 	// botanical autonyms and zoological coordinated names.
 	WithSpeciesGroup bool `json:"withSpeciesGroup"`
 
+	// WithUninomialFuzzyMatch flag; when true, uninomial names are not
+	// restricted from fuzzy matching. Normally it creates too many false
+	// positives and is switched off.
+	WithUninomialFuzzyMatch bool `json:"withUninomialFuzzyMatch"`
+
 	// WithStats flag; when true, results will return the most prevalent
 	// kingdom for the text, as well as the taxon which contains a given
 	// percentage of all names in the text (MainTaxon).
 	//
 	// For example MainTaxon with the MainTaxonThreshold of 0.5 would correspond
-	// to a taxon that contains at least half of all names. We use the managerial
-	// classification of Catalogue of Life for the MainTaxon calculation.
+	// to a taxon that contains at least half of all names. We use the
+	// managerial classification of Catalogue of Life for the MainTaxon
+	// calculation.
 	WithStats bool `json:"withStats"`
 
 	// MainTaxonThreshold sets the minimal percentage of names in a taxon
@@ -76,11 +82,16 @@ type Meta struct {
 	// majority of names (MainTaxon) will be calculated.
 	WithStats bool `json:"withStats,omitempty"`
 
-	// WithCapitalization is true, if there was a request to capitalize input
+	// WithCapitalization is true if there was a request to capitalize input
 	WithCapitalization bool `json:"withCapitalization,omitempty"`
 
-	// WithSpeciesGroup is true, if Input included `WithSpeciesGroup` option.
+	// WithSpeciesGroup is true if Input included `WithSpeciesGroup` option.
 	WithSpeciesGroup bool `json:"withSpeciesGroup,omitempty"`
+
+	// WithUninomialFuzzyMatch is true when it when uninomial names go
+	// through fuzzy matching. Normally it is switched off to decrease the
+	// number of false positives.
+	WithUninomialFuzzyMatch bool `json:"withUninomialFuzzyMatch,omitempty"`
 
 	// DataSources provides IDs of data-sources from the request.
 	DataSources []int `json:"dataSources,omitempty"`

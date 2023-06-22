@@ -44,6 +44,11 @@ type Meta struct {
 	// `WithSpeciesGroup`.
 	WithSpeciesGroup bool `json:"withSpeciesGroup,omitempty"`
 
+	// WithUninomialFuzzyMatch is true when fuzzy matching of
+	// uninomials was allowed. It is set to the value of the
+	// `Input`'s option `WithUninomialFuzzyMatch`.
+	WithUninomialFuzzyMatch bool `json:"withUninomialFuzzyMatch"`
+
 	// DataSources is set to the value of the `Input`'s option
 	// 'WithSpeciesGroup'.
 	DataSources []int `json:"dataSources,omitempty"`

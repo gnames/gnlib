@@ -1,3 +1,6 @@
+// package reconciler describes entities for implementation of a
+// Reconciliation Service API v0.2
+// https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/
 package reconciler
 
 // Input contains fields necessary for the reconciliation process.
@@ -22,22 +25,42 @@ type Query struct {
 
 	// Properties allow to add additional filters to the reconciliation
 	// process.
-	Properties []Property `json:"properties,omitempty"`
+	Properties []PropertyInfo `json:"properties,omitempty"`
 
 	// TypeStrict is a legacy deprecated field that came from FreeBase.
 	TypeStrict string `json:"type_strict,omitempty"`
 }
 
-// Property can be used to further filter list of candidates, similar to
+// ExtendQuery provides input for getting additional properties associated
+// with the name-string ID.
+type ExtendQuery struct {
+	//IDs contain an entity IDs.
+	IDs []string `json:"ids"`
+
+	// Properties contains a slice of properties.
+	Properties []Property `json:"properties"`
+}
+
+// Property implements the APIs `property`, an attribute of an entity.
+type Property struct {
+	// ID is a property identifier.
+	ID string `json:"id"`
+
+	// Name is human-friendly title of a property.
+	Name string `json:"name"`
+}
+
+// PropertyInfo combines a property ID with the value of the property.
+// PropertyInfo can be used to further filter list of candidates, similar to
 // a WHERE cause in SQL.
 // This implementation is less flexible than W3C standard and takes only
 // one value. We will expand it if necessary.
-type Property struct {
-	// PID is the property name.
-	PID string `json:"pid"`
+type PropertyInfo struct {
+	// PropertyID is the same as Property.ID
+	PropertyID string `json:"pid"`
 
-	// Value is used to filter the property.
-	Value string `json:"v"`
+	// PropertyValue is the value of PropertyValue.Str for this property.
+	PropertyValue string `json:"v"`
 }
 
 // Ouput is a map where the key is the provided identifier of a query,
@@ -85,4 +108,31 @@ type Feature struct {
 
 	// Value is a quantitative representation of the feature.
 	Value float64 `json:"value"`
+}
+
+// PropertyOutput provides information about properties known for a particular
+// `entity` type.
+type PropertyOutput struct {
+	// Type is the type ID for a given entity type.
+	Type string `json:"type"`
+
+	// Properties describes corresponding properties of the type.
+	Properties []Property `json:"properties"`
+}
+
+// ExtendOutput provides data returned by Extend query.
+type ExtendOutput struct {
+	// Meta describes properties information.
+	Meta []Property `json:"meta"`
+
+	// Rows is a map, where the key is an entity ID, and the value is another
+	// map where key is the property ID, and the value is a slice of property
+	// values (for simplification values are always JSON-encoded strings).
+	Rows map[string]map[string][]PropertyValue `json:"rows"`
+}
+
+// PropertyValue is simplified compare to API, for now it supports only
+// a string value.
+type PropertyValue struct {
+	Str string `json:"str"`
 }

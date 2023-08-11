@@ -25,6 +25,31 @@ type Manifest struct {
 
 	// DefaultTypes used for a reconciliation queries.
 	DefaultTypes []Type `json:"defaultTypes"`
+
+	// BatchSize sets maximum amount of queris in one batch.
+	BatchSize int
+}
+
+// Choice provides flexibility to PropertySetting, allowing several different
+// variants.
+type Choice struct {
+	ID    string `json:"id"`
+	Value string `json:"value"`
+}
+
+// Entity describes an entity that can be used during reconciliation.
+type Entity struct {
+	// ID of an entity.
+	ID string `json:"id"`
+
+	// Name is a human-friendly title for an entity.
+	Name string `json:"string"`
+
+	// Description explains what an entity is.
+	Description string `json:"description"`
+
+	// Type or types of an entity.
+	Type []Type `json:"type"`
 }
 
 // Type describes types available for the reconciliation service.
@@ -36,36 +61,65 @@ type Type struct {
 	Name string `json:"name"`
 }
 
+// Preview sets options to provide a widget with more details about a
+// reconciliation candidate.
 type Preview struct {
-	Height int    `json:"height"`
-	Width  int    `json:"width"`
-	URL    string `json:"url"`
-}
+	// Height is the vertical size of a widget in pixels.
+	Height int `json:"height"`
 
-type View struct {
+	// Width is a horisontal size of a widget in pixels.
+	Width int `json:"width"`
+
+	// URL provides a template in a form of `https://host/path/{{id}}`
+	// where '{{id}}' will be substituted with an Entity ID
 	URL string `json:"url"`
 }
 
-type Extend struct {
-	ProposeProperties `json:"propose_properties,omitempty"`
-	PropertySettings  []PropertySetting `json:"property_settings"`
+// View provides options for outlink where it shows details about a
+// reconciliation candidate on a remote web page.
+type View struct {
+	// URL provides a template in a form of `http://host/path{{id}}`.
+	// This URL is an outlink to an entity with the given ID.
+	URL string `json:"url"`
 }
 
+// Extend provides information about optional additional information connected
+// to the reconciliation candidate.
+type Extend struct {
+	// ProposeProperties contains metadata for Extend service.
+	ProposeProperties `json:"propose_properties,omitempty"`
+
+	// PropertySettings (optional) describes existing properties.
+	PropertySettings []PropertySetting `json:"property_settings"`
+}
+
+// ProposeProperties provides metadata for Extend service.
 type ProposeProperties struct {
-	ServiceURL  string `json:"service_url,omitempty"`
+	// ServiceURL contains Extend service URL without a path.
+	ServiceURL string `json:"service_url,omitempty"`
+
+	// ServicePath is the path part of the Extend service.
 	ServicePath string `json:"service_path"`
 }
 
+// PropertySetting provides metadata of optional property settings
+// for defining properties in Extend queries.
 type PropertySetting struct {
-	Name     string   `json:"name"`
-	Label    string   `json:"label"`
-	Type     string   `json:"type"`
-	Default  string   `json:"default"`
-	HelpText string   `json:"help_text,omitempty"`
-	Choices  []Choice `json:"choices,omitempty"`
-}
+	// Name of the property settings.
+	Name string `json:"name"`
 
-type Choice struct {
-	Value string `json:"value"`
-	ID    string `json:"id"`
+	// Label of the property settings.
+	Label string `json:"label"`
+
+	// Type of the property settings.
+	Type string `json:"type"`
+
+	// Default value of the property settings.
+	Default string `json:"default"`
+
+	// HelpText explains the property setting.
+	HelpText string `json:"help_text,omitempty"`
+
+	// Choices for the setting (optional)
+	Choices []Choice `json:"choices,omitempty"`
 }

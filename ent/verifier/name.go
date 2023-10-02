@@ -33,8 +33,11 @@ type Name struct {
 	// input name-string.
 	DataSourcesNum int `json:"dataSourcesNum,omitempty"`
 
-	// DataSourcesIDs is a list of ids of all data-sources with a match.
 	DataSourcesIDs []int `json:"dataSourcesIds,omitempty"`
+
+	// DataSourcesDetails contains information about matched data-sources
+	// and the IDs of records that did match.
+	DataSourcesDetails []DataSourceDetails `json:"dataSourcesDetails,omitempty"`
 
 	// Curation estimates reliability of matched data sources. If
 	// matches are returned by at least one manually curated data source, or by
@@ -50,6 +53,30 @@ type Name struct {
 	// Error provides an error message, if any. If error is not empty, the match
 	// failed because of a bug in the service.
 	Error string `json:"error,omitempty"`
+}
+
+// DataSourceDetails describe data-source and found matches.
+type DataSourceDetails struct {
+	// DataSourceID is the ID of the DataSource in GNverifier.
+	DataSourceID int `json:"dataSourceId"`
+
+	// TitleShort is the short name of the resource.
+	TitleShort string `json:"title"`
+
+	// Match is the collection of found records for the data-source.
+	Match MatchShort `json:"matches"`
+}
+
+// MatchShort contains data of a matched record for a resource.
+type MatchShort struct {
+	// RecordID is the RecordID of a name-string.
+	RecordID string `json:"recordId,omitempty"`
+
+	// NameString is verbatim representation of a name.
+	NameString string `json:"nameString"`
+
+	// AuthScore provides information about AuthorScore from sorting algorithm.
+	AuthScore bool `json:"-"`
 }
 
 // ResultData are returned data of the `BestResult` or `Results` of

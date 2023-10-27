@@ -28,6 +28,11 @@ const (
 	// high rate of false positives.
 	Fuzzy
 
+	// FuzzySpeciesGroup means that match happened not with the name, but
+	// with either an autonym (botany)/coordinated name (zoology) of species,
+	// or binomial part of a trinomial.
+	FuzzySpeciesGroup
+
 	// Exact means either canonical form, or the whole name-string matched
 	// perfectlly.
 	Exact

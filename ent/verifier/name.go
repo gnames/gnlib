@@ -72,6 +72,9 @@ type MatchShort struct {
 	// RecordID is the RecordID of a name-string.
 	RecordID string `json:"recordId,omitempty"`
 
+	// Outlink is the link to a match in the original data-source.
+	Outlink string `json:"outlink,omitempty"`
+
 	// NameString is verbatim representation of a name.
 	NameString string `json:"nameString"`
 

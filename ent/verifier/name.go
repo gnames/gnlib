@@ -55,7 +55,7 @@ type Name struct {
 	Error string `json:"error,omitempty"`
 }
 
-// DataSourceDetails describe data-source and found matches.
+// DataSourceDetails describe data-source and found best match.
 type DataSourceDetails struct {
 	// DataSourceID is the ID of the DataSource in GNverifier.
 	DataSourceID int `json:"dataSourceId"`
@@ -64,7 +64,7 @@ type DataSourceDetails struct {
 	TitleShort string `json:"title"`
 
 	// Match is the collection of found records for the data-source.
-	Match MatchShort `json:"matches"`
+	Match MatchShort `json:"match"`
 }
 
 // MatchShort contains data of a matched record for a resource.

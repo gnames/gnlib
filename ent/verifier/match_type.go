@@ -57,10 +57,11 @@ var mapMatchType = map[int]string{
 	1: "PartialFuzzy",
 	2: "PartialExact",
 	3: "Fuzzy",
-	4: "Exact",
-	5: "ExactSpeciesGroup",
-	6: "Virus",
-	7: "FacetedSearch",
+	4: "FuzzySpeciesGroup",
+	5: "Exact",
+	6: "ExactSpeciesGroup",
+	7: "Virus",
+	8: "FacetedSearch",
 }
 
 var mapMatchTypeStr = map[string]MatchTypeValue{
@@ -69,6 +70,7 @@ var mapMatchTypeStr = map[string]MatchTypeValue{
 	"ExactSpeciesGroup": ExactSpeciesGroup,
 	"Exact":             Exact,
 	"Fuzzy":             Fuzzy,
+	"FuzzySpeciesGroup": FuzzySpeciesGroup,
 	"PartialExact":      PartialExact,
 	"PartialFuzzy":      PartialFuzzy,
 	"FacetedSearch":     FacetedSearch,

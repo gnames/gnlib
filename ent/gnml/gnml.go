@@ -37,7 +37,7 @@ func findSplitPoint(chunk string) int {
 	if threshold < 10 {
 		return len(chunk)
 	}
-	delimiters := []string{"\n\n", ". ", " ", "\n"}
+	delimiters := []string{"\r\r\n\r\r\n", "\r\n\r\n", "\n\n", ". ", " ", "\n"}
 	for _, delimiter := range delimiters {
 		if idx := strings.LastIndex(chunk, delimiter); idx != -1 {
 			if len(chunk)-idx < threshold {

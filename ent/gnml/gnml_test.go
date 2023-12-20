@@ -116,8 +116,8 @@ health, mostly as intermediate hosts to dangerous parasites or as carriers of
 func TestSplitText(t *testing.T) {
 	assert := assert.New(t)
 	res := gnml.SplitText(txt, 1000, 100)
-	ls := gnlib.Map(res, func(s string) int {
-		return len(s)
+	ls := gnlib.Map(res, func(tp gnml.TextPart) int {
+		return tp.Length
 	})
 	assert.Equal([]int{594, 656, 938, 871, 691, 715, 406}, ls)
 }

@@ -4,9 +4,17 @@ import (
 	"strings"
 )
 
-func SplitText(text string, chunkSize, overlap int) []string {
-	var chunks []string
-	var i, prevI int
+type TextPart struct {
+	SecNum  int
+	Content string
+	Start   int
+	End     int
+	Length  int
+}
+
+func SplitText(text string, chunkSize, overlap int) []TextPart {
+	var parts []TextPart
+	var i, prevI, count int
 	for {
 		// Ensure that 'i' is always advancing to avoid an infinite loop
 		if i != 0 && i <= prevI {
@@ -16,18 +24,33 @@ func SplitText(text string, chunkSize, overlap int) []string {
 		// Determine the end of the current chunk
 		end := i + chunkSize
 		if end >= len(text) {
-			chunks = append(chunks, text[i:])
-			return chunks
+			part := TextPart{
+				SecNum:  count,
+				Content: text[i:],
+				Start:   i,
+				End:     len(text),
+				Length:  len(text) - i,
+			}
+
+			parts = append(parts, part)
+			return parts
 		}
 
 		// Find the best place to split the chunk
-		chunkEnd := findSplitPoint(text[i:end])
-		actualEnd := i + chunkEnd
+		partEnd := findSplitPoint(text[i:end])
+		actualEnd := i + partEnd
 
-		chunk := text[i:actualEnd]
-		chunks = append(chunks, chunk)
+		part := TextPart{
+			SecNum:  count,
+			Content: text[i:actualEnd],
+			Start:   i,
+			End:     actualEnd,
+			Length:  actualEnd - i,
+		}
+		parts = append(parts, part)
 
 		prevI, i = i, actualEnd-overlap
+		count++
 	}
 }
 

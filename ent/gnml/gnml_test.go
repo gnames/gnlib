@@ -120,4 +120,8 @@ func TestSplitText(t *testing.T) {
 		return tp.Length
 	})
 	assert.Equal([]int{594, 656, 938, 871, 691, 715, 406}, ls)
+	nums := gnlib.Map(res, func(tp gnml.TextPart) int {
+		return tp.PartNum
+	})
+	assert.Equal([]int{0, 1, 2, 3, 4, 5, 6}, nums)
 }

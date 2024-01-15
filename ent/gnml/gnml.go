@@ -4,12 +4,20 @@ import (
 	"strings"
 )
 
+// TextPart represents a chunk of a text file.
 type TextPart struct {
-	SecNum  int
+	// PartNum is the sequence number of the chunk.
+	PartNum int
+
+	// Content is the content of the chunk.
 	Content string
-	Start   int
-	End     int
-	Length  int
+
+	// StartOffset is the start offset of the chunk
+	// (from the start of the text).
+	StartOffset int
+
+	// Length is the length of the chunk.
+	Length int
 }
 
 func SplitText(text string, chunkSize, overlap int) []TextPart {
@@ -25,11 +33,10 @@ func SplitText(text string, chunkSize, overlap int) []TextPart {
 		end := i + chunkSize
 		if end >= len(text) {
 			part := TextPart{
-				SecNum:  count,
-				Content: text[i:],
-				Start:   i,
-				End:     len(text),
-				Length:  len(text) - i,
+				PartNum:     count,
+				Content:     text[i:],
+				StartOffset: i,
+				Length:      len(text) - i,
 			}
 
 			parts = append(parts, part)
@@ -41,11 +48,10 @@ func SplitText(text string, chunkSize, overlap int) []TextPart {
 		actualEnd := i + partEnd
 
 		part := TextPart{
-			SecNum:  count,
-			Content: text[i:actualEnd],
-			Start:   i,
-			End:     actualEnd,
-			Length:  actualEnd - i,
+			PartNum:     count,
+			Content:     text[i:actualEnd],
+			StartOffset: i,
+			Length:      actualEnd - i,
 		}
 		parts = append(parts, part)
 

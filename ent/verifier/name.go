@@ -191,6 +191,10 @@ type ResultData struct {
 	// Can be "accepted", "synonym", "not provided".
 	TaxonomicStatus `json:"taxonomicStatus"`
 
+	// IsSynonym is a boolean value that is true if the matched name is a
+	// synonym. DEPRECATED: use TaxonomicStatus instead.
+	IsSynonym bool `json:"isSynonym,omitempty"`
+
 	// ClassificationPath to the name (if provided by the DataSource).
 	// Classification path consists of a hierarchy of name-strings.
 	ClassificationPath string `json:"classificationPath,omitempty"`

@@ -94,10 +94,6 @@ type ResultData struct {
 	// Curation of the data source.
 	Curation CurationLevel `json:"curation"`
 
-	// Status provides taxonomic status of a name. Can be "accepted", "synonym",
-	// "unknown"
-	Status string `json:"status"`
-
 	// RecordID from a data source. We try our best to return ID that
 	// corresponds to dwc:taxonID of a DataSource. If such ID is not provided,
 	// this ID will be auto-generated.  Auto-generated IDs will
@@ -191,9 +187,9 @@ type ResultData struct {
 	// currently accepted name.
 	CurrentCanonicalFull string `json:"currentCanonicalFull"`
 
-	// IsSynonym is true if there is an indication in the DataSource that the
-	// name is not a currently accepted name for one or another reason.
-	IsSynonym bool `json:"isSynonym"`
+	// TaxonomicStatus provides taxonomic status of a name.
+	// Can be "accepted", "synonym", "not provided".
+	TaxonomicStatus `json:"taxonomicStatus"`
 
 	// ClassificationPath to the name (if provided by the DataSource).
 	// Classification path consists of a hierarchy of name-strings.

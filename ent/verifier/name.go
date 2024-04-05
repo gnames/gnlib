@@ -94,6 +94,10 @@ type ResultData struct {
 	// Curation of the data source.
 	Curation CurationLevel `json:"curation"`
 
+	// Status provides taxonomic status of a name. Can be "accepted", "synonym",
+	// "unknown"
+	Status string `json:"status"`
+
 	// RecordID from a data source. We try our best to return ID that
 	// corresponds to dwc:taxonID of a DataSource. If such ID is not provided,
 	// this ID will be auto-generated.  Auto-generated IDs will

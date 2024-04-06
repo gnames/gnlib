@@ -38,14 +38,14 @@ func (ts TaxonomicStatus) String() string {
 	return txStatusStringMap[ts]
 }
 
-// MarshalJSON implements json.Marshaller interface and converts MatchType
-// into a string.
+// MarshalJSON implements json.Marshaller interface and converts
+// TaxonomicStatus into a string.
 func (ts TaxonomicStatus) MarshalJSON() ([]byte, error) {
 	return []byte("\"" + ts.String() + "\""), nil
 }
 
 // UnmarshalJSON implements json.Unmarshaller interface and converts a
-// string into MatchType.
+// string into TaxonommicStatus.
 func (ts *TaxonomicStatus) UnmarshalJSON(bs []byte) error {
 	var err error
 	var ok bool

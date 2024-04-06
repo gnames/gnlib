@@ -188,12 +188,13 @@ type ResultData struct {
 	CurrentCanonicalFull string `json:"currentCanonicalFull"`
 
 	// TaxonomicStatus provides taxonomic status of a name.
-	// Can be "accepted", "synonym", "not provided".
-	TaxonomicStatus `json:"taxonomicStatus"`
+	// Can be "Accepted", "Synonym", "N/A".
+	TaxonomicStatus TaxonomicStatus `json:"taxonomicStatus"`
 
+	// DEPRECATED: use TaxonomicStatus instead.
 	// IsSynonym is a boolean value that is true if the matched name is a
-	// synonym. DEPRECATED: use TaxonomicStatus instead.
-	IsSynonym bool `json:"isSynonym,omitempty"`
+	// synonym according to the data source.
+	IsSynonym bool `json:"isSynonym"`
 
 	// ClassificationPath to the name (if provided by the DataSource).
 	// Classification path consists of a hierarchy of name-strings.

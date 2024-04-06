@@ -3,15 +3,15 @@ package verifier
 type TaxonomicStatus int
 
 const (
-	Unknown TaxonomicStatus = iota
-	Accepted
-	Synonym
+	UnknownTaxStatus TaxonomicStatus = iota
+	AcceptedTaxStatus
+	SynonymTaxStatus
 )
 
 var txStatusMap = map[string]TaxonomicStatus{
-	"not provided": Unknown,
-	"accepted":     Accepted,
-	"synonym":      Synonym,
+	"not provided": UnknownTaxStatus,
+	"accepted":     AcceptedTaxStatus,
+	"synonym":      SynonymTaxStatus,
 }
 
 var txStatusStringMap = func() map[TaxonomicStatus]string {
@@ -26,7 +26,7 @@ func New(txStatus string) TaxonomicStatus {
 	if res, ok := txStatusMap[txStatus]; ok {
 		return res
 	}
-	return Unknown
+	return UnknownTaxStatus
 }
 
 func (ts TaxonomicStatus) String() string {

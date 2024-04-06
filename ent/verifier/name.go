@@ -189,7 +189,7 @@ type ResultData struct {
 
 	// TaxonomicStatus provides taxonomic status of a name.
 	// Can be "accepted", "synonym", "not provided".
-	TaxonomicStatus `json:"taxonomicStatus"`
+	TaxonomicStatus string `json:"taxonomicStatus"`
 
 	// IsSynonym is a boolean value that is true if the matched name is a
 	// synonym. DEPRECATED: use TaxonomicStatus instead.

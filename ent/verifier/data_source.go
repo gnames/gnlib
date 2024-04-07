@@ -54,6 +54,10 @@ type DataSource struct {
 	// into assuring the quality of the data.
 	Curation CurationLevel `json:"curation"`
 
+	// HasTaxonData is true if a DataSource has data about currently
+	// accepted names and synonyms.
+	HasTaxonData bool `json:"hasTaxonData"`
+
 	// RecordCount tells how many entries are in a DataSource.
 	RecordCount int `json:"recordCount"`
 

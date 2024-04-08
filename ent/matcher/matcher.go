@@ -23,6 +23,11 @@ type Input struct {
 	// fuzzy matching together with bi- and tri-nomials.
 	WithUninomialFuzzyMatch bool `json:"withUninomialFuzzyMatch,omitempty"`
 
+	// WithRelaxedFuzzyMatch -- when true, the fuzzy matching is relaxed.
+	// Maximum edit distance is increased from 1 to 2, there are no constraints
+	// on the length of the strings to be matched.
+	WithRelaxedFuzzyMatch bool `json:"withRelaxedFuzzyMatch,omitempty"`
+
 	// DataSources -- is a list of data-sources that are used to search
 	// a for a name-string
 	DataSources []int `json:"dataSources,omitempty"`

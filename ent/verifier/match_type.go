@@ -17,6 +17,11 @@ const (
 	// positives.
 	PartialFuzzy
 
+	// PartialFuzzyRelaxed is the same as PartialFuzzy, but the fuzzy match
+	// rules were relaxed. This brings more false positives, but also more
+	// matches.
+	PartialFuzzyRelaxed
+
 	// PartialExact used if GNames failed to match full name string. Now the match
 	// happened by removing either middle species epithets, or by choppping the
 	// 'tail' words of the input name-string canonical form.
@@ -28,10 +33,19 @@ const (
 	// high rate of false positives.
 	Fuzzy
 
+	// FuzzyRelaxed is the same as Fuzzy, but the fuzzy match rules were relaxed.
+	// This brings more false positives, but also more matches.
+	FuzzyRelaxed
+
 	// FuzzySpeciesGroup means that match happened not with the name, but
 	// with either an autonym (botany)/coordinated name (zoology) of species,
 	// or binomial part of a trinomial.
 	FuzzySpeciesGroup
+
+	// FuzzySpeciesGroupRelaxed is the same as FuzzySpeciesGroup, but the fuzzy
+	// match rules were relaxed. This brings more false positives, but also more
+	// matches.
+	FuzzySpeciesGroupRelaxed
 
 	// Exact means either canonical form, or the whole name-string matched
 	// perfectlly.
@@ -53,27 +67,33 @@ const (
 )
 
 var mapMatchType = map[int]string{
-	0: "NoMatch",
-	1: "PartialFuzzy",
-	2: "PartialExact",
-	3: "Fuzzy",
-	4: "FuzzySpeciesGroup",
-	5: "Exact",
-	6: "ExactSpeciesGroup",
-	7: "Virus",
-	8: "FacetedSearch",
+	0:  "NoMatch",
+	1:  "PartialFuzzy",
+	2:  "PartialFuzzyRelaxed",
+	3:  "PartialExact",
+	4:  "Fuzzy",
+	5:  "FuzzyRelaxed",
+	6:  "FuzzySpeciesGroup",
+	7:  "FuzzySpeciesGroupRelaxed",
+	8:  "Exact",
+	9:  "ExactSpeciesGroup",
+	10: "Virus",
+	11: "FacetedSearch",
 }
 
 var mapMatchTypeStr = map[string]MatchTypeValue{
-	"NoMatch":           NoMatch,
-	"Virus":             Virus,
-	"ExactSpeciesGroup": ExactSpeciesGroup,
-	"Exact":             Exact,
-	"Fuzzy":             Fuzzy,
-	"FuzzySpeciesGroup": FuzzySpeciesGroup,
-	"PartialExact":      PartialExact,
-	"PartialFuzzy":      PartialFuzzy,
-	"FacetedSearch":     FacetedSearch,
+	"NoMatch":                  NoMatch,
+	"Virus":                    Virus,
+	"ExactSpeciesGroup":        ExactSpeciesGroup,
+	"Exact":                    Exact,
+	"Fuzzy":                    Fuzzy,
+	"FuzzyRelaxed":             FuzzyRelaxed,
+	"FuzzySpeciesGroup":        FuzzySpeciesGroup,
+	"FuzzySpeciesGroupRelaxed": FuzzySpeciesGroupRelaxed,
+	"PartialExact":             PartialExact,
+	"PartialFuzzy":             PartialFuzzy,
+	"PartialFuzzyRelaxed":      PartialFuzzyRelaxed,
+	"FacetedSearch":            FacetedSearch,
 }
 
 // NewMatchType takes a string and converts it into a MatchType. If

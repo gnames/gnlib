@@ -19,14 +19,14 @@ type Input struct {
 	// It means that autonyms in botany and coordination names in zoology.
 	WithSpeciesGroup bool `json:"withSpeciesGroup,omitempty"`
 
-	// WithUninomialFuzzyMatch -- when true, the uninomials go through
-	// fuzzy matching together with bi- and tri-nomials.
-	WithUninomialFuzzyMatch bool `json:"withUninomialFuzzyMatch,omitempty"`
-
 	// WithRelaxedFuzzyMatch -- when true, the fuzzy matching is relaxed.
 	// Maximum edit distance is increased from 1 to 2, there are no constraints
 	// on the length of the strings to be matched.
 	WithRelaxedFuzzyMatch bool `json:"withRelaxedFuzzyMatch,omitempty"`
+
+	// WithUninomialFuzzyMatch -- when true, the uninomials go through
+	// fuzzy matching together with bi- and tri-nomials.
+	WithUninomialFuzzyMatch bool `json:"withUninomialFuzzyMatch,omitempty"`
 
 	// DataSources -- is a list of data-sources that are used to search
 	// a for a name-string
@@ -48,6 +48,11 @@ type Meta struct {
 	// WithSpeciesGroup is set to the value of the `Input`'s option
 	// `WithSpeciesGroup`.
 	WithSpeciesGroup bool `json:"withSpeciesGroup,omitempty"`
+
+	// WithRelaxedFuzzyMatch is set to the value of the `Input`'s option
+	// `WithRelaxedFuzzyMatch`. When true, the fuzzy matching rules are relaxed.
+	// It provides more matches, but they are less accurate.
+	WithRelaxedFuzzyMatch bool `json:"withRelaxedFuzzyMatch,omitempty"`
 
 	// WithUninomialFuzzyMatch is true when fuzzy matching of
 	// uninomials was allowed. It is set to the value of the

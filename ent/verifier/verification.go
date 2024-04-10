@@ -29,6 +29,11 @@ type Input struct {
 	// botanical autonyms and zoological coordinated names.
 	WithSpeciesGroup bool `json:"withSpeciesGroup"`
 
+	// WithRelaxedFuzzyMatch flag; when true, the fuzzy matching rules are
+	// relaxed. Normally it is switched off to decrease the number of false
+	// positives and make verification faster.
+	WithRelaxedFuzzyMatch bool `json:"withRelaxedFuzzyMatch"`
+
 	// WithUninomialFuzzyMatch flag; when true, uninomial names are not
 	// restricted from fuzzy matching. Normally it creates too many false
 	// positives and is switched off.
@@ -87,6 +92,11 @@ type Meta struct {
 
 	// WithSpeciesGroup is true if Input included `WithSpeciesGroup` option.
 	WithSpeciesGroup bool `json:"withSpeciesGroup,omitempty"`
+
+	// WithRelaxedFuzzyMatch is true if Input included `WithRelaxedFuzzyMatch`
+	// option. It means that the fuzzy matching rules are relaxed.
+	// Normally it is switched off to decrease the number of false positives.
+	WithRelaxedFuzzyMatch bool `json:"withRelaxedFuzzyMatch,omitempty"`
 
 	// WithUninomialFuzzyMatch is true when it when uninomial names go
 	// through fuzzy matching. Normally it is switched off to decrease the

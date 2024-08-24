@@ -17,18 +17,20 @@ func TestDataSourceJSON(t *testing.T) {
 	}{
 		{
 			ds: ver.DataSource{
-				ID:          1,
-				Title:       "Catalogue of Life",
-				TitleShort:  "Catalogue of Life",
-				Curation:    ver.Curated,
-				RecordCount: 4_000_000,
-				UpdatedAt:   updated,
+				ID:           1,
+				Title:        "Catalogue of Life",
+				TitleShort:   "Catalogue of Life",
+				Curation:     ver.Curated,
+				HasTaxonData: false,
+				RecordCount:  4_000_000,
+				UpdatedAt:    updated,
 			},
 			json: `{
   "id": 1,
   "title": "Catalogue of Life",
   "titleShort": "Catalogue of Life",
   "curation": "Curated",
+  "hasTaxonData": false,
   "recordCount": 4000000,
   "updatedAt": "2020-06-30"
 }`,

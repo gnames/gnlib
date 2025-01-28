@@ -101,10 +101,6 @@ type ResultData struct {
 	// have 'gn_' prefix.
 	RecordID string `json:"recordId"`
 
-	// NameID provides the name ID associated with the record
-	// from the data source (if given).
-	NameID string `json:"nameId,omitempty"`
-
 	// GlobalID that is exposed globally by a DataSource. Such IDs are usually
 	// self-resolved, like for example LSID, pURL, DOI etc.
 	GlobalID string `json:"globalId,omitempty"`
@@ -112,6 +108,10 @@ type ResultData struct {
 	// LocalID used by a DataSource internally. If an OutLink field is provided,
 	// LocalID serves as a 'dynamic' component of the URL.
 	LocalID string `json:"localId,omitempty"`
+
+	// NameID provides the name ID associated with the record
+	// from the data source (if given).
+	NameID string `json:"nameId,omitempty"`
 
 	// Outlink to the record in the DataSource. It consists of a 'stable'
 	// URL and an appended 'dynamic' LocalID
@@ -192,8 +192,8 @@ type ResultData struct {
 	// currently accepted name.
 	CurrentCanonicalFull string `json:"currentCanonicalFull"`
 
-	// TaxonomicStatus provides taxonomic status of a name.
-	// Can be "Accepted", "Synonym", "N/A".
+	// TaxonomicStatus provides taxonomic status of a name using
+	// enum from CoLDP.
 	TaxonomicStatus coldp.TaxonomicStatus `json:"taxonomicStatus"`
 
 	// DEPRECATED: use TaxonomicStatus instead.

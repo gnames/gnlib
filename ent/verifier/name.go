@@ -3,6 +3,7 @@ package verifier
 import (
 	"strings"
 
+	"github.com/gnames/coldp/ent/coldp"
 	"github.com/gnames/gnstats/ent/stats"
 )
 
@@ -100,6 +101,10 @@ type ResultData struct {
 	// have 'gn_' prefix.
 	RecordID string `json:"recordId"`
 
+	// NameID provides the name ID associated with the record
+	// from the data source (if given).
+	NameID string `json:"nameId,omitempty"`
+
 	// GlobalID that is exposed globally by a DataSource. Such IDs are usually
 	// self-resolved, like for example LSID, pURL, DOI etc.
 	GlobalID string `json:"globalId,omitempty"`
@@ -189,7 +194,7 @@ type ResultData struct {
 
 	// TaxonomicStatus provides taxonomic status of a name.
 	// Can be "Accepted", "Synonym", "N/A".
-	TaxonomicStatus TaxonomicStatus `json:"taxonomicStatus"`
+	TaxonomicStatus coldp.TaxonomicStatus `json:"taxonomicStatus"`
 
 	// DEPRECATED: use TaxonomicStatus instead.
 	// IsSynonym is a boolean value that is true if the matched name is a

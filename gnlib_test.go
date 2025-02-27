@@ -52,3 +52,72 @@ func TestCmpVersion(t *testing.T) {
 		assert.Equal(v.res, res)
 	}
 }
+
+// TestChunkChannel tests the ChunkChannel function with various input
+// scenarios.
+func TestChunkChannel(t *testing.T) {
+	tests := []struct {
+		name      string
+		input     []int
+		chunkSize int
+		expected  [][]int
+	}{
+		{
+			name:      "normal",
+			input:     []int{1, 2, 3, 4, 5, 6},
+			chunkSize: 2,
+			expected:  [][]int{{1, 2}, {3, 4}, {5, 6}},
+		},
+		{
+			name:      "partial",
+			input:     []int{1, 2, 3, 4, 5},
+			chunkSize: 2,
+			expected:  [][]int{{1, 2}, {3, 4}, {5}},
+		},
+		{
+			name:      "empty",
+			input:     []int{},
+			chunkSize: 2,
+			expected:  nil,
+		},
+		{
+			name:      "chunk size 1",
+			input:     []int{1, 2, 3},
+			chunkSize: 1,
+			expected:  [][]int{{1}, {2}, {3}},
+		},
+		{
+			name:      "chunk size larger",
+			input:     []int{1, 2, 3},
+			chunkSize: 5,
+			expected:  [][]int{{1, 2, 3}},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Create input channel
+			input := make(chan int)
+
+			// Start goroutine to send input values and close the channel
+			go func() {
+				for _, v := range tt.input {
+					input <- v
+				}
+				close(input)
+			}()
+
+			// Call ChunkChannel to get the output channel
+			output := gnlib.ChunkChannel(input, tt.chunkSize)
+
+			// Collect all chunks from the output channel
+			var result [][]int
+			for chunk := range output {
+				result = append(result, chunk)
+			}
+
+			// Assert that the result matches the expected output
+			assert.Equal(t, tt.expected, result)
+		})
+	}
+}

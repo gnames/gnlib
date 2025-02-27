@@ -31,6 +31,14 @@ type Query struct {
 	TypeStrict string `json:"type_strict,omitempty"`
 }
 
+// SuggestQuery provides input to get a name of a suggest data that contains
+// submitted prefix. Cursor is optional and it can be used to tell how many
+// suggestions to skip.
+type SuggestQuery struct {
+	Prefix string `json:"prefix"`
+	Cursor int    `json:"cursor,omitempty"`
+}
+
 // ExtendQuery provides input for getting additional properties associated
 // with the name-string ID.
 type ExtendQuery struct {
@@ -118,6 +126,16 @@ type PropertyOutput struct {
 
 	// Properties describes corresponding properties of the type.
 	Properties []Property `json:"properties"`
+}
+
+type SuggestOutput struct {
+	Results []SuggestResult `json:"result"`
+}
+
+type SuggestResult struct {
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
 }
 
 // ExtendOutput provides data returned by Extend query.

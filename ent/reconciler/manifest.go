@@ -13,8 +13,8 @@ type Manifest struct {
 
 	Preview `json:"preview"`
 	View    `json:"view"`
-
-	Extend `json:"extend"`
+	Suggest `json:"suggest"`
+	Extend  `json:"extend"`
 
 	// IdentifierSpace contans the URI prefix of the reconciliation service.
 	// For example "https://verifier.globalnames.org/api/v1/name_strings/"
@@ -81,6 +81,17 @@ type View struct {
 	// URL provides a template in a form of `http://host/path{{id}}`.
 	// This URL is an outlink to an entity with the given ID.
 	URL string `json:"url"`
+}
+
+type Suggest struct {
+	Property *SuggestEntry `json:"property,omitempty"`
+	Entity   *SuggestEntry `json:"entity,omitempty"`
+	Type     *SuggestEntry `json:"type,omitempty"`
+}
+
+type SuggestEntry struct {
+	ServiceURL  string `json:"service_url"`
+	ServicePath string `json:"service_path"`
 }
 
 // Extend provides information about optional additional information connected

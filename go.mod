@@ -1,6 +1,6 @@
 module github.com/gnames/gnlib
 
-go 1.22.5
+go 1.23.6
 
 require (
 	github.com/gnames/gnfmt v0.4.3

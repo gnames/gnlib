@@ -27,6 +27,19 @@ func FilterFunc[T any](s []T, f func(T) bool) []T {
 	return result
 }
 
+// SliceMap takes a slice and returns back a lookup map which allows to find
+// index for each element of the slice. If the value happens several times
+// in the slice, the index corresponds to the first matching element.
+func SliceMap[T comparable](s []T) map[T]int {
+	res := map[T]int{}
+	for i, v := range s {
+		if _, ok := res[v]; !ok {
+			res[v] = i
+		}
+	}
+	return res
+}
+
 func CmpVersion(a, b string) int {
 	if a == b {
 		return 0

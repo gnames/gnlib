@@ -26,6 +26,14 @@ func TestFilter(t *testing.T) {
 	assert.Equal([]string{"a", "c"}, res)
 }
 
+func TestSliceMap(t *testing.T) {
+	assert := assert.New(t)
+	sm := gnlib.SliceMap([]int{1, 2, 3})
+	assert.Equal(1, sm[2])
+	sm2 := gnlib.SliceMap([]string{"one", "two", "three"})
+	assert.Equal(1, sm2["two"])
+}
+
 func TestCmpVersion(t *testing.T) {
 	assert := assert.New(t)
 	tests := []struct {

@@ -115,6 +115,11 @@ func ChunkChannel[T any](input <-chan T, chunkSize int) <-chan []T {
 	return output
 }
 
+// CmpVersion compares two semantic versions (eg v0.1.3 vs v0.2.0) as a and b.
+// It returns 0 if the versions are equal, 1 if a is greater than b, and -1
+// if a is less than b. The version strings are expected to be in a format
+// that can be split into integer components for comparison,
+// such as "1.2.3" or "1.0.0".
 func CmpVersion(a, b string) int {
 	if a == b {
 		return 0

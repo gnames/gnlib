@@ -1,6 +1,7 @@
 package gnlib
 
 import (
+	"context"
 	"strconv"
 	"strings"
 )
@@ -95,21 +96,28 @@ func SliceMap[T comparable](s []T) map[T]int {
 //     any data type.
 //   - The output channel is closed when the input channel is closed and all
 //     items have been processed, ensuring proper resource cleanup.
-func ChunkChannel[T any](input <-chan T, chunkSize int) <-chan []T {
+func ChunkChannel[T any](ctx context.Context, input <-chan T, chunkSize int) <-chan []T {
 	output := make(chan []T)
 	go func() {
 		defer close(output) // Close output channel when done
 		var chunk []T       // Buffer to collect items
-		for val := range input {
-			chunk = append(chunk, val)
-			if len(chunk) == chunkSize {
-				output <- chunk // Send full chunk
-				chunk = nil     // Reset chunk
+		for {
+			select {
+			case <-ctx.Done(): // Handle cancellation
+				return
+			case val, ok := <-input:
+				if !ok { // Input channel closed
+					if len(chunk) > 0 {
+						output <- chunk // Send remaining items
+					}
+					return
+				}
+				chunk = append(chunk, val)
+				if len(chunk) == chunkSize {
+					output <- chunk // Send full chunk
+					chunk = nil     // Reset chunk
+				}
 			}
-		}
-		// Send any remaining items when input closes
-		if len(chunk) > 0 {
-			output <- chunk
 		}
 	}()
 	return output

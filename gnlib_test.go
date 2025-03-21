@@ -1,6 +1,7 @@
 package gnlib_test
 
 import (
+	"context"
 	"strings"
 	"testing"
 
@@ -94,21 +95,21 @@ func TestChunkChannel(t *testing.T) {
 		},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+	for _, v := range tests {
+		t.Run(v.name, func(t *testing.T) {
 			// Create input channel
 			input := make(chan int)
 
 			// Start goroutine to send input values and close the channel
 			go func() {
-				for _, v := range tt.input {
+				for _, v := range v.input {
 					input <- v
 				}
 				close(input)
 			}()
 
 			// Call ChunkChannel to get the output channel
-			output := gnlib.ChunkChannel(input, tt.chunkSize)
+			output := gnlib.ChunkChannel(context.Background(), input, v.chunkSize)
 
 			// Collect all chunks from the output channel
 			var result [][]int
@@ -117,7 +118,7 @@ func TestChunkChannel(t *testing.T) {
 			}
 
 			// Assert that the result matches the expected output
-			assert.Equal(t, tt.expected, result)
+			assert.Equal(t, v.expected, result)
 		})
 	}
 }

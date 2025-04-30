@@ -1,4 +1,5 @@
-package nom
+// Package nomcode provides types and functions for nomenclatural codes.
+package nomcode
 
 import "strings"
 
@@ -7,7 +8,7 @@ type Code int
 
 // Constants for different nomenclatural codes.
 const (
-	UnknownCode       Code = iota
+	Unknown           Code = iota
 	Bacterial              // Bacteriological Code
 	Botanical              // Botanical Code
 	Cultivars              // Cultivated Plant Code
@@ -17,23 +18,23 @@ const (
 )
 
 // NewCode converts a string (number or word) to Code.
-func NewCode(s string) Code {
+func New(s string) Code {
 	s = strings.ToLower(s)
 	switch s {
-	case "1", "bacterial", "icnp":
+	case "1", "bact", "bacterial", "icnp":
 		return Bacterial
-	case "2", "botanical", "icn", "icnafp", "icbn":
+	case "2", "bot", "botanical", "icn", "icnafp", "icbn":
 		return Botanical
-	case "3", "cultivars", "icncp":
+	case "3", "cult", "cultivar", "cultivars", "icncp":
 		return Cultivars
-	case "4", "phytosociological", "icpn":
+	case "4", "phyto", "phytosociological", "icpn":
 		return PhytoSociological
-	case "5", "virus", "icvcn":
+	case "5", "vir", "viral", "virus", "icvcn":
 		return Virus
-	case "6", "zoological", "iczn":
+	case "6", "zoo", "zoological", "iczn":
 		return Zoological
 	default:
-		return UnknownCode
+		return Unknown
 	}
 }
 
@@ -55,14 +56,28 @@ func (nc Code) ID() string {
 	return ""
 }
 
+// String converts code ID to lower case.
 func (nc Code) String() string {
-	return ToStr(nc.ID())
+	return strings.ToLower(nc.ID())
 }
 
-// ToStr normalizes enumerated string IDs to 'normal' strings.
-// For example 'PROVISIONALLY_ACCEPTED' becomes
-// 'provisionally accepted'.
-func ToStr(s string) string {
-	s = strings.ToLower(s)
-	return strings.ReplaceAll(s, "_", " ")
+// Abbr returns common abbreviation of the code that is most popular
+// in databases and literature.
+func (nc Code) Abbr() string {
+	switch nc {
+	case Bacterial:
+		return "ICNP"
+	case Botanical:
+		return "ICN"
+	case Cultivars:
+		return "ICNCP"
+	case PhytoSociological:
+		return "ICPN"
+	case Virus:
+		return "ICVCN"
+	case Zoological:
+		return "ICZN"
+	default:
+		return ""
+	}
 }

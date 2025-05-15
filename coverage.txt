@@ -45,6 +45,11 @@ github.com/gnames/gnlib/lang.go:47.2,47.12 1 77
 github.com/gnames/gnlib/lang.go:50.35,54.16 3 77
 github.com/gnames/gnlib/lang.go:54.16,56.3 1 4
 github.com/gnames/gnlib/lang.go:58.2,58.24 1 73
+github.com/gnames/gnlib/utf8.go:11.31,16.26 2 9
+github.com/gnames/gnlib/utf8.go:16.26,18.39 2 132
+github.com/gnames/gnlib/utf8.go:18.39,22.4 2 9
+github.com/gnames/gnlib/utf8.go:22.9,26.4 2 123
+github.com/gnames/gnlib/utf8.go:29.2,29.40 1 9
 github.com/gnames/gnlib/ent/gnml/gnml.go:23.64,26.6 3 1
 github.com/gnames/gnlib/ent/gnml/gnml.go:26.6,28.27 1 7
 github.com/gnames/gnlib/ent/gnml/gnml.go:28.27,30.4 1 0

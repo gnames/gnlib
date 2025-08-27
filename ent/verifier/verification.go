@@ -16,9 +16,11 @@ type Input struct {
 	// the the best result.
 	WithAllMatches bool `json:"withAllMatches"`
 
-	// WithVernaculars indicates if corresponding vernacular results will be
-	// returned as well.
-	WithVernaculars bool `json:"withVernaculars"`
+	// Vernaculars field provides the list of languages to limit vernacular
+	// names result to only these languages. If 'all' is provided instead, all
+	// languages are included. Empty list means that no vernacular names will be
+	// returned.
+	Vernaculars []string `json:"vernaculars"`
 
 	// WithCapitalization flag; when true, the first rune of low-case
 	// input name-strings will be capitalized if appropriate.

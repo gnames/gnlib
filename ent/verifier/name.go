@@ -33,6 +33,8 @@ type Name struct {
 	// input name-string.
 	DataSourcesNum int `json:"dataSourcesNum,omitempty"`
 
+	// DataSourcesIDs is a list of IDs of data sources that matched an
+	// input name-string.
 	DataSourcesIDs []int `json:"dataSourcesIds,omitempty"`
 
 	// DataSourcesDetails contains information about matched data-sources
@@ -231,13 +233,20 @@ type ResultData struct {
 
 // Vernacular name
 type Vernacular struct {
+	// Name of the vernacular name.
 	Name string `json:"name"`
 
-	// Language of the name, hopefully in ISO form.
+	// Language of the name.
 	Language string `json:"language,omitempty"`
+
+	// LanguageCode is the ISO code of the language.
+	LanguageCode string `json:"languageCode,omitempty"`
 
 	// Locality is geographic places where the name is used.
 	Locality string `json:"locality,omitempty"`
+
+	// Country is the country where the name is used.
+	Country string `json:"country,omitempty"`
 }
 
 // ScoreDetails provides explanations how sorting of result occures and

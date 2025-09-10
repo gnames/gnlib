@@ -77,6 +77,10 @@ type Meta struct {
 	// NamesNumber is the number of name-strings in the request.
 	NamesNumber int `json:"namesNumber"`
 
+	// Vernaculars tells which languages were requested for finding vernacular
+	// names.
+	Vernaculars []string `json:"vernaculars,omitempty"`
+
 	// WithAllSources indicates if `Results` will include all matched
 	// sources.
 	WithAllSources bool `json:"withAllSources,omitempty"`

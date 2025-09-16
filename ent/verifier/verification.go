@@ -16,6 +16,11 @@ type Input struct {
 	// the the best result.
 	WithAllMatches bool `json:"withAllMatches"`
 
+	// WithAllBestResults flag; when true, returns all results with the highest
+	// score instead of just one best result. This provides multiple equally
+	// good matches when they exist.
+	WithAllBestResults bool `json:"withAllBestResults"`
+
 	// Vernaculars field provides the list of languages to limit vernacular
 	// names result to only these languages. If 'all' is provided instead, all
 	// languages are included. Empty list means that no vernacular names will be
@@ -88,6 +93,12 @@ type Meta struct {
 	// WithAllMatches indicates if response provides more then one result
 	// per source, if such results were found.
 	WithAllMatches bool `json:"withAllMatches,omitempty"`
+
+	// WithAllBestResults indicates that response will return a slice of
+	// all results with the highest score. This flag should not be shown
+	// when WithAllMatches is true, because all best results will be
+	// alreadyincluded into all matches.
+	WithAllBestResults bool `json:"withAllBestResults,omitempty"`
 
 	// WithStats indicates that the kingdom and a taxon that contain
 	// majority of names (MainTaxon) will be calculated.

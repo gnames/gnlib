@@ -1,12 +1,12 @@
 module github.com/gnames/gnlib
 
-go 1.23.6
+go 1.25.1
 
 require (
 	github.com/gnames/gnfmt v0.4.3
 	github.com/gnames/gnstats v0.2.1
 	github.com/stretchr/testify v1.8.4
-	golang.org/x/text v0.14.0
+	golang.org/x/text v0.29.0
 )
 
 require (

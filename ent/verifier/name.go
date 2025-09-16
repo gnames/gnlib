@@ -23,7 +23,13 @@ type Name struct {
 	MatchType MatchTypeValue `json:"matchType"`
 
 	// BestResult is the best result according to GNames scoring.
+	// This field is DEPRECATED in favor of BestResults, however it
+	// will stay for backward compatibility.
 	BestResult *ResultData `json:"bestResult,omitempty"`
+
+	// BestResults contains all results with the highest score, most often
+	// just one, excapt for cases of hemihomonyms or ambiguous synonyms.
+	BestResults []*ResultData `json:"bestResults,omitempty"`
 
 	// Results contain all detected matches from preverred data sources
 	// provided by user.

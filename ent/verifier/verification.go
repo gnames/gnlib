@@ -176,15 +176,20 @@ type Kingdom struct {
 // NameStringInput contains parameters for retrieving information about a particular name-string.
 type NameStringInput struct {
 	// ID contains the UUID v5 generated from a name-string.
-	ID string
+	ID string `json:"id"`
 
 	// DataSources contains data source IDs to be used in the
 	// output. If empty, all data sources are used.
-	DataSources []int
+	DataSources []int `json:"dataSources,omitempty"`
 
-	// WithAllMatches controls whether only the best match or all possible matches
+	// WithallMatches controls whether only the best match or all possible matches
 	// are returned.
-	WithAllMatches bool
+	WithAllMatches bool `json:"withAllMatches,omitempty"`
+
+	// WithAllBestResults is true when all matches with the highest score
+	// are returned, not just the one that happened to be the first.
+	// It is ignored when WithAllMatches is true.
+	WithAllBestResults bool `json:"withAllBestResults,omitempty"`
 }
 
 // NameStringOutput contains the data corresponding to the provided name-string ID.
@@ -208,4 +213,9 @@ type NameStringMeta struct {
 	// WithAllMatches indicates whether all matches should be returned
 	// or only the best matches.
 	WithAllMatches bool `json:"withAllMatches"`
+
+	// WithAllBestResults is true when all matches with the highest score
+	// are returned, not just the one that happened to be the first.
+	// It is ignored when WithAllMatches is true.
+	WithAllBestResults bool `json:"withAllBestResults,omitempty"`
 }

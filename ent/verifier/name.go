@@ -27,8 +27,8 @@ type Name struct {
 	// will stay for backward compatibility.
 	BestResult *ResultData `json:"bestResult,omitempty"`
 
-	// BestResults contains all results with the highest score, most often
-	// just one, excapt for cases of hemihomonyms or ambiguous synonyms.
+	// BestResults contains all results with the highest score if there is
+	// more than one best result.
 	BestResults []*ResultData `json:"bestResults,omitempty"`
 
 	// Results contain all detected matches from preverred data sources

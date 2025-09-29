@@ -8,20 +8,13 @@ type Input struct {
 	// DataSources contains data source IDs to limit results to only these
 	// sources. The best result is calculated only from this limited set of
 	// data. By default only the best result is shown. To see all results, use
-	// the WithAllMatches flag. To see all results with the highest score use
-	// the WithAllBestResults flag.
+	// the WithAllMatches flag.
 	DataSources []int `json:"dataSources"`
 
 	// WithAllMatches when true, returns all results instead of only the best result.
 	// The results are sorted by score, not by data source. The top result is
 	// the best result.
 	WithAllMatches bool `json:"withAllMatches"`
-
-	// WithAllBestResults flag; when true, returns all results with the highest
-	// score instead of just one best result. This provides multiple equally
-	// good matches when they exist. This flag is ignored when WithAllMatches is
-	// true.
-	WithAllBestResults bool `json:"withAllBestResults"`
 
 	// Vernaculars contains the list of languages to limit vernacular
 	// name results to only these languages. If 'all' is provided as a 'language',
@@ -92,12 +85,6 @@ type Meta struct {
 	// WithAllMatches indicates whether the response provides more than one result
 	// per source when such results are found.
 	WithAllMatches bool `json:"withAllMatches,omitempty"`
-
-	// WithAllBestResults indicates that the response will return all
-	// results with the highest score. This flag should not be shown
-	// when WithAllMatches is true, as all best results will be
-	// already included in all matches.
-	WithAllBestResults bool `json:"withAllBestResults,omitempty"`
 
 	// WithStats indicates that statistical information including the kingdom
 	// and taxon containing the majority of names (MainTaxon) will be calculated.
@@ -185,11 +172,6 @@ type NameStringInput struct {
 	// WithallMatches controls whether only the best match or all possible matches
 	// are returned.
 	WithAllMatches bool `json:"withAllMatches,omitempty"`
-
-	// WithAllBestResults is true when all matches with the highest score
-	// are returned, not just the one that happened to be the first.
-	// It is ignored when WithAllMatches is true.
-	WithAllBestResults bool `json:"withAllBestResults,omitempty"`
 }
 
 // NameStringOutput contains the data corresponding to the provided name-string ID.
@@ -213,9 +195,4 @@ type NameStringMeta struct {
 	// WithAllMatches indicates whether all matches should be returned
 	// or only the best matches.
 	WithAllMatches bool `json:"withAllMatches"`
-
-	// WithAllBestResults is true when all matches with the highest score
-	// are returned, not just the one that happened to be the first.
-	// It is ignored when WithAllMatches is true.
-	WithAllBestResults bool `json:"withAllBestResults,omitempty"`
 }

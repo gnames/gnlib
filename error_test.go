@@ -14,10 +14,30 @@ import (
 )
 
 // TestErrorBasic verifies the fundamental behavior of creating a custom error
-// type that embeds gnlib.ErrorBase. It ensures that the custom error satisfies
+// type that embeds gnlib.MessageBase. It ensures that the custom error satisfies
 // the gnlib.Error interface, can be wrapped by standard errors, and can be
 // correctly inspected using errors.As.
 func TestErrorBasic(t *testing.T) {
+	msg := "hello"
+	type errTest struct {
+		error
+		gnlib.MessageBase
+	}
+	base := gnlib.NewMessage(msg, nil)
+	err := errTest{
+		error:       errors.New("test error"),
+		MessageBase: base,
+	}
+	assert.Equal(t, "test error", err.Error())
+	assert.Equal(t, "hello", err.UserMessage())
+	err2 := fmt.Errorf("higher error: %w", err)
+	var target gnlib.Error
+	assert.True(t, errors.As(err2, &target))
+	assert.Equal(t, "hello", target.UserMessage())
+}
+
+// TestErrorBasicBackwardCompat verifies backward compatibility with ErrorBase.
+func TestErrorBasicBackwardCompat(t *testing.T) {
 	msg := "hello"
 	type errTest struct {
 		error
@@ -30,10 +50,6 @@ func TestErrorBasic(t *testing.T) {
 	}
 	assert.Equal(t, "test error", err.Error())
 	assert.Equal(t, "hello", err.UserMessage())
-	err2 := fmt.Errorf("higher error: %w", err)
-	var target gnlib.Error
-	assert.True(t, errors.As(err2, &target))
-	assert.Equal(t, "hello", target.UserMessage())
 }
 
 // TestError_Features is a table-driven test that covers the variable
@@ -118,8 +134,56 @@ func TestError_Features(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			base := gnlib.NewError(tt.msg, tt.vars)
+			base := gnlib.NewMessage(tt.msg, tt.vars)
 			assert.Equal(t, tt.expected, base.UserMessage(), tt.name)
+		})
+	}
+}
+
+// TestFormatMessage verifies the static FormatMessage function that can be
+// used independently of the MessageBase type.
+func TestFormatMessage(t *testing.T) {
+	// Force color output for testing purposes
+	origNoColor := color.NoColor
+	color.NoColor = false
+	defer func() { color.NoColor = origNoColor }()
+
+	tests := []struct {
+		name     string
+		msg      string
+		vars     []any
+		expected string
+	}{
+		{
+			name:     "simple message",
+			msg:      "Hello, world!",
+			vars:     nil,
+			expected: "Hello, world!",
+		},
+		{
+			name:     "with variables",
+			msg:      "Processing %d files",
+			vars:     []any{42},
+			expected: "Processing 42 files",
+		},
+		{
+			name:     "with tags",
+			msg:      "<title>Success!</title> All <em>%d</em> tests passed.",
+			vars:     []any{10},
+			expected: "\x1b[32mSuccess!\x1b[0m All \x1b[33m10\x1b[0m tests passed.",
+		},
+		{
+			name:     "complex message",
+			msg:      "<warning>Error:</warning> Failed to process <em>%s</em> in <title>%s</title>",
+			vars:     []any{"data.csv", "/home/user"},
+			expected: "\x1b[31mError:\x1b[0m Failed to process \x1b[33mdata.csv\x1b[0m in \x1b[32m/home/user\x1b[0m",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := gnlib.FormatMessage(tt.msg, tt.vars)
+			assert.Equal(t, tt.expected, result)
 		})
 	}
 }
@@ -143,12 +207,12 @@ func TestPrintUserMessage(t *testing.T) {
 			err: func() error {
 				type errTest struct {
 					error
-					gnlib.ErrorBase
+					gnlib.MessageBase
 				}
-				base := gnlib.NewError("Test <title>message</title>", nil)
+				base := gnlib.NewMessage("Test <title>message</title>", nil)
 				return errTest{
-					error:     errors.New("internal error"),
-					ErrorBase: base,
+					error:       errors.New("internal error"),
+					MessageBase: base,
 				}
 			}(),
 			expected: "Test \x1b[32mmessage\x1b[0m\n",
@@ -158,12 +222,12 @@ func TestPrintUserMessage(t *testing.T) {
 			err: func() error {
 				type errTest struct {
 					error
-					gnlib.ErrorBase
+					gnlib.MessageBase
 				}
-				base := gnlib.NewError("Wrapped <warning>error</warning>", nil)
+				base := gnlib.NewMessage("Wrapped <warning>error</warning>", nil)
 				err := errTest{
-					error:     errors.New("internal error"),
-					ErrorBase: base,
+					error:       errors.New("internal error"),
+					MessageBase: base,
 				}
 				return fmt.Errorf("outer: %w", err)
 			}(),

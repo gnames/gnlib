@@ -24,7 +24,34 @@ go get github.com/gnames/gnlib
 
 ### User-Friendly Error Messages
 
-The `gnfmt` error handling system allows you to create errors that produce clean, colorized output for the terminal, while preserving the underlying error details for logging.
+The error handling system allows you to create errors that produce clean, colorized output for the terminal, while preserving the underlying error details for logging.
+
+#### Static FormatMessage Function
+
+Use `FormatMessage` as a standalone function for any message formatting needs:
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/gnames/gnlib"
+)
+
+func main() {
+	// Format a message with tags and variables
+	msg := gnlib.FormatMessage(
+		"Processing <title>%s</title>: <em>%d</em> items found",
+		[]any{"data.csv", 42},
+	)
+	fmt.Println(msg)
+	// Output (with colors): Processing data.csv: 42 items found
+}
+```
+
+#### MessageBase for Structured Errors
+
+Create custom error types that embed `MessageBase` for more structured error handling:
 
 ```go
 package main
@@ -34,25 +61,34 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/gnames/gnfmt"
+	"github.com/gnames/gnlib"
 )
 
 func main() {
-	// Create a new error with a format string and variables.
-	// The message includes tags for colorization.
-	err := gnfmt.NewError(
+	// Create a custom error type
+	type FileError struct {
+		error
+		gnlib.MessageBase
+	}
+
+	// Create a new error with a format string and variables
+	base := gnlib.NewMessage(
 		"<warning>Could not process file '%s'</warning>",
 		[]any{"important.txt"},
 	)
+	err := FileError{
+		error:       errors.New("file processing failed"),
+		MessageBase: base,
+	}
 
-	// The UserMessage() method returns the formatted, colorized string.
+	// The UserMessage() method returns the formatted, colorized string
 	fmt.Fprintln(os.Stdout, err.UserMessage())
 
-	// Example of wrapping the error.
+	// Example of wrapping the error
 	wrappedErr := fmt.Errorf("operation failed: %w", err)
 
-	// You can inspect the error chain to get the user-friendly message.
-	var gnErr gnfmt.Error
+	// You can inspect the error chain to get the user-friendly message
+	var gnErr gnlib.Error
 	if errors.As(wrappedErr, &gnErr) {
 		fmt.Fprintln(os.Stdout, "---")
 		fmt.Fprintln(os.Stdout, "Message from wrapped error:")
@@ -72,7 +108,7 @@ Could not process file 'important.txt'
 
 #### Colorization Tags
 
-The `UserMessage()` method recognizes the following tags for styling terminal output:
+Both `FormatMessage` and `UserMessage()` recognize the following tags for styling terminal output:
 
 -   `<title>...</title>`: Renders text in **green**.
 -   `<warning>...</warning>`: Renders text in **red**.

@@ -1,16 +1,17 @@
 mode: atomic
 github.com/gnames/gnlib/error.go:11.34,14.15 3 4
 github.com/gnames/gnlib/error.go:14.15,16.3 1 2
-github.com/gnames/gnlib/error.go:40.49,46.2 2 13
-github.com/gnames/gnlib/error.go:56.45,58.25 2 14
-github.com/gnames/gnlib/error.go:58.25,60.3 1 4
-github.com/gnames/gnlib/error.go:62.2,63.12 2 14
-github.com/gnames/gnlib/error.go:68.52,76.39 2 14
-github.com/gnames/gnlib/error.go:76.39,81.64 3 42
-github.com/gnames/gnlib/error.go:81.64,83.27 2 9
-github.com/gnames/gnlib/error.go:83.27,85.5 1 0
-github.com/gnames/gnlib/error.go:86.4,87.29 2 9
-github.com/gnames/gnlib/error.go:91.2,91.12 1 14
+github.com/gnames/gnlib/error.go:46.53,52.2 2 14
+github.com/gnames/gnlib/error.go:57.49,59.2 1 1
+github.com/gnames/gnlib/error.go:69.44,71.2 1 15
+github.com/gnames/gnlib/error.go:85.51,86.19 1 19
+github.com/gnames/gnlib/error.go:86.19,88.3 1 7
+github.com/gnames/gnlib/error.go:90.2,97.39 2 19
+github.com/gnames/gnlib/error.go:97.39,102.64 3 57
+github.com/gnames/gnlib/error.go:102.64,104.27 2 14
+github.com/gnames/gnlib/error.go:104.27,106.5 1 0
+github.com/gnames/gnlib/error.go:107.4,108.29 2 14
+github.com/gnames/gnlib/error.go:112.2,112.12 1 19
 github.com/gnames/gnlib/gnlib.go:11.48,13.22 2 9
 github.com/gnames/gnlib/gnlib.go:13.22,15.3 1 29
 github.com/gnames/gnlib/gnlib.go:16.2,16.15 1 9

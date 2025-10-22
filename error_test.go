@@ -18,15 +18,13 @@ import (
 // the gnlib.Error interface, can be wrapped by standard errors, and can be
 // correctly inspected using errors.As.
 func TestErrorBasic(t *testing.T) {
-	msg := "hello"
 	type errTest struct {
 		error
 		gnlib.MessageBase
 	}
-	base := gnlib.NewMessage(msg, nil)
 	err := errTest{
 		error:       errors.New("test error"),
-		MessageBase: base,
+		MessageBase: gnlib.MessageBase{Msg: "hello"},
 	}
 	assert.Equal(t, "test error", err.Error())
 	assert.Equal(t, "hello", err.UserMessage())
@@ -34,22 +32,6 @@ func TestErrorBasic(t *testing.T) {
 	var target gnlib.Error
 	assert.True(t, errors.As(err2, &target))
 	assert.Equal(t, "hello", target.UserMessage())
-}
-
-// TestErrorBasicBackwardCompat verifies backward compatibility with ErrorBase.
-func TestErrorBasicBackwardCompat(t *testing.T) {
-	msg := "hello"
-	type errTest struct {
-		error
-		gnlib.ErrorBase
-	}
-	base := gnlib.NewError(msg, nil)
-	err := errTest{
-		error:     errors.New("test error"),
-		ErrorBase: base,
-	}
-	assert.Equal(t, "test error", err.Error())
-	assert.Equal(t, "hello", err.UserMessage())
 }
 
 // TestError_Features is a table-driven test that covers the variable
@@ -134,7 +116,7 @@ func TestError_Features(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			base := gnlib.NewMessage(tt.msg, tt.vars)
+			base := gnlib.MessageBase{Msg: tt.msg, Vars: tt.vars}
 			assert.Equal(t, tt.expected, base.UserMessage(), tt.name)
 		})
 	}
@@ -209,10 +191,9 @@ func TestPrintUserMessage(t *testing.T) {
 					error
 					gnlib.MessageBase
 				}
-				base := gnlib.NewMessage("Test <title>message</title>", nil)
 				return errTest{
 					error:       errors.New("internal error"),
-					MessageBase: base,
+					MessageBase: gnlib.MessageBase{Msg: "Test <title>message</title>"},
 				}
 			}(),
 			expected: "Test \x1b[32mmessage\x1b[0m\n",
@@ -224,10 +205,9 @@ func TestPrintUserMessage(t *testing.T) {
 					error
 					gnlib.MessageBase
 				}
-				base := gnlib.NewMessage("Wrapped <warning>error</warning>", nil)
 				err := errTest{
 					error:       errors.New("internal error"),
-					MessageBase: base,
+					MessageBase: gnlib.MessageBase{Msg: "Wrapped <warning>error</warning>"},
 				}
 				return fmt.Errorf("outer: %w", err)
 			}(),

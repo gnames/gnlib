@@ -84,7 +84,7 @@ func TestError_Features(t *testing.T) {
 		},
 		{
 			name:     "warning tag",
-			msg:      "<warning>This is a warning</warning>",
+			msg:      "<warn>This is a warning</warn>",
 			vars:     nil,
 			expected: "\x1b[31mThis is a warning\x1b[0m",
 		},
@@ -96,7 +96,7 @@ func TestError_Features(t *testing.T) {
 		},
 		{
 			name:     "multiple tags",
-			msg:      "<title>Title</title> and <warning>Warning</warning>",
+			msg:      "<title>Title</title> and <warn>Warning</warn>",
 			vars:     nil,
 			expected: "\x1b[32mTitle\x1b[0m and \x1b[31mWarning\x1b[0m",
 		},
@@ -156,7 +156,7 @@ func TestFormatMessage(t *testing.T) {
 		},
 		{
 			name:     "complex message",
-			msg:      "<warning>Error:</warning> Failed to process <em>%s</em> in <title>%s</title>",
+			msg:      "<warn>Error:</warn> Failed to process <em>%s</em> in <title>%s</title>",
 			vars:     []any{"data.csv", "/home/user"},
 			expected: "\x1b[31mError:\x1b[0m Failed to process \x1b[33mdata.csv\x1b[0m in \x1b[32m/home/user\x1b[0m",
 		},
@@ -207,7 +207,7 @@ func TestPrintUserMessage(t *testing.T) {
 				}
 				err := errTest{
 					error:       errors.New("internal error"),
-					MessageBase: gnlib.MessageBase{Msg: "Wrapped <warning>error</warning>"},
+					MessageBase: gnlib.MessageBase{Msg: "Wrapped <warn>error</warn>"},
 				}
 				return fmt.Errorf("outer: %w", err)
 			}(),

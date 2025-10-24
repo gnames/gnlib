@@ -11,7 +11,7 @@ import (
 // Pre-compiled regular expressions for tag replacement
 var (
 	titleRe   = regexp.MustCompile(`<title>(.*?)</title>`)
-	warningRe = regexp.MustCompile(`<warning>(.*?)</warning>`)
+	warningRe = regexp.MustCompile(`<warn>(.*?)</warn>`)
 	emRe      = regexp.MustCompile(`<em>(.*?)</em>`)
 )
 

@@ -11,7 +11,6 @@ A collection of shared utilities and entities for Global Names Architecture Go p
 - **Channel Operations**: Chunk channel data into manageable batches
 - **Version Comparison**: Semantic version comparison utilities
 - **UTF-8 Handling**: Fix and normalize UTF-8 strings
-- **Language Utilities**: Convert between language codes and names
 - **Domain Entities**: Shared types for taxonomic name verification, reconciliation, and matching
 
 ## Installation
@@ -217,32 +216,6 @@ func main() {
     // Replaces invalid UTF-8 with U+FFFD and normalizes to NFC
     fixed := gnlib.FixUtf8("invalid\xc3\x28utf8")
     fmt.Println(fixed)
-}
-```
-
-### Language Utilities
-
-Convert between language codes and names:
-
-```go
-package main
-
-import (
-    "fmt"
-    "github.com/gnames/gnlib"
-)
-
-func main() {
-    // Get ISO 639-3 code from language name
-    code := gnlib.LangCode("English")
-    fmt.Println(code) // "eng"
-
-    code = gnlib.LangCode("en")
-    fmt.Println(code) // "eng"
-
-    // Get language name from code
-    name := gnlib.LangName("fra")
-    fmt.Println(name) // "French"
 }
 ```
 

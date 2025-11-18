@@ -2,9 +2,12 @@ package gnlib
 
 import (
 	"context"
+	"regexp"
 	"strconv"
 	"strings"
 )
+
+var versionRegex = regexp.MustCompile(`^v\d+\.\d+\.\d+(?:\.\d+)?$`)
 
 // Map applies a function to each element of a slice and returns a new slice
 // in the same order.
@@ -86,6 +89,11 @@ func ChunkChannel[T any](ctx context.Context, input <-chan T, chunkSize int) <-c
 		}
 	}()
 	return output
+}
+
+// IsVersion determines if a string follows v.1.2.3(.4)? pattern
+func IsVersion(s string) bool {
+	return versionRegex.MatchString(s)
 }
 
 // CmpVersion compares two semantic versions (eg v0.1.3 vs v0.2.0) as a and b.

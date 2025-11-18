@@ -35,6 +35,28 @@ func TestSliceMap(t *testing.T) {
 	assert.Equal(1, sm2["two"])
 }
 
+func TestIsVersion(t *testing.T) {
+	assert := assert.New(t)
+	tests := []struct {
+		msg, input string
+		isVer      bool
+	}{
+		{"not version", "sdfs aas", false},
+		{"too short", "v1.2", false},
+		{"version", "v23.443.102", true},
+		{"patch", "v1.55.2.1", true},
+		{"version2", "v1.2.3", true},
+		{"version3", "v0.0.0", true},
+		{"typo", "v.1.5.3", false},
+		{"typo2", "v.1.5.3.", false},
+	}
+
+	for _, v := range tests {
+		res := gnlib.IsVersion(v.input)
+		assert.Equal(v.isVer, res, v.msg)
+	}
+}
+
 func TestCmpVersion(t *testing.T) {
 	assert := assert.New(t)
 	tests := []struct {

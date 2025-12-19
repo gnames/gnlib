@@ -29,7 +29,7 @@ func New(s string) Code {
 		return Cultivars
 	case "4", "phyto", "phytosociological", "icpn":
 		return PhytoSociological
-	case "5", "vir", "viral", "virus", "icvcn":
+	case "5", "vir", "viral", "virus", "ictv", "icvcn":
 		return Virus
 	case "6", "zoo", "zoological", "iczn":
 		return Zoological

@@ -113,8 +113,8 @@ type Meta struct {
 	// must have to qualify as the MainTaxon.
 	MainTaxonThreshold float32 `json:"mainTaxonThreshold,omitempty"`
 
-	// StatsNamesNum contains the number of names that qualified for MainTaxon
-	// and Kingdom calculations.
+	// StatsNamesNum contains the number of names that qualified for MainTaxon,
+	// Kingdom and Class calculations.
 	StatsNamesNum int `json:"statsNamesNum,omitempty"`
 
 	// MainTaxon contains the lowest taxon that includes most of the names from
@@ -146,6 +146,26 @@ type Meta struct {
 	// Kingdoms contains all kingdoms with matched names and their
 	// distribution statistics.
 	Kingdoms []Kingdom `json:"kingdoms,omitempty"`
+
+	// Class contains the class that includes the majority of names from the
+	// request according to the managerial classification of Catalogue of Life.
+	// It helps when MainTaxon is too broad, for example `Chordata` for a
+	// group of bird and mammal names.
+	//
+	// Non-matched names and names not in the Catalogue of Life are
+	// not included in the calculation.
+	Class string `json:"class,omitempty"`
+
+	// ClassPercentage contains the percentage of names in the most
+	// prevalent class.
+	//
+	// Non-matched names and names not in the Catalogue of Life are
+	// not included in the calculation.
+	ClassPercentage float32 `json:"classPercentage,omitempty"`
+
+	// Classes contains all classes with matched names and their
+	// distribution statistics.
+	Classes []Class `json:"classes,omitempty"`
 }
 
 // Kingdom contains statistics for matched names found in a particular kingdom.
@@ -157,6 +177,18 @@ type Kingdom struct {
 	NamesNumber int `json:"namesNumber"`
 
 	// Percentage contains the percentage of names found in this kingdom.
+	Percentage float32 `json:"percentage"`
+}
+
+// Class contains statistics for matched names found in a particular class.
+type Class struct {
+	// ClassName contains the name of the class.
+	ClassName string `json:"className"`
+
+	// NamesNumber contains the number of names found in this class.
+	NamesNumber int `json:"namesNumber"`
+
+	// Percentage contains the percentage of names found in this class.
 	Percentage float32 `json:"percentage"`
 }
 

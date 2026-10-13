@@ -27,10 +27,6 @@ type Input struct {
 	// all names to match.
 	Tolerance *int `json:"tolerance,omitempty"`
 
-	// MaxGenusSize is the largest genus, in distinct epithets, that is
-	// checked for misspellings. If zero, the default is used.
-	MaxGenusSize int `json:"maxGenusSize,omitempty"`
-
 	// GeneraLimit is the maximum number of candidate genera in the result.
 	// If zero, the default is used.
 	GeneraLimit int `json:"generaLimit,omitempty"`
@@ -82,10 +78,6 @@ type Meta struct {
 	// genus, as applied.
 	Tolerance int `json:"tolerance"`
 
-	// MaxGenusSize is the largest genus checked for misspellings, as
-	// applied.
-	MaxGenusSize int `json:"maxGenusSize"`
-
 	// GeneraLimit is the maximum number of candidate genera, as applied.
 	GeneraLimit int `json:"generaLimit"`
 
@@ -119,12 +111,9 @@ type Genus struct {
 	ClassificationRanks string `json:"classificationRanks,omitempty"`
 
 	// EpithetsNumber is the size of the genus, as the number of its
-	// distinct epithet stems.
+	// distinct epithet stems. A matched name gives less to the score of
+	// a large genus.
 	EpithetsNumber int `json:"epithetsNumber"`
-
-	// OverMaxSize is true if EpithetsNumber is larger than MaxGenusSize.
-	// Misspellings are not checked for such genera.
-	OverMaxSize bool `json:"overMaxSize,omitempty"`
 
 	// Score is the score of the genus and its parts.
 	Score Score `json:"score"`

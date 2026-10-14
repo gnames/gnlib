@@ -153,6 +153,11 @@ type Score struct {
 	// zero or negative.
 	UnknownGenus float64 `json:"unknownGenus"`
 
+	// Popularity is the part of the score that comes from the number of
+	// data sources with the matched names. It breaks ties between genera
+	// that explain names equally well. It is zero or positive.
+	Popularity float64 `json:"popularity"`
+
 	// Total is the total score of the genus.
 	Total float64 `json:"total"`
 }

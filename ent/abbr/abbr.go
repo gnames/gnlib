@@ -148,6 +148,11 @@ type Score struct {
 	// in the MainTaxon.
 	MainTaxon float64 `json:"mainTaxon"`
 
+	// UnknownGenus is the penalty for a genus that is not in IRMNG and
+	// has no classification. Such genera are often misspellings. It is
+	// zero or negative.
+	UnknownGenus float64 `json:"unknownGenus"`
+
 	// Total is the total score of the genus.
 	Total float64 `json:"total"`
 }

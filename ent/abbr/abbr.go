@@ -30,6 +30,13 @@ type Input struct {
 	// GeneraLimit is the maximum number of candidate genera in the result.
 	// If zero, the default is used.
 	GeneraLimit int `json:"generaLimit,omitempty"`
+
+	// WithFeatures adds raw features of the score to each genus, so a
+	// client can recalculate the score with other weights. It is meant for
+	// tuning of the weights. Genera are still ranked and limited by the
+	// current score, so a client that tunes weights should ask for many
+	// genera.
+	WithFeatures bool `json:"withFeatures,omitempty"`
 }
 
 // Name is an abbreviated name with an optional client ID and genus hints.
@@ -81,6 +88,14 @@ type Meta struct {
 	// GeneraLimit is the maximum number of candidate genera, as applied.
 	GeneraLimit int `json:"generaLimit"`
 
+	// WithFeatures is the WithFeatures from the input.
+	WithFeatures bool `json:"withFeatures,omitempty"`
+
+	// PrefixSize is the sum of sizes (distinct epithet stems) of all
+	// genera that start with the abbreviation. It is a feature of the
+	// score shared by all genera, and is given only with WithFeatures.
+	PrefixSize int `json:"prefixSize,omitempty"`
+
 	// NamesNumber is the number of submitted names.
 	NamesNumber int `json:"namesNumber"`
 
@@ -124,6 +139,71 @@ type Genus struct {
 	// UnmatchedNames contains input names not matched by the genus,
 	// within the Tolerance. Genus hints are not included.
 	UnmatchedNames []Name `json:"unmatchedNames,omitempty"`
+
+	// Features are raw values the score is calculated from. They are
+	// given only with WithFeatures.
+	Features *Features `json:"features,omitempty"`
+}
+
+// Features are raw values the score of a genus is calculated from.
+// Together with Meta.PrefixSize they are enough to recalculate the score
+// with other weights.
+type Features struct {
+	// GenusSize is the size of the genus used by the score: the largest
+	// number of distinct epithet stems among its homonyms. It can differ
+	// from Genus.EpithetsNumber, which belongs to the shown
+	// classification.
+	GenusSize int `json:"genusSize"`
+
+	// DominantClassFit is 1 if the genus is in the DominantClass, -1 if
+	// it is in another class, and 0 if the class or the DominantClass is
+	// unknown.
+	DominantClassFit int `json:"dominantClassFit"`
+
+	// MainTaxonFit is 1 if the genus is in the MainTaxon, -1 if it is
+	// not, and 0 if the classification or the MainTaxon is unknown.
+	MainTaxonFit int `json:"mainTaxonFit"`
+
+	// Known is true if the genus is in IRMNG or has a classification.
+	Known bool `json:"known"`
+
+	// UnmatchedUnits is the number of distinct names that the genus did
+	// not match. A name that occurs several times counts once.
+	UnmatchedUnits int `json:"unmatchedUnits"`
+
+	// Matches contains features of distinct matched names. A name that
+	// occurs several times counts once.
+	Matches []MatchFeatures `json:"matches"`
+}
+
+// MatchFeatures are raw values of a distinct name matched by a genus.
+type MatchFeatures struct {
+	// Name is the first input name with these epithets.
+	Name string `json:"name"`
+
+	// IDs are client IDs of all input names with these epithets.
+	IDs []string `json:"ids,omitempty"`
+
+	// NamesNumber is the number of input names with these epithets.
+	NamesNumber int `json:"namesNumber"`
+
+	// MatchType tells how the name matched.
+	MatchType MatchTypeValue `json:"matchType"`
+
+	// Key is the lookup key of the epithet the evidence is based on, for
+	// example `c-elegans`.
+	Key string `json:"key"`
+
+	// KeyGenera is the number of genera that start with the abbreviation
+	// and have the Key.
+	KeyGenera int `json:"keyGenera"`
+
+	// DsNum is the number of data sources with the matched name.
+	DsNum int `json:"dsNum"`
+
+	// HintPosition is the best position of the genus among genus hints of
+	// the name, starting from 1. It is 0 if the genus is not hinted.
+	HintPosition int `json:"hintPosition,omitempty"`
 }
 
 // Score contains weighted parts of the score of a candidate genus and

@@ -51,8 +51,9 @@ type Name struct {
 	Name string `json:"name"`
 
 	// GenusHints contains full genera found near the name, sorted by
-	// closeness, the closest first. Hints never exclude candidates, they
-	// only change the ranking.
+	// closeness, the closest first. A hint can also be a binomial or
+	// trinomial name, which hints at its genus with more weight. Hints
+	// never exclude candidates, they only change the ranking.
 	GenusHints []string `json:"genusHints,omitempty"`
 }
 
@@ -204,6 +205,11 @@ type MatchFeatures struct {
 	// HintPosition is the best position of the genus among genus hints of
 	// the name, starting from 1. It is 0 if the genus is not hinted.
 	HintPosition int `json:"hintPosition,omitempty"`
+
+	// HintFactor multiplies the weight of the genus hint: 1 for a genus,
+	// more for a binomial or trinomial hint, most if its last epithet is
+	// the name's. It is 0 if the genus is not hinted.
+	HintFactor float64 `json:"hintFactor,omitempty"`
 }
 
 // Score contains weighted parts of the score of a candidate genus and

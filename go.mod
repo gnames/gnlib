@@ -3,13 +3,16 @@ module github.com/gnames/gnlib
 go 1.27.3
 
 require (
+	github.com/dvirsky/levenshtein v0.0.0-20200624034316-59b26b61c3c8
 	github.com/gnames/gnfmt v0.4.3
 	github.com/gnames/gnstats v0.2.3
+	github.com/gnames/levenshtein v0.4.0
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/text v0.43.0
 )
 
 require (
+	github.com/Shugyousha/mafsa v0.2.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421 // indirect

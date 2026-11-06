@@ -1,10 +1,16 @@
+github.com/Shugyousha/mafsa v0.2.0 h1:6HY6Me41PPIOIi5fPp8ZmNHoS9WaqoQMweqP2GrHOH0=
+github.com/Shugyousha/mafsa v0.2.0/go.mod h1:h6m5+MtPR+uLmA+cytwLTiBC/5/9S1mOojyFe3wk5S0=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/dvirsky/levenshtein v0.0.0-20200624034316-59b26b61c3c8 h1:ZHXmu38XBR16nVGtbMr39LBLtLpyat9KxM/17jp+MSE=
+github.com/dvirsky/levenshtein v0.0.0-20200624034316-59b26b61c3c8/go.mod h1:XKAbRrNT11mKMvr8sixVFkHyaFbkh7ag+086d9pNEFg=
 github.com/gnames/gnfmt v0.4.3 h1:TUbqT+2KsC7qdo2lUICw9vOx2tBDF80ehvBrLZaMMR0=
 github.com/gnames/gnfmt v0.4.3/go.mod h1:Nnxb1w0jh+8cit4gVkfSKqH2lA2chImkvSiDvAFhJes=
 github.com/gnames/gnstats v0.2.3 h1:l7Ujgyy+E0r+GTqNUu0hgj1cxke1eJNry/h4vaCSyn4=
 github.com/gnames/gnstats v0.2.3/go.mod h1:6wM0JRePOjGlapEMmryh60lyrsX5uc8cUXqJWgataGc=
+github.com/gnames/levenshtein v0.4.0 h1:yC/2IcSmG7akKxqpWyvDUPzVwogislkA1LG+BURxqxU=
+github.com/gnames/levenshtein v0.4.0/go.mod h1:SxfO0pn22XHRXFSuREr8SWwpzc/OKy/ArG60xNck+Ug=
 github.com/google/gofuzz v1.0.0/go.mod h1:dBl0BpW6vV/+mYPU4Po3pmUjxk6FQPldtuIdl/M65Eg=
 github.com/json-iterator/go v1.1.12 h1:PV8peI4a0ysnczrg+LtxykD8LfKY9ML6u2jnxaEnrnM=
 github.com/json-iterator/go v1.1.12/go.mod h1:e30LSqwooZae/UwlEbR2852Gd8hjQvJoHmT4TnhNGBo=
